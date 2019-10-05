@@ -13,9 +13,9 @@ export class AppComponent {
 
   constructor(private userService: UserService) {}
 
-  public fetchUsers(): void {
-    this.userService.getUsers().subscribe(entry => {
-      this.user = entry;
-    });
-  }
+  // public fetchUsers(): void {
+  //   this.userService.getUsers().subscribe(entry => {
+  //     this.user = entry;
+  //   });
+  // }
 }
