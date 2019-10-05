@@ -1,19 +1,16 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
+import { Day } from '../interfaces/day.interface';
 import { User } from '../interfaces/user.interface';
 
 // array in local storage for registered users
 const userJonah: User = { name: 'jonah', picture: 'someUrl' };
 const users = [userJonah];
+const daytime = new Date();
+
+const day: Day = {date: daytime, beforenoon: ['koken', 'dansen'], afternoon: ['zingen', 'lachen'], noon: 'brocoli', users};
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -34,7 +31,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       switch (true) {
         case url.endsWith('/users') && method === 'GET':
           return getUsers();
-
+        case url.endsWith('/day') && method === 'GET':
+          return getDay();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -45,6 +43,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function getUsers() {
       return ok(users);
+    }
+
+    function getDay() {
+      return ok(day);
     }
 
     // helper functions
