@@ -1,0 +1,18 @@
+<p>
+
+</p>
+
+<form class="border border-light p-5" [formGroup]="userFormGroup">
+  <div class="custom-control custom-radio mb-4" *ngFor="let type of this._userTypes; let i = index">
+    <input type="radio" class="custom-control-input" id="{{'radio' + type}}" name="userType" [value]="i" [checked]="i === defaultTypeChecked">
+    <label class="custom-control-label" for="{{'radio' + type}}">{{type}}</label>
+</div>
+
+<label for="textInput">Naam</label>
+  <input type="text" id="name" class="form-control" formControlName="name">
+
+  
+</form>
+
+
+REMOVE {{ userFormGroup.value | json }}

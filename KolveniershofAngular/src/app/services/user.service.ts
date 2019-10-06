@@ -13,4 +13,12 @@ export class UserService {
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`localhost:4200/users`);
   }
+
+  public getUser(id: number): Observable<User>{
+    return this.http.get<User>(`localhost:4200/user/${id}`);
+  }
+
+  public getUserTypes(): Observable<string[]>{
+    return this.http.get<string[]>(`localhost:4200/usertypes`);
+  }
 }
