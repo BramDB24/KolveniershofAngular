@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DayComponent } from './day/day.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 export const routes: Routes = [
   {
@@ -10,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: DayComponent
+    component: CalendarComponent
   },
   {
     path: '**',

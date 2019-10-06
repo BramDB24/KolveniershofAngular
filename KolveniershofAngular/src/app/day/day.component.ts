@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { Day } from '../interfaces/day.interface';
 import { DayService } from '../services/day.service';
-import { finalize } from 'rxjs/operators';
+import { User } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-day',
@@ -9,6 +10,7 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./day.component.scss']
 })
 export class DayComponent implements OnInit {
+  @Input() public dateTime: Date;
   public day: Day;
   public loader = false;
 

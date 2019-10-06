@@ -1,8 +1,32 @@
 <ng-container *ngIf="loader">
-  <div>
+  <div class='beforenoon'>
     <p>voormiddag</p>
     <div>
-      <p>{{ day.beforenoon }}</p>
+      <div *ngFor="let ateliers of day.beforenoon">
+        <p>{{ateliers.name}} - {{ateliers.guide}}</p>
+        <div *ngFor="let users of ateliers.clients">
+          <p>- {{users.name}}</p>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class='afternoon'>
+      <p>namiddag</p>
+      <div>
+        <div *ngFor="let ateliers of day.afternoon">
+          <p>{{ateliers.name}} - {{ateliers.guide}}</p>
+          <div *ngFor="let users of ateliers.clients">
+            <p>- {{users.name}}</p>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="present-clients">
+    <p>Aanwezige leden</p>
+    <select>
+      <option *ngFor="let presentUsers of day.users">
+        {{presentUsers.name}}
+      </option>
+    </select>
   </div>
 </ng-container>

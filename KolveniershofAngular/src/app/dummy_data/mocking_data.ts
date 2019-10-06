@@ -1,17 +1,56 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
 import { Day } from '../interfaces/day.interface';
 import { User } from '../interfaces/user.interface';
+import { Atelerier } from '../interfaces/atelier.interface';
 
 // array in local storage for registered users
-const userJonah: User = { name: 'jonah', picture: 'someUrl' };
-const users = [userJonah];
+const userJonah: User = { name: 'jonah', picture: 'someUrl', role: 'client' };
+const userJohanna: User = {
+  name: 'johanna',
+  picture: 'someUrl',
+  role: 'client'
+};
+const userBram: User = { name: 'bram', picture: 'someUrl', role: 'client' };
+
 const daytime = new Date();
+const atelier1: Atelerier = {
+  name: 'zingen',
+  guide: 'begeleider',
+  clients: [userJonah, userJohanna]
+};
+const atelier2: Atelerier = {
+  name: 'koken',
+  guide: 'begeleider',
+  clients: [userJohanna]
+};
+const atelier3: Atelerier = {
+  name: 'knutselen',
+  guide: 'begeleider',
+  clients: [userBram]
+};
+const atelier4: Atelerier = {
+  name: 'spelen',
+  guide: 'begeleider',
+  clients: [userBram, userJohanna, userJonah]
+};
 
-const day: Day = {date: daytime, beforenoon: ['koken', 'dansen'], afternoon: ['zingen', 'lachen'], noon: 'brocoli', users};
-
+const day: Day = {
+  beforenoon: [atelier1, atelier2],
+  afternoon: [atelier3, atelier4],
+  date: daytime,
+  noon: 'zalm met puree',
+  users: [userJonah, userJohanna, userBram]
+};
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   intercept(
@@ -42,7 +81,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     // route functions
 
     function getUsers() {
-      return ok(users);
+      return ok([userJonah, userJohanna, userBram]);
     }
 
     function getDay() {

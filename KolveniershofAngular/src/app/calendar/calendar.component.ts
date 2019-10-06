@@ -6,18 +6,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  @Input() date: Date;
+  public date: Date = new Date();
 
   constructor() {
-    this.date = new Date();
   }
 
-  public changeDate(nr: number) : void {
+  public changeDate(nr: number): void {
     this.date = new Date(
       this.date.getFullYear(),
       this.date.getMonth(),
       this.date.getDate() + nr
-    )
+    );
   }
 
   public previousDate(): void {
@@ -28,8 +27,5 @@ export class CalendarComponent implements OnInit {
     this.changeDate(+1);
   }
 
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 }
