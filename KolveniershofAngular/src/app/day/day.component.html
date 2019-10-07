@@ -1,32 +1,44 @@
-<ng-container *ngIf="loader">
-  <div class='beforenoon'>
-    <p>voormiddag</p>
-    <div>
-      <div *ngFor="let ateliers of day.beforenoon">
-        <p>{{ateliers.name}} - {{ateliers.guide}}</p>
-        <div *ngFor="let users of ateliers.clients">
-          <p>- {{users.name}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class='afternoon'>
-      <p>namiddag</p>
-      <div>
-        <div *ngFor="let ateliers of day.afternoon">
-          <p>{{ateliers.name}} - {{ateliers.guide}}</p>
-          <div *ngFor="let users of ateliers.clients">
-            <p>- {{users.name}}</p>
+<ng-container class="ngcontainer" *ngIf="loader">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Voormiddag</h4>
+            <div>
+              <div *ngFor="let ateliers of day.beforenoon">
+                <p class="atelier">{{ateliers.name}} - {{ateliers.guide}}</p>
+                <div *ngFor="let users of ateliers.clients">
+                  <p>- {{users.name}}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-  </div>
-  <div class="present-clients">
-    <p>Aanwezige leden</p>
-    <select>
-      <option *ngFor="let presentUsers of day.users">
-        {{presentUsers.name}}
-      </option>
-    </select>
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Namiddag</h4>
+            <div>
+              <div *ngFor="let ateliers of day.afternoon">
+                <p class="atelier">{{ateliers.name}} - {{ateliers.guide}}</p>
+                <div *ngFor="let users of ateliers.clients">
+                  <p>- {{users.name}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="present-clients">
+      <p>Aanwezige leden</p>
+      <select>
+        <option *ngFor="let presentUsers of day.users">
+          {{presentUsers.name}}
+        </option>
+      </select>
+    </div>
   </div>
 </ng-container>
