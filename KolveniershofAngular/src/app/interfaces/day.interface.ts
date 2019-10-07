@@ -1,7 +1,7 @@
-import { User } from './user.interface';
+import { Gebruiker } from './gebruiker.interface';
 
 export interface Day {
-    users: Array<User>;
+    users: Array<Gebruiker>;
     date: Date;
     beforenoon: Array<string>;
     afternoon: Array<string>;

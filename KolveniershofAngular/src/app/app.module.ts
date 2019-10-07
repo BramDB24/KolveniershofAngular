@@ -6,14 +6,16 @@ import { fakeBackendProvider } from './dummy_data/mocking_data';
 import { AppRoutingModule } from './app-routing.module';
 import { DayComponent } from './day/day.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { RegisterGebruikerComponent } from './register-user/register-gebruiker.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from './calendar/calendar.component';
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 registerLocaleData(localeNl);
 
 @NgModule({
-  declarations: [AppComponent, CalendarComponent, DayComponent, NavigationComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+    declarations: [AppComponent, CalendarComponent, DayComponent, NavigationComponent, RegisterGebruikerComponent],
+    imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
   providers: [fakeBackendProvider, {provide: LOCALE_ID, useValue: "nl-BE"}],
   bootstrap: [AppComponent]
 })
