@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DayComponent } from './day/day.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
+import { RegisterGebruikerComponent } from './register-user/register-gebruiker.component';
 
 export const routes: Routes = [
   {
@@ -11,11 +11,11 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterUserComponent
+    component: RegisterGebruikerComponent
   },
   {
     path: 'register/:id',
-    component: RegisterUserComponent
+    component: RegisterGebruikerComponent
   },
   {
     path: '',

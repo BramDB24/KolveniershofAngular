@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/user.interface';
+import { Gebruiker } from '../interfaces/gebruiker.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class GebruikerService {
 
   constructor(private http: HttpClient) { }
 
-  public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`localhost:4200/users`);
+  public getUsers(): Observable<Gebruiker[]> {
+    return this.http.get<Gebruiker[]>(`localhost:4200/users`);
   }
 
-  public getUser(id: number): Observable<User>{
-    return this.http.get<User>(`localhost:4200/user/${id}`);
+  public getUser(id: number): Observable<Gebruiker>{
+    return this.http.get<Gebruiker>(`localhost:4200/user/${id}`);
   }
 
   public getUserTypes(): Observable<string[]>{

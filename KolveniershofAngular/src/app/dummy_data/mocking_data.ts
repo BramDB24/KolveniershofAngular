@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
 import { Day } from '../interfaces/day.interface';
-import { User } from '../interfaces/user.interface';
+import { Gebruiker } from '../interfaces/gebruiker.interface';
 
 // array in local storage for registered users
-const userJonah: User = {
-  id: 1,
-  name: 'De Smet',
-  firstname: 'Jonah',
+const userJonah: Gebruiker = {
+  id: '1',
+  naam: 'De Smet',
+  voornaam: 'Jonah',
   email: 'jonah.desmet@gmail.com',
-  password: 'test123',
-  street: 'Arbeidstraat',
-  houseNumber: '14',
-  city: 'Aalst',
+  wachtwoord: 'test123',
+  straat: 'Arbeidstraat',
+  huisnummer: '14',
+  gemeente: 'Aalst',
   postcode: '9300',
-  picture: 'someUrl',
+  foto: 'someUrl',
   type: 1
 };
 const users = [userJonah];
@@ -44,7 +44,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         case url.endsWith('/users') && method === 'GET':
           return getUsers();
         case url.match(/\/user\/[0-9]+$/) && method === 'GET':
-          return getUser(+url.match(/[0-9]+$/)[0]);
+          return getUser(url.match(/[0-9]+$/)[0]);
         case url.endsWith('/usertypes') && method === 'GET':
           return getUserTypes();
         case url.endsWith('/day') && method === 'GET':
@@ -61,7 +61,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       return ok(users);
     }
 
-    function getUser(id: number) {
+    function getUser(id: string) {
       return ok(users.find(user => user.id === id));
     }
 
