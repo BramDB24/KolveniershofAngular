@@ -1,11 +1,11 @@
 import { User } from './user.interface';
-import { Atelerier } from './atelier.interface';
+import { Atelier } from './atelier.interface';
 
 export interface Day {
   users: Array<User>;
   date: Date;
-  beforenoon: Array<Atelerier>;
-  afternoon: Array<Atelerier>;
+  beforenoon: Array<Atelier>;
+  afternoon: Array<Atelier>;
   noon: string;
   remarks?: Array<string>;
 }

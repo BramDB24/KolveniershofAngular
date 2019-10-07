@@ -13,4 +13,8 @@ export class DayService {
   public getDay(day: string): Observable<Day> {
     return this.http.get<Day>('localhost:4200/day');
   }
+
+  public getEditInformatie(): any {
+    return this.http.get<any>('localhost:4200/homepage-edit')
+  }
 }

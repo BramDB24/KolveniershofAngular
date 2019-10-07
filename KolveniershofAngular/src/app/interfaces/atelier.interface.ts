@@ -1,7 +1,7 @@
 import { User } from './user.interface';
 
-export interface Atelerier {
+export interface Atelier {
   name: string;
-  guide: string;
+  guide: Array<User>;
   clients: Array<User>;
 }

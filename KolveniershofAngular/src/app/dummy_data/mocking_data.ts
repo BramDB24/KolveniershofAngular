@@ -10,37 +10,39 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
 import { Day } from '../interfaces/day.interface';
-import { User } from '../interfaces/user.interface';
-import { Atelerier } from '../interfaces/atelier.interface';
+import { User, Rol } from '../interfaces/user.interface';
+import { Atelier } from '../interfaces/atelier.interface';
 
 // array in local storage for registered users
-const userJonah: User = { name: 'jonah', picture: 'someUrl', role: 'client' };
+const userJonah: User = { name: 'jonah', picture: 'someUrl', role: Rol.cliënt };
 const userJohanna: User = {
   name: 'johanna',
   picture: 'someUrl',
-  role: 'client'
+  role: Rol.cliënt
 };
-const userBram: User = { name: 'bram', picture: 'someUrl', role: 'client' };
+const userBram: User = { name: 'bram', picture: 'someUrl', role: Rol.cliënt };
+const begeleiderDirk: User = { name: 'dirk', picture: 'someUrl', role: Rol.begeleider };
+
 
 const daytime = new Date();
-const atelier1: Atelerier = {
+const atelier1: Atelier = {
   name: 'zingen',
-  guide: 'begeleider',
+  guide: [begeleiderDirk],
   clients: [userJonah, userJohanna]
 };
-const atelier2: Atelerier = {
+const atelier2: Atelier = {
   name: 'koken',
-  guide: 'begeleider',
+  guide: [begeleiderDirk],
   clients: [userJohanna]
 };
-const atelier3: Atelerier = {
+const atelier3: Atelier = {
   name: 'knutselen',
-  guide: 'begeleider',
+  guide: [begeleiderDirk],
   clients: [userBram]
 };
-const atelier4: Atelerier = {
+const atelier4: Atelier = {
   name: 'spelen',
-  guide: 'begeleider',
+  guide: [begeleiderDirk],
   clients: [userBram, userJohanna, userJonah]
 };
 
@@ -72,6 +74,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return getUsers();
         case url.endsWith('/day') && method === 'GET':
           return getDay();
+        case url.endsWith('/homepage-edit') && method === 'GET':
+          return getEdit();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -86,6 +90,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function getDay() {
       return ok(day);
+    }
+
+    function getEdit(){
+      return ok({users: [userJonah, userJohanna, userBram], ateliers:[atelier1, atelier2, atelier3, atelier4]})
     }
 
     // helper functions

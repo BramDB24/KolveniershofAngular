@@ -1,0 +1,8 @@
+<ng-container *ngIf="loaded">
+  <div *ngFor="let user of object.users">
+    <p> {{ user.name }} </p>
+  </div>
+  <div *ngFor="let atelier of object.ateliers">
+    <p> {{ atelier.name }} </p>
+  </div>
+</ng-container>
