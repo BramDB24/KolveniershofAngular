@@ -1,55 +1,61 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
-import { Day } from '../interfaces/day.interface';
-import { User } from '../interfaces/user.interface';
 import { Atelerier } from '../interfaces/atelier.interface';
+import { Day } from '../interfaces/day.interface';
+import { stateClient, User } from '../interfaces/user.interface';
 
 // array in local storage for registered users
-const userJonah: User = { name: 'jonah', picture: 'someUrl', role: 'client' };
-const userJohanna: User = {
-  name: 'johanna',
-  picture: 'someUrl',
-  role: 'client'
+const userJonah: User = {
+  naam: 'jonah',
+  foto: 'someUrl',
+  authoriteit: 'client',
+  stateClient: stateClient.aanwezig
 };
-const userBram: User = { name: 'bram', picture: 'someUrl', role: 'client' };
+const userJohanna: User = {
+  naam: 'johanna',
+  foto: 'someUrl',
+  authoriteit: 'client',
+  stateClient: stateClient.afwezig
+};
+const userBram: User = {
+  naam: 'bram',
+  foto: 'someUrl',
+  authoriteit: 'client',
+  stateClient: stateClient.aanwezig
+};
 
-const daytime = new Date();
+let daytime = new Date();
+
 const atelier1: Atelerier = {
-  name: 'zingen',
-  guide: 'begeleider',
-  clients: [userJonah, userJohanna]
+  naam: 'zingen',
+  begeleider: 'begeleider',
+  clienten: [userJonah, userJohanna]
 };
 const atelier2: Atelerier = {
-  name: 'koken',
-  guide: 'begeleider',
-  clients: [userJohanna]
+  naam: 'koken',
+  begeleider: 'begeleider',
+  clienten: [userJohanna]
 };
 const atelier3: Atelerier = {
-  name: 'knutselen',
-  guide: 'begeleider',
-  clients: [userBram]
+  naam: 'knutselen',
+  begeleider: 'begeleider',
+  clienten: [userBram]
 };
 const atelier4: Atelerier = {
-  name: 'spelen',
-  guide: 'begeleider',
-  clients: [userBram, userJohanna, userJonah]
+  naam: 'spelen',
+  begeleider: 'begeleider',
+  clienten: [userBram, userJohanna, userJonah]
 };
 
 const day: Day = {
-  beforenoon: [atelier1, atelier2],
-  afternoon: [atelier3, atelier4],
-  date: daytime,
-  noon: 'zalm met puree',
-  users: [userJonah, userJohanna, userBram]
+  voormiddag: [atelier1, atelier2],
+  namiddag: [atelier3, atelier4],
+  datum: daytime = new Date( daytime.getFullYear(),
+  daytime.getMonth(), daytime.getDate() + 1),
+  middag: 'zalm met puree',
+  gebruikers: [userJonah, userJohanna, userBram]
 };
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -70,7 +76,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       switch (true) {
         case url.endsWith('/users') && method === 'GET':
           return getUsers();
-        case url.endsWith('/day') && method === 'GET':
+        case url.endsWith('/date/' + RegExp('/^[0-9]{7}$/')) && method === 'GET':
           return getDay();
         default:
           // pass through any requests not handled above
@@ -86,6 +92,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function getDay() {
       return ok(day);
+    }
+
+    function getEdit(){
+      return ok({users: [], ateliers:[]})
     }
 
     // helper functions

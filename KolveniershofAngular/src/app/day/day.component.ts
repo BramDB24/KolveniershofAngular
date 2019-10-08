@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { Day } from '../interfaces/day.interface';
 import { DayService } from '../services/day.service';
-import { User } from '../interfaces/user.interface';
+import { User, stateClient } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-day',
@@ -10,20 +10,38 @@ import { User } from '../interfaces/user.interface';
   styleUrls: ['./day.component.scss']
 })
 export class DayComponent implements OnInit {
-  @Input() public dateTime: Date;
-  public day: Day;
+  @Input() public datum: Date;
+  public dag: Day;
   public loader = false;
+  public aanwezigeLeden = new Array<User>();
+  public afwezigeLeden = new Array<User>();
 
-  constructor(private dayService: DayService) {}
+  constructor(private dagService: DayService) {}
 
   ngOnInit() {
-    this.dayService
-      .getDay('')
+    this.dagService
+      .getDay(this.datum)
       .pipe(
         finalize(() => {
           this.loader = true;
         })
       )
-      .subscribe(day => (this.day = day));
+      .subscribe(day => {
+        this.dag = day;
+        this.readState(this.dag);
+      });
+  }
+
+  public readState(dag: Day): void {
+    dag.gebruikers.forEach(element => {
+      switch (element.stateClient) {
+        case stateClient.aanwezig:
+          this.aanwezigeLeden.push(element);
+          break;
+        case stateClient.afwezig:
+          this.afwezigeLeden.push(element);
+          break;
+      }
+    });
   }
 }

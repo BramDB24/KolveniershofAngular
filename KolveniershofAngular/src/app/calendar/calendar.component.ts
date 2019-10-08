@@ -6,16 +6,16 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  public date: Date = new Date();
+  public datum: Date = new Date();
 
   constructor() {
   }
 
   public changeDate(nr: number): void {
-    this.date = new Date(
-      this.date.getFullYear(),
-      this.date.getMonth(),
-      this.date.getDate() + nr
+    this.datum = new Date(
+      this.datum.getFullYear(),
+      this.datum.getMonth(),
+      this.datum.getDate() + nr
     );
   }
 
