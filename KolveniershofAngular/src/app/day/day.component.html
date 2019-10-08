@@ -6,10 +6,12 @@
           <div class="card-body">
             <h4 class="card-title">Voormiddag</h4>
             <div>
-              <div *ngFor="let ateliers of day.beforenoon">
-                <p class="atelier">{{ateliers.name}} - {{ateliers.guide}}</p>
-                <div *ngFor="let users of ateliers.clients">
-                  <p>- {{users.name}}</p>
+              <div *ngFor="let ateliers of dag.voormiddag">
+                <p class="atelier">
+                  {{ ateliers.naam }} - {{ ateliers.begeleider }}
+                </p>
+                <div *ngFor="let users of ateliers.clienten">
+                  <p>- {{ users.naam }}</p>
                 </div>
               </div>
             </div>
@@ -21,10 +23,12 @@
           <div class="card-body">
             <h4 class="card-title">Namiddag</h4>
             <div>
-              <div *ngFor="let ateliers of day.afternoon">
-                <p class="atelier">{{ateliers.name}} - {{ateliers.guide}}</p>
-                <div *ngFor="let users of ateliers.clients">
-                  <p>- {{users.name}}</p>
+              <div *ngFor="let ateliers of dag.namiddag">
+                <p class="atelier">
+                  {{ ateliers.naam }} - {{ ateliers.begeleider }}
+                </p>
+                <div *ngFor="let users of ateliers.clienten">
+                  <p>- {{ users.naam }}</p>
                 </div>
               </div>
             </div>
@@ -35,11 +39,19 @@
     <div class="present-clients">
       <p>Aanwezige leden</p>
       <select>
-        <option *ngFor="let presentUsers of day.users">
-          {{presentUsers.name}}
+        <option *ngFor="let presentUsers of aanwezigeLeden">
+          {{ presentUsers.naam }}
+        </option>
+      </select>
+    </div>
+    <div class="absent-clients">
+      <p>Afwezige leden</p>
+      <select>
+        <option *ngFor="let absentUsers of afwezigeLeden">
+          {{ absentUsers.naam }}
         </option>
       </select>
     </div>
   </div>
-  <app-homepage-edit></app-homepage-edit>
 </ng-container>
+

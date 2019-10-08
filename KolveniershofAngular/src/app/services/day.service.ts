@@ -10,8 +10,8 @@ export class DayService {
 
   constructor(private http: HttpClient) { }
 
-  public getDay(day: string): Observable<Day> {
-    return this.http.get<Day>('localhost:4200/day');
+  public getDay(day: Date): Observable<Day> {
+    return this.http.get<Day>(`localhost:4200/date`);
   }
 
   public getEditInformatie(): any {

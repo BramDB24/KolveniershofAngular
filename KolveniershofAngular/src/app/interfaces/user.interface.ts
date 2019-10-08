@@ -1,7 +1,12 @@
 export interface User {
-    name: string;
-    picture: string;
-    role: Rol;
+    naam: string;
+    foto: string;
+    rol: Rol;
+    stateClient?: stateClient;
+}
+
+export enum stateClient {
+    'aanwezig', 'afwezig', 'ziek'
 }
 
 export enum Rol {
