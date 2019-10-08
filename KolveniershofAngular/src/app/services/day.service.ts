@@ -11,6 +11,6 @@ export class DayService {
   constructor(private http: HttpClient) { }
 
   public getDay(day: Date): Observable<Day> {
-    return this.http.get<Day>(`localhost:4200/${day.toLocaleDateString().toString().replace(/\//g, '')}`);
+    return this.http.get<Day>(`localhost:4200/date`);
   }
 }

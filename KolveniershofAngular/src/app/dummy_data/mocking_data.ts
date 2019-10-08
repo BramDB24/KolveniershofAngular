@@ -76,7 +76,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       switch (true) {
         case url.endsWith('/users') && method === 'GET':
           return getUsers();
-        case url.endsWith('/date/' + RegExp('/^[0-9]{7}$/')) && method === 'GET':
+        case url.endsWith('/date') && method === 'GET':
           return getDay();
         default:
           // pass through any requests not handled above
