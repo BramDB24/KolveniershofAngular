@@ -22,7 +22,7 @@ const userJohanna: User = {
 };
 const userBram: User = { name: 'bram', picture: 'someUrl', role: Rol.cliënt };
 const begeleiderDirk: User = { name: 'dirk', picture: 'someUrl', role: Rol.begeleider };
-
+const begeleiderGeert: User = { name: 'geert', picture: 'someUrl', role: Rol.begeleider };
 
 const daytime = new Date();
 const atelier1: Atelier = {
@@ -32,7 +32,7 @@ const atelier1: Atelier = {
 };
 const atelier2: Atelier = {
   name: 'koken',
-  guide: [begeleiderDirk],
+  guide: [begeleiderDirk, begeleiderGeert],
   clients: [userJohanna]
 };
 const atelier3: Atelier = {
@@ -42,7 +42,7 @@ const atelier3: Atelier = {
 };
 const atelier4: Atelier = {
   name: 'spelen',
-  guide: [begeleiderDirk],
+  guide: [begeleiderGeert],
   clients: [userBram, userJohanna, userJonah]
 };
 
@@ -51,7 +51,7 @@ const day: Day = {
   afternoon: [atelier3, atelier4],
   date: daytime,
   noon: 'zalm met puree',
-  users: [userJonah, userJohanna, userBram]
+  users: [begeleiderDirk, begeleiderGeert, userJonah, userJohanna, userBram]
 };
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {

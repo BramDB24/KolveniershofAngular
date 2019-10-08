@@ -18,4 +18,5 @@ export class HomepageEditComponent implements OnInit {
     this.service.getEditInformatie().pipe(finalize(() => {this.loaded = true})).subscribe(entry => this.object = entry);
   }
 
+
 }
