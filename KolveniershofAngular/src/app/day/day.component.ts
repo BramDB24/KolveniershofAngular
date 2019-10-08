@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { Day } from '../interfaces/day.interface';
+import { User } from '../interfaces/user.interface';
 import { DayService } from '../services/day.service';
-import { User, stateClient } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-day',
@@ -33,15 +33,8 @@ export class DayComponent implements OnInit {
   }
 
   public readState(dag: Day): void {
-    dag.gebruikers.forEach(element => {
-      switch (element.stateClient) {
-        case stateClient.aanwezig:
-          this.aanwezigeLeden.push(element);
-          break;
-        case stateClient.afwezig:
-          this.afwezigeLeden.push(element);
-          break;
-      }
-    });
+    if (dag.ziekte !== null) {
+      this.afwezigeLeden = dag.ziekte.clienten;
+    }
   }
 }

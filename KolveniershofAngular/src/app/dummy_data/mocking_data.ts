@@ -1,23 +1,44 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
-
-import { Day } from '../interfaces/day.interface';
-import { User, Rol, stateClient } from '../interfaces/user.interface';
 import { Atelier } from '../interfaces/atelier.interface';
+import { Day } from '../interfaces/day.interface';
+import { Rol, User } from '../interfaces/user.interface';
 
 // array in local storage for registered users
-const userJonah: User = { naam: 'jonah', foto: 'someUrl', rol: Rol.cliënt, stateClient: stateClient.aanwezig };
+const userJonah: User = {
+  naam: 'jonah',
+  foto: 'someUrl',
+  rol: Rol.cliënt
+};
 const userJohanna: User = {
   naam: 'johanna',
   foto: 'someUrl',
-  rol: Rol.cliënt,
-  stateClient: stateClient.afwezig
+  rol: Rol.cliënt
 };
-const userBram: User = { naam: 'bram', foto: 'someUrl', rol: Rol.cliënt, stateClient: stateClient.aanwezig };
-const begeleiderDirk: User = { naam: 'dirk', foto: 'someUrl', rol: Rol.begeleider };
-const begeleiderGeert: User = { naam: 'geert', foto: 'someUrl', rol: Rol.begeleider };
+const userBram: User = {
+  naam: 'bram',
+  foto: 'someUrl',
+  rol: Rol.cliënt
+};
+const begeleiderDirk: User = {
+  naam: 'dirk',
+  foto: 'someUrl',
+  rol: Rol.begeleider
+};
+const begeleiderGeert: User = {
+  naam: 'geert',
+  foto: 'someUrl',
+  rol: Rol.begeleider
+};
 
 let daytime = new Date();
 const atelier1: Atelier = {
@@ -40,13 +61,23 @@ const atelier4: Atelier = {
   begeleider: [begeleiderGeert],
   clienten: [userBram, userJohanna, userJonah]
 };
-
+const atelier5: Atelier = {
+  naam: 'ziek',
+  clienten: [userJohanna]
+};
 const day: Day = {
   voormiddag: [atelier1, atelier2],
   namiddag: [atelier3, atelier4],
   datum: daytime,
   middag: 'zalm met puree',
-  gebruikers: [begeleiderDirk, begeleiderGeert, userJonah, userJohanna, userBram]
+  ziekte: atelier5,
+  gebruikers: [
+    begeleiderDirk,
+    begeleiderGeert,
+    userJonah,
+    userJohanna,
+    userBram
+  ]
 };
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -87,8 +118,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       return ok(day);
     }
 
-    function getEdit(){
-      return ok({users: [userJonah, userJohanna, userBram], ateliers:[atelier1, atelier2, atelier3, atelier4]})
+    function getEdit() {
+      return ok({
+        users: [userJonah, userJohanna, userBram],
+        ateliers: [atelier1, atelier2, atelier3, atelier4]
+      });
     }
 
     // helper functions

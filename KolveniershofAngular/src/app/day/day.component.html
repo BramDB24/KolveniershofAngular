@@ -8,7 +8,7 @@
             <div>
               <div *ngFor="let ateliers of dag.voormiddag">
                 <p class="atelier">
-                  {{ ateliers.naam }} - {{ ateliers.begeleider }}
+                  {{ ateliers.naam }}
                 </p>
                 <div *ngFor="let users of ateliers.clienten">
                   <p>- {{ users.naam }}</p>
@@ -25,7 +25,7 @@
             <div>
               <div *ngFor="let ateliers of dag.namiddag">
                 <p class="atelier">
-                  {{ ateliers.naam }} - {{ ateliers.begeleider }}
+                  {{ ateliers.naam }}
                 </p>
                 <div *ngFor="let users of ateliers.clienten">
                   <p>- {{ users.naam }}</p>
@@ -36,21 +36,22 @@
         </div>
       </div>
     </div>
-    <div class="present-clients">
-      <p>Aanwezige leden</p>
-      <select>
-        <option *ngFor="let presentUsers of aanwezigeLeden">
-          {{ presentUsers.naam }}
-        </option>
-      </select>
-    </div>
-    <div class="absent-clients">
-      <p>Afwezige leden</p>
-      <select>
-        <option *ngFor="let absentUsers of afwezigeLeden">
-          {{ absentUsers.naam }}
-        </option>
-      </select>
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Afwezigen</h4>
+          <div>
+            <div>
+              <p class="atelier">
+                {{ dag.ziekte.naam }}
+              </p>
+             <div *ngFor="let clienten of dag.ziekte.clienten">
+              <p> {{clienten.naam}}</p>
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ng-container>

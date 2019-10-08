@@ -6,6 +6,7 @@ export interface Day {
   datum: Date;
   voormiddag: Array<Atelier>;
   namiddag: Array<Atelier>;
+  ziekte?: Atelier;
   middag: string;
   opmerkingen?: Array<string>;
 }
