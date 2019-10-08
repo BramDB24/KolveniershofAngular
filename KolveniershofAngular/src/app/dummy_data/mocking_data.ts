@@ -120,8 +120,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function getEdit() {
       return ok({
-        users: [userJonah, userJohanna, userBram],
-        ateliers: [atelier1, atelier2, atelier3, atelier4]
+        users: [userJonah, userJohanna, userBram, begeleiderDirk, begeleiderGeert],
+        ateliers: [atelier1, atelier2, atelier3, atelier4, atelier5]
       });
     }
 

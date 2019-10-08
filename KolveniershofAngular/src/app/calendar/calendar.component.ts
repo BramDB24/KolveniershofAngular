@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -8,8 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CalendarComponent implements OnInit {
   public datum: Date = new Date();
 
-  constructor() {
-  }
+  constructor(private _router: Router) {}
 
   public changeDate(nr: number): void {
     this.datum = new Date(
@@ -25,6 +25,10 @@ export class CalendarComponent implements OnInit {
 
   public nextDate(): void {
     this.changeDate(+1);
+  }
+
+  public redirect(route: string) {
+    this._router.navigate([`${route}`]);
   }
 
   ngOnInit() {}

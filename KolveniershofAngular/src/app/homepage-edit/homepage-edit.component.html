@@ -1,8 +1,15 @@
 <ng-container *ngIf="loaded">
-  <div *ngFor="let user of object.users">
-    <p> {{ user.name }} </p>
+  
+      <label [ngClass]="{'colorGreen': checked, '': !checked}" (click)="isActive($event.target.checked)" *ngFor="let atelier of ateliers" class="checkbox-inline">
+        <input type="checkbox" value="" />{{atelier.naam}}
+      </label>
+  
+  <h4>Cliënten</h4>
+  <div *ngFor="let users of clienten">
+    <p>{{ users.naam }}</p>
   </div>
-  <div *ngFor="let atelier of object.ateliers">
-    <p> {{ atelier.name }} </p>
+  <h4>Medewerkers</h4>
+  <div *ngFor="let users of medewerkers">
+    <p>{{ users.naam }}</p>
   </div>
 </ng-container>

@@ -10,12 +10,23 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
+
 registerLocaleData(localeNl);
 
 @NgModule({
-  declarations: [AppComponent, CalendarComponent, DayComponent, NavigationComponent, HomepageEditComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
-  providers: [fakeBackendProvider, {provide: LOCALE_ID, useValue: "nl-BE"}],
+  declarations: [
+    AppComponent,
+    CalendarComponent,
+    DayComponent,
+    NavigationComponent,
+    HomepageEditComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule
+  ],
+  providers: [fakeBackendProvider, { provide: LOCALE_ID, useValue: 'nl-BE' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
