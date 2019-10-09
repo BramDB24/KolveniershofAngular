@@ -16,17 +16,17 @@ import { Rol, User } from '../interfaces/user.interface';
 // array in local storage for registered users
 const userJonah: User = {
   naam: 'jonah',
-  foto: 'someUrl',
+  foto: 'https://www.pasfoto.nl/wp-content/themes/webmarket-child/generator/img/nl/passbild-avatar-nl.gif',
   rol: Rol.cliënt
 };
 const userJohanna: User = {
   naam: 'johanna',
-  foto: 'someUrl',
+  foto: 'https://www.pasfoto.nl/wp-content/themes/webmarket-child/generator/img/nl/passbild-avatar-nl.gif',
   rol: Rol.cliënt
 };
 const userBram: User = {
   naam: 'bram',
-  foto: 'someUrl',
+  foto: 'https://www.pasfoto.nl/wp-content/themes/webmarket-child/generator/img/nl/passbild-avatar-nl.gif',
   rol: Rol.cliënt
 };
 const begeleiderDirk: User = {
@@ -111,7 +111,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     // route functions
 
     function getUsers() {
-      return ok([userJonah, userJohanna, userBram]);
+      return ok([userJonah, userJohanna, userBram, begeleiderDirk, begeleiderGeert]);
     }
 
     function getDay() {

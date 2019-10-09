@@ -1,33 +1,24 @@
-
 <div class="container">
   <div class="kalenderNav">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-        <button
-          (click)="previousDate()"
-          type="button"
-          class="btn naastelkaar datumAanpassen links"
-        >
+        <button (click)="previousDate()" type="button" class="btn naastelkaar datumAanpassen links">
           Terug
         </button>
         <p class="naastelkaar datum">{{ datum | date: 'EEEE dd MMMM yyyy' }}</p>
-        <button
-          (click)="nextDate()"
-          type="button"
-          class="btn naastelkaar datumAanpassen rechts"
-        >
+        <button (click)="nextDate()" type="button" class="btn naastelkaar datumAanpassen rechts">
           Verder
         </button>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-6">
-        <button type="button" class="btn keuzeknop">Dagplanning</button>
+        <button type="button" (click)="veranderState(StateType.Dag)" class="btn keuzeknop">Dagplanning</button>
         <button type="button" class="btn keuzeknop">Opmerkingen</button>
-        <button type="button" (click)="redirect('edit')" class="btn keuzeknop">aanpassen dagplanning</button>
-
+        <button type="button" (click)="veranderState(StateType.Edit)" class="btn keuzeknop">Aanpassen
+          dagplanning</button>
       </div>
     </div>
   </div>
 </div>
 
-<app-day [datum]="datum"></app-day>
-
+<app-day *ngIf="state == StateType.Dag" [datum]="datum"></app-day>
+<app-homepage-edit *ngIf="state == StateType.Edit" [datum]="datum"></app-homepage-edit>

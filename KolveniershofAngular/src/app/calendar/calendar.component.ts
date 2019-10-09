@@ -1,6 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+export enum State {
+  Dag = 'dag',
+  Edit = 'edit',
+  Opmerkingen = 'opmerkingen'
+}
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -9,7 +15,20 @@ import { Router } from '@angular/router';
 export class CalendarComponent implements OnInit {
   public datum: Date = new Date();
 
-  constructor(private _router: Router) {}
+  public state = State.Dag;
+  StateType = State;
+
+  // get state() {
+  //   return State;
+  // }
+
+  constructor(private _router: Router) {
+    this.state = State.Dag;
+  }
+
+  public veranderState(type: State) {
+    this.state = type;
+  }
 
   public changeDate(nr: number): void {
     this.datum = new Date(
