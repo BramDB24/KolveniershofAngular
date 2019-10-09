@@ -7,9 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  public datum: Date = new Date();
+  public datum: Date;
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router) {
+    this.datum = new Date();
+  }
 
   public changeDate(nr: number): void {
     this.datum = new Date(

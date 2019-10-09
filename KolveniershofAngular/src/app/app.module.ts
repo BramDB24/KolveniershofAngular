@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DayComponent } from './day/day.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, DatePipe } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
 
@@ -26,7 +26,7 @@ registerLocaleData(localeNl);
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [fakeBackendProvider, { provide: LOCALE_ID, useValue: 'nl-BE' }],
+  providers: [fakeBackendProvider, { provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

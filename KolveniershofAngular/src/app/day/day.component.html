@@ -1,4 +1,4 @@
-<ng-container class="ngcontainer" *ngIf="loader">
+<ng-container class="ngcontainer" *ngIf="(loader && loadingError === null) else loadingError">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-6">
@@ -56,3 +56,6 @@
   </div>
 </ng-container>
 
+<ng-template #loadingError>
+  <p>Er lijkt iets mis gegaan te zijn.</p>
+</ng-template>
