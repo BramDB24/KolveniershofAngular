@@ -21,7 +21,6 @@ export class HomepageEditComponent implements OnInit {
   public dagPlanning: DagPlanning;
   public atelier: Atelier;
   public dagmoment: string;
-  public clicked = false;
   public aanwezigen = new Array<User>();
 
   public state: State;
@@ -45,13 +44,11 @@ export class HomepageEditComponent implements OnInit {
   public setAtelier(atelier: Atelier) {
     this.atelier = atelier;
     this.state = State.Edit;
-    this.clicked = true;
   }
 
   public nieuwAtelier(dagmoment: string) {
     this.atelier = { naam: '', begeleider: [], clienten: [] };
     this.state = State.VoegToe;
     this.dagmoment = dagmoment;
-    this.clicked = true;
   }
 }

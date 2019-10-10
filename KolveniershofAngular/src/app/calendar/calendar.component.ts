@@ -13,7 +13,7 @@ export enum State {
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  public datum: Date;
+  public datum: Date = new Date();
 
   public state = State.Dag;
   StateType = State;
