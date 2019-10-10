@@ -1,0 +1,7 @@
+<ng-container *ngIf="condition else templateName" *ngFor="let user of users">
+    <p>aanpasbaar</p>
+</ng-container>
+
+<ng-template #templateName>
+    <p (click)="edit(user)">aangepast</p>
+</ng-template>

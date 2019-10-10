@@ -5,9 +5,6 @@
         <div class="card">
           <div class="card-body">
             <h4>Volledige Dag</h4>
-            <!-- <label [ngClass]="{'colorGreen': checked, '': !checked}" (click)="isActive($event.target.checked)" *ngFor="let atelier of dag.voormiddag" class="checkbox-inline">
-                <input type="checkbox" value="" />{{atelier.naam}}
-              </label> -->
             <button (click)="nieuwAtelier('volledigedag')" type="button" class="btn btn-primary">+</button>
             <h4>Voormiddag</h4>
             <div *ngFor="let atelier of dag.voormiddag">

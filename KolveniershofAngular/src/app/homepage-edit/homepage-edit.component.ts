@@ -1,11 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { DayService } from '../services/day.service';
 import { Atelier } from '../interfaces/atelier.interface';
-import { User, Rol } from '../interfaces/user.interface';
-import { DayComponent } from '../day/day.component';
 import { Day } from '../interfaces/day.interface';
-import { UserService } from '../services/user.service';
+import { User } from '../interfaces/user.interface';
+import { DayService } from '../services/day.service';
 
 export enum State {
   Edit = 'edit',
@@ -42,14 +40,6 @@ export class HomepageEditComponent implements OnInit {
       .subscribe(entry => {
         this.dag = entry;
       });
-
-    // this.dayService
-    //   .veranderDag(this.dag)
-    //   .pipe(
-    //     finalize(() => {
-    //       this.loaded = true;
-    //     })
-    //   );
   }
 
   public setAtelier(atelier: Atelier) {

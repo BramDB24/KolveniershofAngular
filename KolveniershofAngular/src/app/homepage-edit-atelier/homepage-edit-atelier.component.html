@@ -1,22 +1,33 @@
 <ng-container *ngIf="loaded">
 <div class="card">
   <div class="card-body">
-    <h4>Ateliers</h4>
-    <select (change)="onChange($event.target.value)" class="dropdown">
-      <option *ngFor="let user of clienten" [value]="user.naam">{{user.naam}}</option>
-    </select>
+   <ng-container *ngIf="(dagmoment !== undefined) else editAtelierTemplate">
+      <h4>Ateliers</h4>
+      <select (change)="onChange($event.target.value)" class="dropdown">
+        <option *ngFor="let user of clienten" [value]="user.naam">{{user.naam}}</option>
+      </select>
+   </ng-container> 
     <h4>Begeleiders</h4>
     <div class="naastelkaar" *ngFor="let user of begeleiders">
       <p id="{{user.naam}}" (click)="toevoegenUser(user)" class="begeleider">{{ user.naam }}</p>
     </div>
     <h4>Cliënten</h4>
     <div class="naastelkaar" *ngFor="let user of clienten">
-      <img id="{{user.naam}}" (click)="toevoegenUser(user)" class="client" src="{{ user.foto }}">
+      <img id="{{user.naam}}" [class.style1]="getPresentUsers(user)" (click)="toevoegenUser(user)" class="client" src="{{ user.foto }}">
       <p class="tekst">{{ user.naam }}</p>
     </div>
-    <div>
-      <button (click)="editAtelier()" type="button" class="btn btn-primary rechts">Opslaan</button>
+    <div *ngIf="dagmoment === undefined else saveAtelierTemplate">
+      <button (click)="editAtelier()" type="button" class="btn btn-primary rechts">Aanpassen</button>
     </div>
   </div>
 </div>
 </ng-container>
+
+
+<ng-template #editAtelierTemplate>
+  <h4>{{atelier.naam}}</h4>
+</ng-template>
+
+<ng-template #saveAtelierTemplate>
+  <button (click)="saveAtelier(dagmoment)" type="button" class="btn btn-primary rechts">Opslaan</button>
+</ng-template>

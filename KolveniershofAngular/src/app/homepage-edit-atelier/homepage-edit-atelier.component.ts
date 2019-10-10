@@ -36,9 +36,6 @@ export class HomepageEditAtelierComponent implements OnInit {
       });
   }
 
-  // ngAfterViewInit() {
-  //   this.ophalenAanwezigen();
-  // }
   public onChange(atelierkeuze: string) {
     this.ateliernaam = atelierkeuze;
     console.log(this.ateliernaam);
@@ -53,7 +50,6 @@ export class HomepageEditAtelierComponent implements OnInit {
       this.aanwezigen.push(user);
       document.getElementById(user.naam).classList.add('style1');
     }
-    console.log(this.aanwezigen);
   }
 
   public editAtelier() {
@@ -72,6 +68,14 @@ export class HomepageEditAtelierComponent implements OnInit {
     console.log(this.atelier.naam);
     console.log(begeleidersAangepast);
     console.log(clientenAangepast);
+  }
+
+  public saveAtelier(moment: any) {
+    console.log(moment);
+  }
+
+  public getPresentUsers(user: User){
+    return this.atelier.clienten.some((client) => client == user);
   }
 
   // public ophalenAanwezigen() {
