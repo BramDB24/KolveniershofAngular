@@ -14,6 +14,10 @@ export class DayService {
     return this.http.get<Day>(`localhost:4200/date`);
   }
 
+  public veranderDag(day: Day): Observable<Day> {
+    return this.http.put<Day>(`localhost:4200/date`, day);
+  }
+
   public getEditInformatie(): any {
     return this.http.get<any>('localhost:4200/homepage-edit')
   }

@@ -1,42 +1,30 @@
 <ng-container *ngIf="loaded">
   <div class="container">
     <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-3">
-        
+      <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="card">
           <div class="card-body">
             <h4>Volledige Dag</h4>
             <!-- <label [ngClass]="{'colorGreen': checked, '': !checked}" (click)="isActive($event.target.checked)" *ngFor="let atelier of dag.voormiddag" class="checkbox-inline">
                 <input type="checkbox" value="" />{{atelier.naam}}
               </label> -->
-            <button type="button" class="btn btn-primary">+</button>
+            <button (click)="nieuwAtelier('volledigedag')" type="button" class="btn btn-primary">+</button>
             <h4>Voormiddag</h4>
             <div *ngFor="let atelier of dag.voormiddag">
-              <button type="button" class="btn btn-secondary">{{ atelier.naam }}</button>
+              <button (click)="setAtelier(atelier)" type="button" class="btn btn-success">{{ atelier.naam }}</button>
             </div>
-            <button type="button" class="btn btn-primary">+</button>
+            <button (click)="nieuwAtelier('voormiddag')" type="button" class="btn btn-primary">+</button>
             <h4>Namiddag</h4>
             <div *ngFor="let atelier of dag.namiddag">
-              <button type="button" class="btn btn-secondary">{{ atelier.naam }}</button>
+              <button (click)="setAtelier(atelier)" type="button" class="btn btn-success">{{ atelier.naam }}</button>
             </div>
-            <button type="button" class="btn btn-primary">+</button>
+            <button (click)="nieuwAtelier('namiddag')" type="button" class="btn btn-primary">+</button>
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-9">
-        <div class="card">
-          <div class="card-body">
-            <h4>Begeleiders</h4>
-            <div *ngFor="let user of begeleiders">
-              <p>{{ user.naam }}</p>
-            </div>
-            <h4>Cliënten</h4>
-            <div class="naastelkaar" *ngFor="let user of clienten">
-                <img id="{{user.naam}}" (click)="triggerClicked(user)" class="image" src="{{ user.foto }}">
-              <p class="tekst">{{ user.naam }}</p>
-            </div>
-          </div>
-        </div>
+      <div class="col-xs-12 col-sm-6 col-md-9">
+        <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [atelier]="atelier"></app-homepage-edit-atelier>
+        <app-homepage-edit-atelier *ngIf="state == StateType.VoegToe" [atelier]="atelier" [dagmoment]="dagmoment"></app-homepage-edit-atelier>
       </div>
     </div>
   </div>

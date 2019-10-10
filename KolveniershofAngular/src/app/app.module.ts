@@ -10,6 +10,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
+import { HomepageEditAtelierComponent } from './homepage-edit-atelier/homepage-edit-atelier.component';
 
 registerLocaleData(localeNl);
 
@@ -19,7 +20,8 @@ registerLocaleData(localeNl);
     CalendarComponent,
     DayComponent,
     NavigationComponent,
-    HomepageEditComponent
+    HomepageEditComponent,
+    HomepageEditAtelierComponent
   ],
   imports: [
     BrowserModule,

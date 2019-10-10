@@ -7,6 +7,11 @@ import { DayComponent } from '../day/day.component';
 import { Day } from '../interfaces/day.interface';
 import { UserService } from '../services/user.service';
 
+export enum State {
+  Edit = 'edit',
+  VoegToe = 'voegtoe'
+}
+
 @Component({
   selector: 'app-homepage-edit',
   templateUrl: './homepage-edit.component.html',
@@ -15,19 +20,16 @@ import { UserService } from '../services/user.service';
 export class HomepageEditComponent implements OnInit {
   @Input() public datum: Date;
   public loaded = false;
-  public object: object;
-  // public ateliers = new Array<Atelier>();
-  public clienten = new Array<User>();
-  public begeleiders = new Array<User>();
   public dag: Day;
-  public checked = false;
-
+  public atelier: Atelier;
+  public dagmoment: string;
+  public clicked = false;
   public aanwezigen = new Array<User>();
 
-  constructor(
-    private dayService: DayService,
-    private userService: UserService
-  ) {}
+  public state: State;
+  StateType = State;
+
+  constructor(private dayService: DayService) {}
 
   ngOnInit() {
     this.dayService
@@ -41,49 +43,25 @@ export class HomepageEditComponent implements OnInit {
         this.dag = entry;
       });
 
-    this.userService
-      .getUsers()
-      .pipe(
-        finalize(() => {
-          this.loaded = true;
-        })
-      )
-      .subscribe(entry => {
-        entry.forEach(element => {
-          element.rol !== Rol.cliënt
-            ? this.begeleiders.push(element)
-            : this.clienten.push(element);
-        });
-      });
+    // this.dayService
+    //   .veranderDag(this.dag)
+    //   .pipe(
+    //     finalize(() => {
+    //       this.loaded = true;
+    //     })
+    //   );
   }
 
-  public isActive(t: any) {
-    this.checked = t;
+  public setAtelier(atelier: Atelier) {
+    this.atelier = atelier;
+    this.state = State.Edit;
+    this.clicked = true;
   }
 
-  // public triggerClicked(e : any) {
-  //   var clickedElementName = e.target.attributes.id;
-  // }
-
-  public triggerClicked(user: User) {
-    if (this.aanwezigen.includes(user)) {
-      const index = this.aanwezigen.indexOf(user);
-      this.aanwezigen.splice(index, 1);
-      document.getElementById(user.naam).classList.remove("style1");
-    } else {
-      this.aanwezigen.push(user);
-      document.getElementById(user.naam).classList.add("style1");
-    }
-    console.log(this.aanwezigen);
-    
+  public nieuwAtelier(dagmoment: string) {
+    this.atelier = { naam: '', begeleider: [], clienten: [] };
+    this.state = State.VoegToe;
+    this.dagmoment = dagmoment;
+    this.clicked = true;
   }
-
-  // public functie(user: User) {
-  //   if (this.aanwezigen.includes(user)) {
-  //     const index = this.aanwezigen.indexOf(user);
-  //     this.aanwezigen.splice(index, 1);
-  //   } else {
-  //     this.aanwezigen.push(user);
-  //   }
-  // }
 }
