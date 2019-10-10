@@ -1,0 +1,44 @@
+.naastelkaar {
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .client {
+    width: 75px;
+    margin-right: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .style1 {
+    box-shadow:0px 12px 22px 1px #333;
+  }
+  .rechts {
+    float: right;
+  }
+  
+  .image:hover {
+      cursor: pointer;
+  }
+  
+  .tekst {
+    margin-right: 30px;
+    font-size: 11pt;
+    margin-bottom: 10px;
+  }
+
+  .dropdown {
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
+  .begeleider {
+    width: 75px;
+    margin-right: 30px;
+    font-size: 14pt;
+    background-color: crimson;
+    color: white;
+    border-radius: 5px;
+  }
+  .begeleider:hover {
+    cursor: pointer;
+}

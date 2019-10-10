@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { DayService } from '../services/day.service';
 import { Atelier } from '../interfaces/atelier.interface';
-import { User, Rol } from '../interfaces/user.interface';
+import { DagPlanning } from '../interfaces/dag-planning';
+import { User } from '../interfaces/user.interface';
+import { DayService } from '../services/day.service';
+
+export enum State {
+  Edit = 'edit',
+  VoegToe = 'voegtoe'
+}
 
 @Component({
   selector: 'app-homepage-edit',
@@ -10,33 +16,42 @@ import { User, Rol } from '../interfaces/user.interface';
   styleUrls: ['./homepage-edit.component.scss']
 })
 export class HomepageEditComponent implements OnInit {
+  @Input() public datum: Date;
   public loaded = false;
-  public object: object;
-  public ateliers = new Array<Atelier>();
-  public clienten = new Array<User>();
-  public medewerkers = new Array<User>();
-  public checked = false;
-  constructor(private service: DayService) {}
+  public dagPlanning: DagPlanning;
+  public atelier: Atelier;
+  public dagmoment: string;
+  public clicked = false;
+  public aanwezigen = new Array<User>();
+
+  public state: State;
+  StateType = State;
+
+  constructor(private dayService: DayService) {}
 
   ngOnInit() {
-    this.service
-      .getEditInformatie()
+    this.dayService
+      .getDay(this.datum)
       .pipe(
         finalize(() => {
           this.loaded = true;
         })
       )
       .subscribe(entry => {
-        this.ateliers = entry.ateliers;
-        entry.users.forEach(element => {
-          element.rol !== Rol.cliënt
-            ? this.medewerkers.push(element)
-            : this.clienten.push(element);
-        });
+        this.dagPlanning = entry;
       });
   }
 
-  public isActive(t: any){
-    this.checked = t;
+  public setAtelier(atelier: Atelier) {
+    this.atelier = atelier;
+    this.state = State.Edit;
+    this.clicked = true;
+  }
+
+  public nieuwAtelier(dagmoment: string) {
+    this.atelier = { naam: '', begeleider: [], clienten: [] };
+    this.state = State.VoegToe;
+    this.dagmoment = dagmoment;
+    this.clicked = true;
   }
 }

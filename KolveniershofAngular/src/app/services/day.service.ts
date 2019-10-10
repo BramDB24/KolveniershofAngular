@@ -18,6 +18,10 @@ export class DayService {
     );
   }
 
+  // public veranderDag(day: Day): Observable<Day> {
+  //   return this.http.put<Day>(`localhost:4200/date`, day);
+  // }
+
   public getEditInformatie(): any {
     // needs to be refactored
     return this.http.get<any>('localhost:4200/homepage-edit');

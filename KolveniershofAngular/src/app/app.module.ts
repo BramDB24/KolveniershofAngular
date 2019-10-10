@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DayComponent } from './day/day.component';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
+import { HomepageEditAtelierComponent } from './homepage-edit-atelier/homepage-edit-atelier.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 registerLocaleData(localeNl);
@@ -18,13 +19,10 @@ registerLocaleData(localeNl);
     CalendarComponent,
     DayComponent,
     NavigationComponent,
-    HomepageEditComponent
+    HomepageEditComponent,
+    HomepageEditAtelierComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
   bootstrap: [AppComponent]
 })

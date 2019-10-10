@@ -1,4 +1,4 @@
-<ng-container *ngIf="loadingError !== undefined else loadingError">
+<ng-container *ngIf="loadingError !== undefined; else loadingError">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-6">
@@ -12,7 +12,7 @@
                 </p>
                 <div *ngFor="let ateliers of voormiddag">
                   <p *ngFor="let user of ateliers.gebruikers">
-                    {{user.voornaam}}
+                    {{ user.voornaam }}
                   </p>
                 </div>
               </div>
@@ -30,28 +30,31 @@
                   {{ ateliers.atelier.naam }}
                 </p>
                 <div *ngFor="let ateliers of namiddag">
-                    <p *ngFor="let user of ateliers.gebruikers">
-                      {{ user.voornaam }}
-                    </p>
-                  </div>
+                  <p *ngFor="let user of ateliers.gebruikers">
+                    {{ user.voornaam }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="col-xs-12 col-sm-12 coll-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Afwezigen</h4>
-          <div>
+
+    <!-- <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Afwezigen</h4>
             <div>
-              <p class="atelier">
-                {{ dag.ziekte.naam }}
-              </p>
-             <div *ngFor="let clienten of dag.ziekte.clienten">
-              <p> {{clienten.naam}}</p>
-             </div>
+              <div>
+                <p class="atelier">
+                  {{ dag.ziekte.naam }}
+                </p>
+                <div *ngFor="let clienten of dag.ziekte.clienten">
+                  <p>{{ clienten.naam }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
