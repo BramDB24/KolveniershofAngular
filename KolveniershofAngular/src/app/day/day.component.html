@@ -1,4 +1,4 @@
-<ng-container class="ngcontainer" *ngIf="(loader && loadingError === null) else loadingError">
+<ng-container *ngIf="loadingError !== undefined else loadingError">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-6">
@@ -6,12 +6,14 @@
           <div class="card-body">
             <h4 class="card-title">Voormiddag</h4>
             <div>
-              <div *ngFor="let ateliers of dag.voormiddag">
+              <div *ngFor="let ateliers of voormiddag">
                 <p class="atelier">
-                  {{ ateliers.naam }}
+                  {{ ateliers.atelier.naam }}
                 </p>
-                <div *ngFor="let users of ateliers.clienten">
-                  <p>- {{ users.naam }}</p>
+                <div *ngFor="let ateliers of voormiddag">
+                  <p *ngFor="let user of ateliers.gebruikers">
+                    {{user.voornaam}}
+                  </p>
                 </div>
               </div>
             </div>
@@ -23,20 +25,22 @@
           <div class="card-body">
             <h4 class="card-title">Namiddag</h4>
             <div>
-              <div *ngFor="let ateliers of dag.namiddag">
+              <div *ngFor="let ateliers of namiddag">
                 <p class="atelier">
-                  {{ ateliers.naam }}
+                  {{ ateliers.atelier.naam }}
                 </p>
-                <div *ngFor="let users of ateliers.clienten">
-                  <p>- {{ users.naam }}</p>
-                </div>
+                <div *ngFor="let ateliers of namiddag">
+                    <p *ngFor="let user of ateliers.gebruikers">
+                      {{ user.voornaam }}
+                    </p>
+                  </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6">
+    <!-- <div class="col-xs-12 col-sm-12 coll-md-6">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Afwezigen</h4>
@@ -52,7 +56,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </ng-container>
 

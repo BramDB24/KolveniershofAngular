@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Day } from '../interfaces/day.interface';
-import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { DagPlanning } from '../interfaces/dag-planning';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,9 @@ import { DatePipe } from '@angular/common';
 export class DayService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
-  public getDay(date: Date): Observable<Day> {
+  public getDay(date: Date): Observable<DagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return this.http.get<any>(
+    return this.http.get<DagPlanning>(
       `${environment.apiUrl}/dagplanning/${convertedDate}`
     );
   }
