@@ -6,7 +6,7 @@ import { fakeBackendProvider } from './dummy_data/mocking_data';
 import { AppRoutingModule } from './app-routing.module';
 import { DayComponent } from './day/day.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { RegisterGebruikerComponent } from './register-user/register-gebruiker.component';
+import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from './calendar/calendar.component';
 import { registerLocaleData } from '@angular/common';

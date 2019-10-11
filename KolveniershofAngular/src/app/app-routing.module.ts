@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DayComponent } from './day/day.component';
-import { RegisterGebruikerComponent } from './register-user/register-gebruiker.component';
+import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
 
 export const routes: Routes = [
   {

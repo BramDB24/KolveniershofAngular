@@ -75,7 +75,8 @@ export class RegisterGebruikerComponent implements OnInit {
       busnummer: [this.huidigeGebruiker ? this.huidigeGebruiker.busnummer : ''],
       gemeente: [this.huidigeGebruiker ? this.huidigeGebruiker.gemeente : '', Validators.required],
       postcode: [this.huidigeGebruiker ? this.huidigeGebruiker.postcode : '', Validators.required],
-      gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required]
+      gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required],
+      foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', Validators.required]
     });
     this.typeVeranderd(this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked);
 
@@ -93,7 +94,7 @@ export class RegisterGebruikerComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    
+
     // stop het process hier als de form invalid is
     if (this.gebruikerFormGroup.invalid) {
       return;
@@ -103,20 +104,20 @@ export class RegisterGebruikerComponent implements OnInit {
   }
   hasRequiredField(abstractControl: AbstractControl): boolean {
     if (abstractControl.validator) {
-        const validator = abstractControl.validator({}as AbstractControl);
-        if (validator && validator.required) {
-            return true;
-        }
+      const validator = abstractControl.validator({} as AbstractControl);
+      if (validator && validator.required) {
+        return true;
+      }
     }
     if (abstractControl['controls']) {
-        for (const controlName in abstractControl['controls']) {
-            if (abstractControl['controls'][controlName]) {
-                if (this.hasRequiredField(abstractControl['controls'][controlName])) {
-                    return true;
-                }
-            }
+      for (const controlName in abstractControl['controls']) {
+        if (abstractControl['controls'][controlName]) {
+          if (this.hasRequiredField(abstractControl['controls'][controlName])) {
+            return true;
+          }
         }
+      }
     }
     return false;
-};
+  };
 }
