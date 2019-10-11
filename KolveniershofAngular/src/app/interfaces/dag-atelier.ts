@@ -1,4 +1,4 @@
-import { Atelier } from './atelier.interface';
+import { Atelier } from './atelier';
 import { Gebruiker } from './gebruiker';
 
 export interface DagAtelier {

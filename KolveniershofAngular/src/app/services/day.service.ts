@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DagPlanning } from '../interfaces/dag-planning';
+import { Atelier } from '../interfaces/atelier';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,7 @@ export class DayService {
   //   return this.http.put<Day>(`localhost:4200/date`, day);
   // }
 
-  public getEditInformatie(): any {
-    // needs to be refactored
-    return this.http.get<any>('localhost:4200/homepage-edit');
+  public getEditInformatie(): Observable<Array<Atelier>> {
+    return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
   }
 }

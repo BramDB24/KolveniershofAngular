@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/user.interface';
+import { environment } from 'src/environments/environment';
+import { Gebruiker } from '../interfaces/gebruiker';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`localhost:4200/users`);
+  public getUsers(): Observable<Gebruiker[]> {
+    return this.http.get<Gebruiker[]>(`${environment.apiUrl}/account`);
   }
 }

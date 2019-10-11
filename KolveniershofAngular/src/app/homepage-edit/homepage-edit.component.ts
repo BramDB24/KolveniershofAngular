@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { Atelier } from '../interfaces/atelier.interface';
+import { DagAtelier } from '../interfaces/dag-atelier';
 import { DagPlanning } from '../interfaces/dag-planning';
-import { User } from '../interfaces/user.interface';
 import { DayService } from '../services/day.service';
 
 export enum State {
@@ -17,15 +16,14 @@ export enum State {
 })
 export class HomepageEditComponent implements OnInit {
   @Input() public datum: Date;
+  public atelier: DagAtelier;
   public loaded = false;
   public dagPlanning: DagPlanning;
-  public atelier: Atelier;
-  public dagmoment: string;
-  public aanwezigen = new Array<User>();
-
+  public voormiddag = new Array<DagAtelier>();
+  public namiddag = new Array<DagAtelier>();
+  public isEdit = false;
   public state: State;
   StateType = State;
-
   constructor(private dayService: DayService) {}
 
   ngOnInit() {
@@ -38,17 +36,30 @@ export class HomepageEditComponent implements OnInit {
       )
       .subscribe(entry => {
         this.dagPlanning = entry;
+        this.setDayMoment();
       });
   }
 
-  public setAtelier(atelier: Atelier) {
+  public setDayMoment(): void {
+    this.namiddag = new Array<DagAtelier>();
+    this.voormiddag = new Array<DagAtelier>();
+    this.dagPlanning.dagAteliers.forEach(entry => {
+      if (entry.dagMoment === 1) {
+        this.voormiddag.push(entry);
+      } else {
+        this.namiddag.push(entry);
+      }
+    });
+  }
+  public setAtelier(atelier: DagAtelier) {
     this.atelier = atelier;
+    this.isEdit = true;
     this.state = State.Edit;
   }
 
-  public nieuwAtelier(dagmoment: string) {
-    this.atelier = { naam: '', begeleider: [], clienten: [] };
+  public nieuwAtelier() {
+    this.atelier = null;
+    this.isEdit = false;
     this.state = State.VoegToe;
-    this.dagmoment = dagmoment;
   }
 }

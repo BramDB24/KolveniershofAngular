@@ -10,11 +10,9 @@
                 <p class="atelier">
                   {{ ateliers.atelier.naam }}
                 </p>
-                <div *ngFor="let ateliers of voormiddag">
-                  <p *ngFor="let user of ateliers.gebruikers">
-                    {{ user.voornaam }}
-                  </p>
-                </div>
+                <p *ngFor="let user of ateliers.gebruikers">
+                  {{ user.voornaam }}
+                </p>
               </div>
             </div>
           </div>
@@ -29,11 +27,9 @@
                 <p class="atelier">
                   {{ ateliers.atelier.naam }}
                 </p>
-                <div *ngFor="let ateliers of namiddag">
-                  <p *ngFor="let user of ateliers.gebruikers">
-                    {{ user.voornaam }}
-                  </p>
-                </div>
+                <p *ngFor="let user of ateliers.gebruikers">
+                  {{ user.voornaam }}
+                </p>
               </div>
             </div>
           </div>

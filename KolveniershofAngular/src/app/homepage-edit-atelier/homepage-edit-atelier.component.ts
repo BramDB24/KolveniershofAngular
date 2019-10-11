@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { Atelier } from '../interfaces/atelier.interface';
-import { Rol, User } from '../interfaces/user.interface';
+import { Atelier } from '../interfaces/atelier';
+import { DagAtelier } from '../interfaces/dag-atelier';
+import { Gebruiker } from '../interfaces/gebruiker';
+import { DayService } from '../services/day.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-homepage-edit-atelier',
@@ -10,14 +12,18 @@ import { Rol, User } from '../interfaces/user.interface';
   styleUrls: ['./homepage-edit-atelier.component.scss']
 })
 export class HomepageEditAtelierComponent implements OnInit {
-  @Input() public atelier: Atelier;
-  @Input() public dagmoment: string;
+  @Input() public dagAtelier: DagAtelier;
+  @Input() public isEdit: boolean;
   public loaded = false;
-  public clienten = new Array<User>();
-  public begeleiders = new Array<User>();
-  public aanwezigen = new Array<User>();
-  public ateliernaam: string;
-  constructor(private userService: UserService) {}
+  public ateliers = Array<Atelier>();
+  public gebruikers = Array<Gebruiker>();
+  public begeleiders = Array<Gebruiker>();
+  public aanwezigen = new Array<Gebruiker>();
+
+  constructor(
+    private userService: UserService,
+    private dayService: DayService
+  ) {}
 
   ngOnInit() {
     this.userService
@@ -29,53 +35,67 @@ export class HomepageEditAtelierComponent implements OnInit {
       )
       .subscribe(entry => {
         entry.forEach(element => {
-          element.rol !== Rol.cliënt
+          element.type === 1
+            ? this.gebruikers.push(element)
+            : element.type === 3
             ? this.begeleiders.push(element)
-            : this.clienten.push(element);
+            : null;
         });
       });
+    this.dayService
+      .getEditInformatie()
+      .pipe(finalize(() => (this.loaded = true)))
+      .subscribe(entry => entry.forEach(e => this.ateliers.push(e)));
   }
 
-  public onChange(atelierkeuze: string) {
-    this.ateliernaam = atelierkeuze;
-    console.log(this.ateliernaam);
-  }
-
-  public toevoegenUser(user: User) {
+  public select(user: Gebruiker): void {
     if (this.aanwezigen.includes(user)) {
       const index = this.aanwezigen.indexOf(user);
       this.aanwezigen.splice(index, 1);
-      document.getElementById(user.naam).classList.remove('style1');
+      document.getElementById(user.voornaam).classList.remove('style1');
     } else {
       this.aanwezigen.push(user);
-      document.getElementById(user.naam).classList.add('style1');
+      document.getElementById(user.voornaam).classList.add('style1');
     }
   }
 
-  public editAtelier() {
-    if (this.ateliernaam !== null) {
-      this.atelier.naam = this.ateliernaam;
-    }
-    var begeleidersAangepast = this.aanwezigen.filter(obj => {
-      return obj.rol === 0;
-    });
-    this.atelier.begeleider = begeleidersAangepast;
-    var clientenAangepast = this.aanwezigen.filter(obj => {
-      return obj.rol === 1;
-    });
-    this.atelier.clienten = clientenAangepast;
-    this.aanwezigen.splice(0, this.aanwezigen.length);
-    console.log(this.atelier.naam);
-    console.log(begeleidersAangepast);
-    console.log(clientenAangepast);
-  }
+  public onChange(atelierkeuze: string) {}
 
-  public saveAtelier(moment: any) {
-    console.log(moment);
-  }
+  // public toevoegenUser(user: User) {
+  //   if (this.aanwezigen.includes(user)) {
+  //     const index = this.aanwezigen.indexOf(user);
+  //     this.aanwezigen.splice(index, 1);
+  //     document.getElementById(user.naam).classList.remove('style1');
+  //   } else {
+  //     this.aanwezigen.push(user);
+  //     document.getElementById(user.naam).classList.add('style1');
+  //   }
+  // }
 
-  public getPresentUsers(user: User){
-    return this.atelier.clienten.some((client) => client == user);
+  // public editAtelier() {
+  //   if (this.ateliernaam !== null) {
+  //     this.atelier.naam = this.ateliernaam;
+  //   }
+  //   var begeleidersAangepast = this.aanwezigen.filter(obj => {
+  //     return obj.rol === 0;
+  //   });
+  //   this.atelier.begeleider = begeleidersAangepast;
+  //   var clientenAangepast = this.aanwezigen.filter(obj => {
+  //     return obj.rol === 1;
+  //   });
+  //   this.atelier.clienten = clientenAangepast;
+  //   this.aanwezigen.splice(0, this.aanwezigen.length);
+  //   console.log(this.atelier.naam);
+  //   console.log(begeleidersAangepast);
+  //   console.log(clientenAangepast);
+  // }
+
+  // public saveAtelier(moment: any) {
+  //   console.log(moment);
+  // }
+
+  public getPresentUsers(user: Gebruiker) {
+    //return this.atelier.clienten.some(client => client == user);
   }
 
   // public ophalenAanwezigen() {

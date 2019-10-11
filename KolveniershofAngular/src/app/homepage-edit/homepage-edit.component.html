@@ -5,23 +5,43 @@
         <div class="card">
           <div class="card-body">
             <h4>Volledige Dag</h4>
-            <button (click)="nieuwAtelier('volledigedag')" type="button" class="btn btn-primary">+</button>
             <h4>Voormiddag</h4>
-            <div *ngFor="let atelier of dag.voormiddag">
-              <button (click)="setAtelier(atelier)" type="button" class="btn btn-success">{{ atelier.naam }}</button>
+            <div *ngFor="let ateliers of voormiddag">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="setAtelier(ateliers)"
+              >
+                {{ ateliers.atelier.naam }}
+              </button>
             </div>
-            <button (click)="nieuwAtelier('voormiddag')" type="button" class="btn btn-primary">+</button>
+
             <h4>Namiddag</h4>
-            <div *ngFor="let atelier of dag.namiddag">
-              <button (click)="setAtelier(atelier)" type="button" class="btn btn-success">{{ atelier.naam }}</button>
+            <div *ngFor="let ateliers of namiddag">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="setAtelier(ateliers)"
+              >
+                {{ ateliers.atelier.naam }}
+              </button>
             </div>
-            <button (click)="nieuwAtelier('namiddag')" type="button" class="btn btn-primary">+</button>
+            <button
+              (click)="nieuwAtelier()"
+              type="button"
+              class="btn btn-primary"
+            >
+              +
+            </button>
           </div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-9">
-        <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [atelier]="atelier"></app-homepage-edit-atelier>
-        <app-homepage-edit-atelier *ngIf="state == StateType.VoegToe" [atelier]="atelier" [dagmoment]="dagmoment"></app-homepage-edit-atelier>
+        <app-homepage-edit-atelier
+          *ngIf="state == StateType.Edit || state == StateType.VoegToe"
+          [isEdit]="isEdit"
+          [dagAtelier]="atelier"
+        ></app-homepage-edit-atelier>
       </div>
     </div>
   </div>
