@@ -11,10 +11,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from './calendar/calendar.component';
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 registerLocaleData(localeNl);
 
 @NgModule({
-    declarations: [AppComponent, CalendarComponent, DayComponent, NavigationComponent, RegisterGebruikerComponent],
+    declarations: [AppComponent, CalendarComponent, DayComponent, NavigationComponent, RegisterGebruikerComponent, FileUploadComponent],
     imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
   providers: [fakeBackendProvider, {provide: LOCALE_ID, useValue: "nl-BE"}],
   bootstrap: [AppComponent]
