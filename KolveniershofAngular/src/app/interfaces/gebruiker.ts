@@ -1,5 +1,5 @@
 export interface Gebruiker {
-    id: string;
+    id?: string;
     voornaam: string;
     achternaam: string;
     commentaren: Array<string>;

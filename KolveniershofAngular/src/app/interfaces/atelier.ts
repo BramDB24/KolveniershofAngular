@@ -1,5 +1,5 @@
 export interface Atelier {
-    aterlierId: number;
+    aterlierId?: number;
     aterlierType: number;
     naam: string;
 }

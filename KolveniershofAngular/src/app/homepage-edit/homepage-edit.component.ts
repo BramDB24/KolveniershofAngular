@@ -24,6 +24,7 @@ export class HomepageEditComponent implements OnInit {
   public isEdit = false;
   public state: State;
   StateType = State;
+  
   constructor(private dayService: DayService) {}
 
   ngOnInit() {

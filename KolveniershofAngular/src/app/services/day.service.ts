@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DagPlanning } from '../interfaces/dag-planning';
 import { Atelier } from '../interfaces/atelier';
+import { DagAtelier } from '../interfaces/dag-atelier';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,9 @@ export class DayService {
     );
   }
 
-  // public veranderDag(day: Day): Observable<Day> {
-  //   return this.http.put<Day>(`localhost:4200/date`, day);
-  // }
+  public putDagAtelier(id: number, dagAtelier: DagAtelier): Observable<object> {
+    return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
+  }
 
   public getEditInformatie(): Observable<Array<Atelier>> {
     return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
