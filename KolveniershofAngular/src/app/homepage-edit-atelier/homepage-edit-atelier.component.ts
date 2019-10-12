@@ -4,7 +4,7 @@ import { Atelier } from '../interfaces/atelier';
 import { DagAtelier } from '../interfaces/dag-atelier';
 import { Gebruiker } from '../interfaces/gebruiker';
 import { DayService } from '../services/day.service';
-import { UserService } from '../services/user.service';
+import { GebruikerService } from '../services/gebruiker.service';
 
 @Component({
   selector: 'app-homepage-edit-atelier',
@@ -23,7 +23,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   public atelierNaam: string;
 
   constructor(
-    private userService: UserService,
+    private userService: GebruikerService,
     private dayService: DayService
   ) {}
 

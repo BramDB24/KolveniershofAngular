@@ -6,8 +6,8 @@ import { DayService } from '../services/day.service';
 
 @Component({
   selector: 'app-day',
-  templateUrl: './day.component.html',
-  styleUrls: ['./day.component.scss']
+  templateUrl: './dag.component.html',
+  styleUrls: ['./dag.component.scss']
 })
 export class DayComponent implements OnChanges {
   @Input() public datum: Date;
@@ -27,6 +27,7 @@ export class DayComponent implements OnChanges {
     this.dagService.getDay(date).subscribe(
       day => {
         this.dagplanning = day;
+        console.log(this.dagplanning);
         this.setDayMoment();
       },
       error => {

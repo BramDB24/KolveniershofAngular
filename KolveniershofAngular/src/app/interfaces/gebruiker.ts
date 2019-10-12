@@ -12,4 +12,7 @@ export interface Gebruiker {
     postcode: string;
     type: number;
     foto: string;
+    naamOuder: string;
+    voornaamOuder: string;
+    wachtwoord: string;
 }

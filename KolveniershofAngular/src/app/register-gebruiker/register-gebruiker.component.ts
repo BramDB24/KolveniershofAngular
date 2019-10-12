@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { GebruikerService } from '../services/gebruiker.service';
-import { Gebruiker } from '../interfaces/gebruiker.interface';
-import { finalize } from 'rxjs/operators';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Gebruiker } from '../interfaces/gebruiker';
+import { GebruikerService } from '../services/gebruiker.service';
 
 @Component({
   selector: 'app-register-gebruiker',
@@ -21,64 +25,106 @@ export class RegisterGebruikerComponent implements OnInit {
   public verbergOuderInfo = '';
   public submitted = false;
 
-  constructor(private gebruikerService: GebruikerService, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(
+    private gebruikerService: GebruikerService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
-    this.gebruikerService.getUserTypes().subscribe(
-      types => this._gebruikerTypes = types,
-      err => {
-        alert('Er was een error bij het ophalen van de gebruiker soorten.');
-        console.log(err);
-      },
-      () => {
-        this.initializeFormGroup();
-      });
-    this.route.params.subscribe(params => {
-      if (params.id) {
-        this.gebruikerService.getUser(+params.id)
-          .pipe(
-            finalize(() => {
-              this.loader = true;
-            })
-          )
-          .subscribe(user => {
-            this.huidigeGebruiker = user;
-          },
-            err => {
-              alert('Er was een error bij het ophalen van de gebruiker.');
-              console.log(err);
-            },
-            () => {
-              this.initializeFormGroup();
-            });
-      } else {
-        this.huidigeGebruiker = null;
-      }
-    },
-      err => {
-        alert('Er was een error bij laden van de pagina.');
-        console.log(err);
-      });
+    // this.gebruikerService.getUserTypes().subscribe(
+    //   types => this._gebruikerTypes = types,
+    //   err => {
+    //     alert('Er was een error bij het ophalen van de gebruiker soorten.');
+    //     console.log(err);
+    //   },
+    //   () => {
+    //     this.initializeFormGroup();
+    //   });
+    // this.route.params.subscribe(params => {
+    //   if (params.id) {
+    //     this.gebruikerService.getUser(+params.id)
+    //       .pipe(
+    //         finalize(() => {
+    //           this.loader = true;
+    //         })
+    //       )
+    //       .subscribe(user => {
+    //         this.huidigeGebruiker = user;
+    //       },
+    //         err => {
+    //           alert('Er was een error bij het ophalen van de gebruiker.');
+    //           console.log(err);
+    //         },
+    //         () => {
+    //           this.initializeFormGroup();
+    //         });
+    //   } else {
+    //     this.huidigeGebruiker = null;
+    //   }
+    // },
+    //   err => {
+    //     alert('Er was een error bij laden van de pagina.');
+    //     console.log(err);
+    //   });
     this.initializeFormGroup();
   }
 
   private initializeFormGroup() {
     this.gebruikerFormGroup = this.fb.group({
-      naam: [this.huidigeGebruiker ? this.huidigeGebruiker.naam : '', Validators.required],
-      voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
+      naam: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '',
+        Validators.required
+      ],
+      voornaam: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '',
+        Validators.required
+      ],
       naamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.naamOuder : ''],
-      voornaamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaamOuder : ''],
-      email: [this.huidigeGebruiker ? this.huidigeGebruiker.email : '', [Validators.required, Validators.email]],
-      wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '', Validators.required],
-      straat: [this.huidigeGebruiker ? this.huidigeGebruiker.straat : '', Validators.required],
-      huisnummer: [this.huidigeGebruiker ? this.huidigeGebruiker.huisnummer : '', Validators.required],
+      voornaamOuder: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.voornaamOuder : ''
+      ],
+      email: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.email : '',
+        [Validators.required, Validators.email]
+      ],
+      wachtwoord: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '',
+        Validators.required
+      ],
+      straat: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.straatnaam : '',
+        Validators.required
+      ],
+      huisnummer: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.huisnummer : '',
+        Validators.required
+      ],
       busnummer: [this.huidigeGebruiker ? this.huidigeGebruiker.busnummer : ''],
-      gemeente: [this.huidigeGebruiker ? this.huidigeGebruiker.gemeente : '', Validators.required],
-      postcode: [this.huidigeGebruiker ? this.huidigeGebruiker.postcode : '', Validators.required],
-      gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required],
-      foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', Validators.required]
+      gemeente: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.gemeente : '',
+        Validators.required
+      ],
+      postcode: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.postcode : '',
+        Validators.required
+      ],
+      gebruikerType: [
+        this.huidigeGebruiker
+          ? this.huidigeGebruiker.type
+          : this.standaardTypeChecked,
+        Validators.required
+      ],
+      foto: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.type : '',
+        Validators.required
+      ]
     });
-    this.typeVeranderd(this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked);
+    this.typeVeranderd(
+      this.huidigeGebruiker
+        ? this.huidigeGebruiker.type
+        : this.standaardTypeChecked
+    );
 
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
   }
@@ -90,7 +136,6 @@ export class RegisterGebruikerComponent implements OnInit {
       this.verbergOuderInfo = 'd-none';
     }
   }
-
 
   onSubmit() {
     this.submitted = true;
@@ -119,5 +164,5 @@ export class RegisterGebruikerComponent implements OnInit {
       }
     }
     return false;
-  };
+  }
 }

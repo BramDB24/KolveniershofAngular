@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 export enum State {
@@ -9,8 +9,8 @@ export enum State {
 
 @Component({
   selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  templateUrl: './kalender.component.html',
+  styleUrls: ['./kalender.component.scss']
 })
 export class CalendarComponent implements OnInit {
   public datum: Date = new Date();
