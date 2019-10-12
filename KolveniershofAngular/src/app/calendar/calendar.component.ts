@@ -1,4 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
+export enum State {
+  Dag = 'dag',
+  Edit = 'edit',
+  Opmerkingen = 'opmerkingen'
+}
 
 @Component({
   selector: 'app-calendar',
@@ -6,18 +13,25 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  @Input() date: Date;
+  public datum: Date = new Date();
 
-  constructor() {
-    this.date = new Date();
+  public state = State.Dag;
+  StateType = State;
+
+  constructor(private _router: Router) {
+    this.state = State.Dag;
   }
 
-  public changeDate(nr: number) : void {
-    this.date = new Date(
-      this.date.getFullYear(),
-      this.date.getMonth(),
-      this.date.getDate() + nr
-    )
+  public veranderState(type: State) {
+    this.state = type;
+  }
+
+  public changeDate(nr: number): void {
+    this.datum = new Date(
+      this.datum.getFullYear(),
+      this.datum.getMonth(),
+      this.datum.getDate() + nr
+    );
   }
 
   public previousDate(): void {
@@ -28,8 +42,9 @@ export class CalendarComponent implements OnInit {
     this.changeDate(+1);
   }
 
-  ngOnInit() {
-
+  public redirect(route: string) {
+    this._router.navigate([`${route}`]);
   }
 
+  ngOnInit() {}
 }

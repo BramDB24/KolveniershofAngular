@@ -1,0 +1,63 @@
+<ng-container *ngIf="loaded">
+  <div class="card">
+    <div class="card-body">
+      <ng-container *ngIf="!isEdit; else editAtelierTemplate">
+        <h4>Ateliers</h4>
+        <select (change)="onChange($event.target.value)" class="dropdown">
+          <option *ngFor="let dagatelier of ateliers" [value]="dagatelier.naam">{{
+            dagatelier.naam
+          }}</option>
+        </select>
+      </ng-container>
+      <h4>Begeleiders</h4>
+      <div class="naastelkaar" *ngFor="let user of begeleiders">
+        <img
+          id="{{ user.voornaam }}"
+          class="client"
+          src="{{ user.foto }}"
+          (click)="select(user)"          
+          [class.style1]="getPresentUsers(user)"
+        />
+        <p class="tekst">{{ user.voornaam }}</p>
+      </div>
+      <h4>Cliënten</h4>
+      <div class="naastelkaar" *ngFor="let user of gebruikers">
+        <img
+          id="{{ user.voornaam }}"
+          class="client"
+          src="{{ user.foto }}"
+          (click)="select(user)"
+          [class.style1]="getPresentUsers(user)"
+          
+        />
+        <p class="tekst">{{ user.voornaam }}</p>
+      </div>
+      <div *ngIf="isEdit; else saveAtelierTemplate">
+        <button
+          (click)="editAtelier()"
+          type="button"
+          class="btn btn-primary rechts"
+        >
+          Aanpassen
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #editAtelierTemplate>
+  <h4>{{ dagAtelier.atelier.naam }}</h4>
+</ng-template>
+
+<ng-template #saveAtelierTemplate>
+  <div>
+      <button
+      (click)="saveAtelier()"
+      type="button"
+      class="btn btn-primary rechts"
+    >
+      Opslaan
+    </button>
+  </div>
+  
+</ng-template>
