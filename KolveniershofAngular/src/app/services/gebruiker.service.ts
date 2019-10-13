@@ -14,11 +14,19 @@ export class GebruikerService {
     return this.http.get<Gebruiker[]>(`localhost:4200/users`);
   }
 
-  public getUser(id: number): Observable<Gebruiker>{
+  public getUser(id: number): Observable<Gebruiker> {
     return this.http.get<Gebruiker>(`localhost:4200/user/${id}`);
   }
 
-  public getUserTypes(): Observable<string[]>{
+  public getUserTypes(): Observable<string[]> {
     return this.http.get<string[]>(`localhost:4200/usertypes`);
+  }
+
+  public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
+    return this.http.post(`localhost:4200/updateGebruiker`, gebruikerJson);
+  }
+
+  public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
+    return this.http.post(`localhost:4200/addGebruiker`, gebruikerJson);
   }
 }

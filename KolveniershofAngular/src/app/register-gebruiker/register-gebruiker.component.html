@@ -12,11 +12,11 @@
     </div>
     <div class="row justify-content-around">
       <div class="col-md-5 m-1">
-        <label for="naam">Naam*</label>
-        <input type="text" id="naam" class="form-control" formControlName="naam"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.naam.errors }">
-        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.naam.errors" class="text-danger">
-          <div *ngIf="gebruikerFormGroup.controls.naam.errors.required">Naam is verplicht</div>
+        <label for="achternaam">Achternaam*</label>
+        <input type="text" id="achternaam" class="form-control" formControlName="achternaam"
+          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.achternaam.errors }">
+        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.achternaam.errors" class="text-danger">
+          <div *ngIf="gebruikerFormGroup.controls.achternaam.errors.required">Achternaam is verplicht</div>
         </div>
       </div>
 
@@ -30,9 +30,9 @@
       </div>
 
       <div class="col-md-5 m-1" [ngClass]="this.verbergOuderInfo">
-        <label for="naamOuder">Naam ouder</label>
-        <input type="text" id="naamOuder" class="form-control" formControlName="naamOuder"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.naamOuder.errors }">
+        <label for="achternaamOuder">Achternaam ouder</label>
+        <input type="text" id="achternaamOuder" class="form-control" formControlName="achternaamOuder"
+          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.achternaamOuder.errors }">
       </div>
 
       <div class="col-md-5 m-1" [ngClass]="this.verbergOuderInfo">
@@ -101,9 +101,15 @@
           <div *ngIf="gebruikerFormGroup.controls.postcode.errors.required">Postcode is verplicht</div>
         </div>
       </div>
-      <!-- <div class="col-md-5 m-1">
-        <app-file-upload formControlName="image" [progress]="progress"></app-file-upload>
-      </div> -->
+      <div class="col-md-5 m-1">
+        <label for="foto">Foto*</label>
+        <app-file-upload formControlName="foto" [errorGevonden]="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors"></app-file-upload> <!-- [progress]="progress" -->
+        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors" class="text-danger">
+          <div *ngIf="gebruikerFormGroup.controls.foto.errors.required">Een foto is verplicht</div>
+          <div *ngIf="gebruikerFormGroup.controls.foto.errors.wrongFileType">Gelieve een geldige foto type te uploaden
+            (.jpg, .png)</div>
+        </div>
+      </div>
     </div>
     <small>* = Verplicht</small>
     <div class="row justify-content-center">
@@ -113,4 +119,3 @@
     </div>
   </form>
 </div>
-REMOVE {{ gebruikerFormGroup.value | json }}

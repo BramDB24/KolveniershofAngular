@@ -8,7 +8,7 @@ import { Gebruiker } from '../interfaces/gebruiker.interface';
 // array in local storage for registered users
 const userJonah: Gebruiker = {
   id: '1',
-  naam: 'De Smet',
+  achternaam: 'De Smet',
   voornaam: 'Jonah',
   email: 'jonah.desmet@gmail.com',
   wachtwoord: 'test123',

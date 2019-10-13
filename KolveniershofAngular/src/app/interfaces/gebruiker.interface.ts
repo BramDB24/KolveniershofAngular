@@ -1,8 +1,8 @@
 export interface Gebruiker {
     id: string;
-    naam: string;
+    achternaam: string;
     voornaam: string;
-    naamOuder?: string;
+    achternaamOuder?: string;
     voornaamOuder?: string;
     email: string;
     wachtwoord: string;

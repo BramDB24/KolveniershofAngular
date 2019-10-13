@@ -4,6 +4,22 @@ import { Gebruiker } from '../interfaces/gebruiker.interface';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { BestandService } from '../services/bestand.service';
+
+function valideerBestandType(control: FormControl): { [key: string]: any } {
+  const foto = control.value;
+  if (!foto) {
+    return { required: true };
+  }
+  if (foto.name.split('.').length !== 2) {
+    return { wrongFileType: true };
+  }
+  const extentie = foto.name.split('.')[1];
+  if (!['jpg', 'png'].includes(extentie.toLowerCase())) {
+    return { wrongFileType: true };
+  }
+  return null;
+}
 
 @Component({
   selector: 'app-register-gebruiker',
@@ -21,7 +37,13 @@ export class RegisterGebruikerComponent implements OnInit {
   public verbergOuderInfo = '';
   public submitted = false;
 
-  constructor(private gebruikerService: GebruikerService, private route: ActivatedRoute, private fb: FormBuilder) { }
+
+  constructor(
+    private gebruikerService: GebruikerService,
+    private bestandService: BestandService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.gebruikerService.getUserTypes().subscribe(
@@ -31,7 +53,7 @@ export class RegisterGebruikerComponent implements OnInit {
         console.log(err);
       },
       () => {
-        this.initializeFormGroup();
+        this.initializeerFormGroup();
       });
     this.route.params.subscribe(params => {
       if (params.id) {
@@ -49,7 +71,7 @@ export class RegisterGebruikerComponent implements OnInit {
               console.log(err);
             },
             () => {
-              this.initializeFormGroup();
+              this.initializeerFormGroup();
             });
       } else {
         this.huidigeGebruiker = null;
@@ -59,14 +81,14 @@ export class RegisterGebruikerComponent implements OnInit {
         alert('Er was een error bij laden van de pagina.');
         console.log(err);
       });
-    this.initializeFormGroup();
+    this.initializeerFormGroup();
   }
 
-  private initializeFormGroup() {
+  private initializeerFormGroup() {
     this.gebruikerFormGroup = this.fb.group({
-      naam: [this.huidigeGebruiker ? this.huidigeGebruiker.naam : '', Validators.required],
+      achternaam: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '', Validators.required],
       voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
-      naamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.naamOuder : ''],
+      achternaamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaamOuder : ''],
       voornaamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaamOuder : ''],
       email: [this.huidigeGebruiker ? this.huidigeGebruiker.email : '', [Validators.required, Validators.email]],
       wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '', Validators.required],
@@ -76,8 +98,9 @@ export class RegisterGebruikerComponent implements OnInit {
       gemeente: [this.huidigeGebruiker ? this.huidigeGebruiker.gemeente : '', Validators.required],
       postcode: [this.huidigeGebruiker ? this.huidigeGebruiker.postcode : '', Validators.required],
       gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required],
-      foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', Validators.required]
-    });
+      foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', valideerBestandType]
+    }
+    );
     this.typeVeranderd(this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked);
 
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
@@ -94,13 +117,49 @@ export class RegisterGebruikerComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop het process hier als de form invalid is
     if (this.gebruikerFormGroup.invalid) {
       return;
     }
 
-    console.log('submitted');
+    const nieuweGebruiker = {
+      id: '',
+      achternaam: this.gebruikerFormGroup.controls.achternaam.value,
+      voornaam: this.gebruikerFormGroup.controls.voornaam.value,
+      achternaamOuder: this.gebruikerFormGroup.controls.achternaamOuder.value,
+      voornaamOuder: this.gebruikerFormGroup.controls.voornaamOuder.value,
+      email: this.gebruikerFormGroup.controls.email.value,
+      wachtwoord: this.gebruikerFormGroup.controls.wachtwoord.value,
+      straat: this.gebruikerFormGroup.controls.straat.value,
+      huisnummer: this.gebruikerFormGroup.controls.huisnummer.value,
+      busnummer: this.gebruikerFormGroup.controls.busnummer.value,
+      gemeente: this.gebruikerFormGroup.controls.gemeente.value,
+      postcode: this.gebruikerFormGroup.controls.postcode.value,
+      foto: this.gebruikerFormGroup.controls.foto.value.name,
+      type: this.gebruikerFormGroup.controls.gebruikerType.value
+    };
+    if (this.huidigeGebruiker) {
+      nieuweGebruiker.id = this.huidigeGebruiker.id;
+    }
+
+    // Uploaden van de foto
+    const fotoFormGroup = new FormGroup({
+      foto: new FormControl(this.gebruikerFormGroup.controls.foto.value)
+    });
+
+
+    this.bestandService.postFile('gebruiker-foto', fotoFormGroup);
+
+    // Stuur nieuweGebruiker naar de databank
+    if (this.huidigeGebruiker) {
+      this.gebruikerService.postUpdateGebruiker(nieuweGebruiker).subscribe((response) => {
+        alert('Gebruiker geüpdate.');
+      });
+    } else {
+      this.gebruikerService.postNieuweGebruiker(nieuweGebruiker).subscribe((response) => {
+        alert('Gebruiker toegevoegd.');
+      });
+    }
   }
   hasRequiredField(abstractControl: AbstractControl): boolean {
     if (abstractControl.validator) {
