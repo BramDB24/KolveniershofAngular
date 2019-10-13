@@ -3,7 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { Atelier } from '../interfaces/atelier';
 import { DagAtelier } from '../interfaces/dag-atelier';
 import { Gebruiker } from '../interfaces/gebruiker';
-import { DayService } from '../services/day.service';
+import { DagService } from '../services/dag.service';
 import { GebruikerService } from '../services/gebruiker.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
 
   constructor(
     private userService: GebruikerService,
-    private dayService: DayService
+    private dagService: DagService
   ) {}
 
   ngOnChanges() {
@@ -51,7 +51,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
             : null;
         });
       });
-    this.dayService
+    this.dagService
       .getEditInformatie()
       .pipe(finalize(() => (this.loaded = true)))
       .subscribe(entry => entry.forEach(e => this.ateliers.push(e)));
@@ -72,7 +72,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     this.atelierNaam = atelierkeuze;
   }
 
-  public getPresentUsers(user: Gebruiker) {
+  public getAanwezigen(user: Gebruiker) {
     if (this.dagAtelier === null) {
       return false;
     }
@@ -96,7 +96,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       gebruikers: this.aanwezigen
     };
 
-    //this.dayService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(); 
+    //this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(); 
   }
 }
 

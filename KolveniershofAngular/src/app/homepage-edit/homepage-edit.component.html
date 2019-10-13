@@ -9,7 +9,7 @@
             <div *ngFor="let ateliers of voormiddag">
               <button
                 type="button"
-                class="btn btn-success"
+                class="btn atelierbtn"
                 (click)="setAtelier(ateliers)"
               >
                 {{ ateliers.atelier.naam }}
@@ -20,7 +20,7 @@
             <div *ngFor="let ateliers of namiddag">
               <button
                 type="button"
-                class="btn btn-success"
+                class="btn atelierbtn"
                 (click)="setAtelier(ateliers)"
               >
                 {{ ateliers.atelier.naam }}
@@ -29,9 +29,9 @@
             <button
               (click)="nieuwAtelier()"
               type="button"
-              class="btn btn-primary"
+              class="btn atelierbtn nieuw"
             >
-              +
+              Atelier toevoegen
             </button>
           </div>
         </div>

@@ -1,10 +1,16 @@
-.colorGreen {
-  background-color: green;
-  border-color: red;
-  border-width: 2px;
+.atelierbtn {
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.colorRed {
-  background-color: red;
+.nieuw {
+  margin-top: 20px;
 }
 
+.btn:hover {
+  background-color: slategray;
+}

@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CalendarComponent } from './kalender/kalender.component';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
-import { DayComponent } from './dag/dag.component';
+import { KalenderComponent } from './kalender/kalender.component';
 import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
 
 export const routes: Routes = [
@@ -21,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: CalendarComponent
+    component: KalenderComponent
     // ,
     // children: [
     //   {path: 'dag', component: DayComponent},

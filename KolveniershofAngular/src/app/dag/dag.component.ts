@@ -2,21 +2,21 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { DagAtelier } from '../interfaces/dag-atelier';
 import { DagPlanning } from '../interfaces/dag-planning';
-import { DayService } from '../services/day.service';
+import { DagService } from '../services/dag.service';
 
 @Component({
-  selector: 'app-day',
+  selector: 'app-dag',
   templateUrl: './dag.component.html',
   styleUrls: ['./dag.component.scss']
 })
-export class DayComponent implements OnChanges {
+export class DagComponent implements OnChanges {
   @Input() public datum: Date;
   public loadingError: HttpErrorResponse;
   public dagplanning: DagPlanning;
   public voormiddag = new Array<DagAtelier>();
   public namiddag = new Array<DagAtelier>();
 
-  constructor(private dagService: DayService) {
+  constructor(private dagService: DagService) {
   }
 
   ngOnChanges() {
@@ -28,7 +28,7 @@ export class DayComponent implements OnChanges {
       day => {
         this.dagplanning = day;
         console.log(this.dagplanning);
-        this.setDayMoment();
+        this.setDagMoment();
       },
       error => {
         this.loadingError = error;
@@ -36,7 +36,7 @@ export class DayComponent implements OnChanges {
     );
   }
 
-  public setDayMoment(): void {
+  public setDagMoment(): void {
     this.namiddag = new Array<DagAtelier>();
     this.voormiddag = new Array<DagAtelier>();
     this.dagplanning.dagAteliers.forEach(entry => {

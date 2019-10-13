@@ -1,44 +1,48 @@
 .kalenderNav {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .naastelkaar {
-    display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .datum {
-    font-size: 20pt;
+  font-size: 20pt;
 }
 
 .datumAanpassen {
-    background-color: dodgerblue;
-    border-radius: 5%;
-    font-size: 12pt;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+  font-size: 12pt;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .links {
-    float: left;
+  float: left;
 }
 
 .rechts {
-    float: right;
+  float: right;
 }
 
 .keuzeknop {
-    background-color: dodgerblue;
-    border-radius: 5%;
-    font-size: 12pt;
-    margin-right: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+  font-size: 12pt;
+  margin-right: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-
+.btn:hover {
+  background-color: slategray;
+}

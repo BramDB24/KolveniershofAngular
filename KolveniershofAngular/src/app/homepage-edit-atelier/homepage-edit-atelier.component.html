@@ -10,33 +10,33 @@
         </select>
       </ng-container>
       <h4>Begeleiders</h4>
-      <div class="naastelkaar" *ngFor="let user of begeleiders">
+      <div class="naastelkaar" *ngFor="let begeleider of begeleiders">
         <img
-          id="{{ user.voornaam }}"
+          id="{{ begeleider.voornaam }}"
           class="client"
-          src="{{ user.foto }}"
-          (click)="select(user)"          
-          [class.style1]="getPresentUsers(user)"
+          src="{{ begeleider.foto }}"
+          (click)="select(begeleider)"          
+          [class.style1]="getAanwezigen(begeleider)"
         />
-        <p class="tekst">{{ user.voornaam }}</p>
+        <p class="tekst">{{ begeleider.voornaam }}</p>
       </div>
       <h4>Cliënten</h4>
-      <div class="naastelkaar" *ngFor="let user of gebruikers">
+      <div class="naastelkaar" *ngFor="let client of gebruikers">
         <img
-          id="{{ user.voornaam }}"
+          id="{{ client.voornaam }}"
           class="client"
-          src="{{ user.foto }}"
-          (click)="select(user)"
-          [class.style1]="getPresentUsers(user)"
+          src="{{ client.foto }}"
+          (click)="select(client)"
+          [class.style1]="getAanwezigen(client)"
           
         />
-        <p class="tekst">{{ user.voornaam }}</p>
+        <p class="tekst">{{ client.voornaam }}</p>
       </div>
       <div *ngIf="isEdit; else saveAtelierTemplate">
         <button
           (click)="editAtelier()"
           type="button"
-          class="btn btn-primary rechts"
+          class="btn rechts"
         >
           Aanpassen
         </button>
@@ -54,7 +54,7 @@
       <button
       (click)="saveAtelier()"
       type="button"
-      class="btn btn-primary rechts"
+      class="btn rechts"
     >
       Opslaan
     </button>

@@ -10,9 +10,14 @@
                 <p class="atelier">
                   {{ ateliers.atelier.naam }}
                 </p>
-                <p *ngFor="let user of ateliers.gebruikers">
-                  {{ user.voornaam }}
-                </p>
+                <div class="naastelkaar" *ngFor="let gebruiker of ateliers.gebruikers">
+                    <img
+                    id="{{ gebruiker.voornaam }}"
+                    class="client"
+                    src="{{ gebruiker.foto }}"
+                  />
+                  <p class="tekst">{{ gebruiker.voornaam }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -27,9 +32,14 @@
                 <p class="atelier">
                   {{ ateliers.atelier.naam }}
                 </p>
-                <p *ngFor="let user of ateliers.gebruikers">
-                  {{ user.voornaam }}
-                </p>
+                <div class="naastelkaar" *ngFor="let gebruiker of ateliers.gebruikers">
+                    <img
+                    id="{{ gebruiker.voornaam }}"
+                    class="client"
+                    src="{{ gebruiker.foto }}"
+                  />  
+                  <p class="tekst">{{ gebruiker.voornaam }}</p>
+                </div>
               </div>
             </div>
           </div>

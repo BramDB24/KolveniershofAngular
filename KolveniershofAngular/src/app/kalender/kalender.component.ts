@@ -8,11 +8,11 @@ export enum State {
 }
 
 @Component({
-  selector: 'app-calendar',
+  selector: 'app-kalender',
   templateUrl: './kalender.component.html',
   styleUrls: ['./kalender.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class KalenderComponent implements OnInit {
   public datum: Date = new Date();
 
   public state = State.Dag;
@@ -26,7 +26,7 @@ export class CalendarComponent implements OnInit {
     this.state = type;
   }
 
-  public changeDate(nr: number): void {
+  public veranderDatum(nr: number): void {
     this.datum = new Date(
       this.datum.getFullYear(),
       this.datum.getMonth(),
@@ -34,12 +34,12 @@ export class CalendarComponent implements OnInit {
     );
   }
 
-  public previousDate(): void {
-    this.changeDate(-1);
+  public vorigeDatum(): void {
+    this.veranderDatum(-1);
   }
 
-  public nextDate(): void {
-    this.changeDate(+1);
+  public volgendeDatum(): void {
+    this.veranderDatum(+1);
   }
 
   public redirect(route: string) {

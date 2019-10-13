@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { DagAtelier } from '../interfaces/dag-atelier';
 import { DagPlanning } from '../interfaces/dag-planning';
-import { DayService } from '../services/day.service';
+import { DagService } from '../services/dag.service';
 
 export enum State {
   Edit = 'edit',
@@ -25,10 +25,10 @@ export class HomepageEditComponent implements OnInit {
   public state: State;
   StateType = State;
   
-  constructor(private dayService: DayService) {}
+  constructor(private dagService: DagService) {}
 
   ngOnInit() {
-    this.dayService
+    this.dagService
       .getDay(this.datum)
       .pipe(
         finalize(() => {
@@ -37,11 +37,11 @@ export class HomepageEditComponent implements OnInit {
       )
       .subscribe(entry => {
         this.dagPlanning = entry;
-        this.setDayMoment();
+        this.setDagMoment();
       });
   }
 
-  public setDayMoment(): void {
+  public setDagMoment(): void {
     this.namiddag = new Array<DagAtelier>();
     this.voormiddag = new Array<DagAtelier>();
     this.dagPlanning.dagAteliers.forEach(entry => {

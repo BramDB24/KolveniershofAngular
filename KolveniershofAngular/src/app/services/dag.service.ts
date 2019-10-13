@@ -10,7 +10,7 @@ import { DagAtelier } from '../interfaces/dag-atelier';
 @Injectable({
   providedIn: 'root'
 })
-export class DayService {
+export class DagService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
   public getDay(date: Date): Observable<DagPlanning> {
