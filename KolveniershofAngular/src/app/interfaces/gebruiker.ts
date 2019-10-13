@@ -3,16 +3,16 @@ export interface Gebruiker {
     voornaam: string;
     achternaam: string;
     commentaren: Array<string>;
+    achternaamOuder?: string;
+    voornaamOuder?: string;
     email: string;
+    wachtwoord: string;
     sfeergroep: number;
     straatnaam: string;
     huisnummer: string;
-    busnummer: string;
+    busnummer?: string;
     gemeente: string;
     postcode: string;
-    type: number;
     foto: string;
-    naamOuder: string;
-    voornaamOuder: string;
-    wachtwoord: string;
+    type: number;
 }

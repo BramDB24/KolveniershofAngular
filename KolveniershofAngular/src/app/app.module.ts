@@ -11,6 +11,10 @@ import { HomepageEditAtelierComponent } from './homepage-edit-atelier/homepage-e
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeNl from '@angular/common/locales/nl';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 import { KalenderComponent } from './kalender/kalender.component';
 
 registerLocaleData(localeNl);
@@ -19,6 +23,7 @@ registerLocaleData(localeNl);
   declarations: [
     AppComponent,
     KalenderComponent,
+    FileUploadComponent,
     DagComponent,
     NavigationComponent,
     HomepageEditComponent,
