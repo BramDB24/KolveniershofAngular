@@ -13,6 +13,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { KalenderComponent } from './kalender/kalender.component';
+import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.component';
 
 registerLocaleData(localeNl);
 
@@ -25,7 +26,8 @@ registerLocaleData(localeNl);
     NavigationComponent,
     HomepageEditComponent,
     HomepageEditAtelierComponent,
-    RegisterGebruikerComponent
+    RegisterGebruikerComponent,
+    OpmerkingenBladComponent
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],

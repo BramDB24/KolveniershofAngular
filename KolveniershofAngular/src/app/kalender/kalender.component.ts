@@ -16,6 +16,7 @@ export class KalenderComponent implements OnInit {
   public datum: Date = new Date();
 
   public state = State.Dag;
+  //StateType gelijk stellen aan enum State, anders kan html hier niet aan
   StateType = State;
 
   constructor(private _router: Router) {
