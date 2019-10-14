@@ -13,7 +13,7 @@ import { DagAtelier } from '../interfaces/dag-atelier';
 export class DagService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
-  public getDay(date: Date): Observable<DagPlanning> {
+  public getDag(date: Date): Observable<DagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
     return this.http.get<DagPlanning>(
       `${environment.apiUrl}/dagplanning/${convertedDate}`
@@ -24,7 +24,7 @@ export class DagService {
     return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
   }
 
-  public getEditInformatie(): Observable<Array<Atelier>> {
+  public getAteliers(): Observable<Array<Atelier>> {
     return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
   }
 }

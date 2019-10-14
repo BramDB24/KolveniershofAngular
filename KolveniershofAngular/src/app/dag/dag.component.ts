@@ -24,7 +24,7 @@ export class DagComponent implements OnChanges {
   }
 
   public callApi(date: Date): void {
-    this.dagService.getDay(date).subscribe(
+    this.dagService.getDag(date).subscribe(
       day => {
         this.dagplanning = day;
         console.log(this.dagplanning);

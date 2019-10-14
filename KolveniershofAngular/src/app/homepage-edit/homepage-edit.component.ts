@@ -29,7 +29,7 @@ export class HomepageEditComponent implements OnInit {
 
   ngOnInit() {
     this.dagService
-      .getDay(this.datum)
+      .getDag(this.datum)
       .pipe(
         finalize(() => {
           this.loaded = true;
