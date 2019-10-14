@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { GebruikerService } from '../services/gebruiker.service';
-import { Gebruiker } from '../interfaces/gebruiker.interface';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { BestandService } from '../services/bestand.service';
+import { Gebruiker } from '../interfaces/gebruiker';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
   const foto = control.value;
@@ -36,8 +36,6 @@ export class RegisterGebruikerComponent implements OnInit {
   public readonly typesMetOuderInfo = [2];
   public verbergOuderInfo = '';
   public submitted = false;
-
-  constructor(private gebruikerService: GebruikerService, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   constructor(
     private gebruikerService: GebruikerService,
@@ -82,7 +80,7 @@ export class RegisterGebruikerComponent implements OnInit {
     //     alert('Er was een error bij laden van de pagina.');
     //     console.log(err);
     //   });
-    this.initializeFormGroup();
+    this.initializeerFormGroup();
   }
 
   private initializeerFormGroup() {
