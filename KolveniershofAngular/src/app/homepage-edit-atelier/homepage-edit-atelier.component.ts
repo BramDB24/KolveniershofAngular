@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { Atelier } from '../interfaces/atelier';
-import { DagAtelier } from '../interfaces/dag-atelier';
+import { Atelier } from '../models/atelier.model';
 import { Gebruiker } from '../interfaces/gebruiker';
 import { DagService } from '../services/dag.service';
 import { GebruikerService } from '../services/gebruiker.service';
+import { DagAtelier } from '../models/dag-atelier.model';
+import { IDagAtelier } from '../interfaces/dag-atelier';
 
 @Component({
   selector: 'app-homepage-edit-atelier',
@@ -12,13 +13,12 @@ import { GebruikerService } from '../services/gebruiker.service';
   styleUrls: ['./homepage-edit-atelier.component.scss']
 })
 export class HomepageEditAtelierComponent implements OnInit, OnChanges {
-  @Input() public dagAtelier: DagAtelier;
+  @Input() public dagAtelier: IDagAtelier;
   @Input() public isEdit: boolean;
   @Input() public dagplanningId: number;
   public loaded = false;
   public ateliers = Array<Atelier>();
-  public gebruikers = Array<Gebruiker>();
-  public begeleiders = Array<Gebruiker>();
+  public alleGebruikers = Array<Gebruiker>();
   public aanwezigen = new Array<Gebruiker>();
   public atelierNaam: string;
 
@@ -43,13 +43,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         })
       )
       .subscribe(entry => {
-        entry.forEach(element => {
-          element.type === 1
-            ? this.gebruikers.push(element)
-            : element.type === 3
-            ? this.begeleiders.push(element)
-            : null;
-        });
+        this.alleGebruikers = entry;
       });
     this.dagService
       .getEditInformatie()
@@ -87,16 +81,16 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   }
 
   public saveAtelier(): void {
-    this.dagAtelier = {
+    this.dagAtelier = new DagAtelier({
       atelier: {
-        aterlierType: 1,
+        atelierType: 1,
         naam: this.atelierNaam
       },
       dagMoment: 1,
       gebruikers: this.aanwezigen
-    };
+    });
 
-    //this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(); 
+    // this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe();
   }
 }
 

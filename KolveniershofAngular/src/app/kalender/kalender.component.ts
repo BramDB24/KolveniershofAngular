@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 export enum State {
   Dag = 'dag',
-  Edit = 'edit',
+  DagEdit = 'dagEdit',
   Opmerkingen = 'opmerkingen'
 }
 
@@ -16,7 +16,7 @@ export class KalenderComponent implements OnInit {
   public datum: Date = new Date();
 
   public state = State.Dag;
-  //StateType gelijk stellen aan enum State, anders kan html hier niet aan
+  // StateType gelijk stellen aan enum State, anders kan html hier niet aan
   StateType = State;
 
   constructor(private _router: Router) {
@@ -28,6 +28,7 @@ export class KalenderComponent implements OnInit {
   }
 
   public veranderDatum(nr: number): void {
+    this.veranderState(State.Dag);
     this.datum = new Date(
       this.datum.getFullYear(),
       this.datum.getMonth(),
@@ -47,5 +48,5 @@ export class KalenderComponent implements OnInit {
     this._router.navigate([`${route}`]);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

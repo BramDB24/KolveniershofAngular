@@ -1,5 +1,5 @@
-export interface Atelier {
-    aterlierId?: number;
-    aterlierType: number;
+export interface IAtelier {
+    atelierId?: number;
+    atelierType: number;
     naam: string;
 }

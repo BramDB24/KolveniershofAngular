@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DagPlanning } from '../interfaces/dag-planning';
-import { Atelier } from '../interfaces/atelier';
-import { DagAtelier } from '../interfaces/dag-atelier';
+import { IDagPlanning } from '../interfaces/dag-planning';
+import { Atelier } from '../models/atelier.model';
+import { DagAtelier } from '../models/dag-atelier.model';
+import { IDagAtelier } from '../interfaces/dag-atelier';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,14 @@ import { DagAtelier } from '../interfaces/dag-atelier';
 export class DagService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
-  public getDay(date: Date): Observable<DagPlanning> {
+  public getDag(date: Date): Observable<IDagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return this.http.get<DagPlanning>(
+    return this.http.get<IDagPlanning>(
       `${environment.apiUrl}/dagplanning/${convertedDate}`
     );
   }
 
-  public putDagAtelier(id: number, dagAtelier: DagAtelier): Observable<object> {
+  public putDagAtelier(id: number, dagAtelier: IDagAtelier): Observable<object> {
     return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
   }
 

@@ -10,34 +10,27 @@
         </select>
       </ng-container>
       <h4>Begeleiders</h4>
-      <div class="naastelkaar" *ngFor="let begeleider of begeleiders">
-        <img
-          id="{{ begeleider.voornaam }}"
-          class="client"
-          src="{{ begeleider.foto }}"
-          (click)="select(begeleider)"          
-          [class.style1]="getAanwezigen(begeleider)"
-        />
-        <p class="tekst">{{ begeleider.voornaam }}</p>
-      </div>
-      <h4>Cliënten</h4>
-      <div class="naastelkaar" *ngFor="let client of gebruikers">
-        <img
-          id="{{ client.voornaam }}"
-          class="client"
-          src="{{ client.foto }}"
-          (click)="select(client)"
-          [class.style1]="getAanwezigen(client)"
-          
-        />
+      <div class="naastelkaar" *ngFor="let client of dagAtelier.getBegeleiders()">
+        <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
         <p class="tekst">{{ client.voornaam }}</p>
       </div>
+      <!-- <div class="naastelkaar" *ngFor="let begeleider of alleBegeleiders">
+        <img id="{{ begeleider.voornaam }}" class="client" src="{{ begeleider.foto }}" (click)="select(begeleider)"
+          [class.style1]="getAanwezigen(begeleider)" />
+        <p class="tekst">{{ begeleider.voornaam }}</p>
+      </div> -->
+      <h4>Cliënten</h4>
+      <div class="naastelkaar" *ngFor="let client of dagAtelier.getClienten()">
+        <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
+        <p class="tekst">{{ client.voornaam }}</p>
+      </div>
+      <!-- <div class="naastelkaar" *ngFor="let client of alleGebruikers">
+        <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" (click)="select(client)"
+          [class.style1]="getAanwezigen(client)" />
+        <p class="tekst">{{ client.voornaam }}</p>
+      </div> -->
       <div *ngIf="isEdit; else saveAtelierTemplate">
-        <button
-          (click)="editAtelier()"
-          type="button"
-          class="btn rechts"
-        >
+        <button (click)="editAtelier()" type="button" class="btn rechts">
           Aanpassen
         </button>
       </div>
@@ -51,13 +44,9 @@
 
 <ng-template #saveAtelierTemplate>
   <div>
-      <button
-      (click)="saveAtelier()"
-      type="button"
-      class="btn rechts"
-    >
+    <button (click)="saveAtelier()" type="button" class="btn rechts">
       Opslaan
     </button>
   </div>
-  
+
 </ng-template>

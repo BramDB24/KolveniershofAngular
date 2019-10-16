@@ -1,10 +1,12 @@
-import { DagAtelier } from './dag-atelier';
+import { IDagAtelier } from './dag-atelier';
 
-export interface DagPlanning {
+export interface IDagPlanning {
     eten: string;
     datum: string;
     weeknummer: number;
     weekdag: number;
     dagplanningId: number;
-    dagAteliers: Array<DagAtelier>;
+    dagAteliers: Array<IDagAtelier>;
+
+    getDagAteliersOpDagMoment(dagMoment: number);
 }
