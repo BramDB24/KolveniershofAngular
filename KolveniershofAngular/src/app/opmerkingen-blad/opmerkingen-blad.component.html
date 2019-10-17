@@ -1,3 +1,42 @@
-<p>
-  opmerkingen-blad works!
-</p>
+<div class="container">
+  <div class="modal-body row">
+    <div class="col-md-6" *ngFor="let opmerking of opmerkingen">
+      <div class="card m-2">
+        <h5>{{opmerking.opmerkingType}}</h5>
+        <p>{{opmerking.tekst}}</p>
+      </div>
+    </div>
+  </div>
+  <button class="btn float-right" (click)="onSubmit()">Save</button>
+</div>
+
+
+
+<!-- 
+
+<div class="container">
+  <div class="row">
+    <div *ngFor="let opmerking of opmerkingen">
+      <div class="col col-12">
+        <h5>{{opmerking.opmerkingType}}</h5>
+        <p>{{opmerking.tekst}}</p>
+        <form class="border border-light p-5" [formGroup]="opmerkingFormGroup" (ngSubmit)="onSubmit()">
+          <textarea type="text" class="form-control" cols="50" rows="7" formControlName="tekst">{{opmerking.tekst}}
+              </textarea>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button (click)="onSubmit()">Save</button>
+</div>
+
+
+
+<form [formGroup]="validatingForm">
+  <div class="md-form">
+    <input mdbInput mdbValidate type="text" id="form1" class="form-control" formControlName="input" />
+    <mdb-error *ngIf="input.invalid && (input.dirty || input.touched)">Input invalid</mdb-error>
+    <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success>
+  </div>
+  <button type="submit" mdbBtn color="primary" (click)="onSubmit()">Submit form</button>
+</form> -->

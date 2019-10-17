@@ -12,7 +12,7 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-6">
         <button type="button" (click)="veranderState(StateType.Dag)" class="btn keuzeknop">Dagplanning</button>
-        <button type="button" class="btn keuzeknop">Opmerkingen</button>
+        <button type="button" (click)="veranderState(StateType.Opmerkingen)" class="btn keuzeknop">Opmerkingen</button>
         <button type="button" (click)="veranderState(StateType.Edit)" class="btn datumAanpassen rechts">Dagplanning
           aanpassen</button>
       </div>
@@ -23,4 +23,4 @@
 
 <app-dag *ngIf="state == StateType.Dag" [datum]="datum"></app-dag>
 <app-homepage-edit *ngIf="state == StateType.Edit" [datum]="datum"></app-homepage-edit>
-<app-opmerkingenBlad *ngIf="state == StateType.Opmerkingen" [datum]="datum"></app-opmerkingenBlad>
+<app-opmerkingen-blad *ngIf="state == StateType.Opmerkingen" [datum]="datum"></app-opmerkingen-blad>
