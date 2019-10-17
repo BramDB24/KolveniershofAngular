@@ -8,15 +8,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class GebruikerService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public getUsers(): Observable<Gebruiker[]> {
     return this.http.get<Gebruiker[]>(`${environment.apiUrl}/account`);
   }
-
-
-
 
   public getGebruikerViaId(id: number): Observable<Gebruiker> {
     console.log('getGebruikerViaId');
