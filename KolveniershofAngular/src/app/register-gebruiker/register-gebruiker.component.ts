@@ -80,10 +80,10 @@ export class RegisterGebruikerComponent implements OnInit {
     //     alert('Er was een error bij laden van de pagina.');
     //     console.log(err);
     //   });
-    this.initializeerFormGroup();
+    this.initialiseerFormGroup();
   }
 
-  private initializeerFormGroup() {
+  private initialiseerFormGroup() {
     this.gebruikerFormGroup = this.fb.group({
       achternaam: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '', Validators.required],
       voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
