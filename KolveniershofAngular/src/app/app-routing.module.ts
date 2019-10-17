@@ -28,7 +28,7 @@ export const routes: Routes = [
     // ]
   },
   {
-    path: 'edit',
+    path: 'dagEdit',
     component: HomepageEditComponent
   },
   {

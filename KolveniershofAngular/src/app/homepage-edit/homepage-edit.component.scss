@@ -5,12 +5,15 @@
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  &:hover {
+    background-color: slategray;
+  }
 }
 
 .nieuw {
   margin-top: 20px;
 }
 
-.btn:hover {
-  background-color: slategray;
+.btn-link{
+  padding: 0.15em;
 }

@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { DagAtelier } from '../interfaces/dag-atelier';
-import { DagPlanning } from '../interfaces/dag-planning';
+import { IDagPlanning } from '../interfaces/dag-planning';
 import { DagService } from '../services/dag.service';
+import { DagMoment } from '../enums/dag-moment.enum';
+import { AtelierType } from '../enums/atelier-type.enum';
+import { DagAtelier } from '../models/dag-atelier.model';
+import { DagPlanning } from '../models/dag-planning.model';
 
 @Component({
   selector: 'app-dag',
@@ -12,9 +15,11 @@ import { DagService } from '../services/dag.service';
 export class DagComponent implements OnChanges {
   @Input() public datum: Date;
   public loadingError: HttpErrorResponse;
-  public dagplanning: DagPlanning;
+  public dagplanning: IDagPlanning;
+  public volledigeDag = new Array<DagAtelier>();
   public voormiddag = new Array<DagAtelier>();
   public namiddag = new Array<DagAtelier>();
+  public specialeAteliers = new Array<DagAtelier>();
 
   constructor(private dagService: DagService) {
   }
@@ -24,9 +29,10 @@ export class DagComponent implements OnChanges {
   }
 
   public callApi(date: Date): void {
-    this.dagService.getDay(date).subscribe(
-      day => {
-        this.dagplanning = day;
+    this.dagService.getDag(date).subscribe(
+      dag => {
+        this.dagplanning = new DagPlanning(dag);
+        console.log(dag);
         console.log(this.dagplanning);
         this.setDagMoment();
       },
@@ -37,14 +43,17 @@ export class DagComponent implements OnChanges {
   }
 
   public setDagMoment(): void {
-    this.namiddag = new Array<DagAtelier>();
-    this.voormiddag = new Array<DagAtelier>();
-    this.dagplanning.dagAteliers.forEach(entry => {
-      if (entry.dagMoment === 1) {
-        this.voormiddag.push(entry);
-      } else {
-        this.namiddag.push(entry);
-      }
-    });
+    this.namiddag = this.dagplanning.getDagAteliersOpDagMoment(DagMoment.Namiddag);
+    this.voormiddag = this.dagplanning.getDagAteliersOpDagMoment(DagMoment.Voormiddag);
+    this.volledigeDag = this.dagplanning.getDagAteliersOpDagMoment(DagMoment.VolledigeDag);
+    this.specialeAteliers = new Array<DagAtelier>();
+    this.dagplanning.getDagAteliersOpDagMoment(DagMoment.Undefined)
+      .forEach(entry => {
+        if (entry.atelier.atelierType === AtelierType.Afwezig
+          || entry.atelier.atelierType === AtelierType.Ziek
+          || entry.atelier.atelierType === AtelierType.VervoerAtelier) {
+          this.specialeAteliers.push(entry);
+        }
+      });
   }
 }
