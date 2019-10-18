@@ -14,7 +14,7 @@
         <button type="button" (click)="veranderState(StateType.Dag)" class="btn keuzeknop"
           [ngClass]="{ 'geselecteerd' : state == StateType.Dag || state == StateType.DagEdit }"
           [disabled]="state == StateType.Dag">Dagplanning</button>
-          <i class="fas fa-arrows-alt-h"></i>
+        <i class="fas fa-arrows-alt-h"></i>
         <button type="button" (click)="veranderState(StateType.Opmerkingen)" class="btn keuzeknop"
           [ngClass]="{ 'geselecteerd' : state == StateType.Opmerkingen }"
           [disabled]="state == StateType.Opmerkingen">Opmerkingen</button>
@@ -34,4 +34,4 @@
 
 <app-dag *ngIf="state == StateType.Dag" [datum]="datum"></app-dag>
 <app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="datum"></app-homepage-edit>
-<app-opmerkingen-blad *ngIf="state == StateType.Opmerkingen"></app-opmerkingen-blad>
+<app-opmerkingen-blad *ngIf="state == StateType.Opmerkingen" [datum]="datum"></app-opmerkingen-blad>

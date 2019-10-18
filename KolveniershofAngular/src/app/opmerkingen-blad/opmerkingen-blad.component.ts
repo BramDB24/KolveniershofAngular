@@ -1,85 +1,70 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { OpmerkingenService } from '../services/opmerkingen.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Opmerking } from '../interfaces/opmerking';
+import { IOpmerking } from '../interfaces/opmerking';
 import { finalize } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Opmerking } from '../models/opmerking';
+import { OpmerkingType } from '../enums/opmerking-type.enum';
 
 @Component({
   selector: 'app-opmerkingen-blad',
   templateUrl: './opmerkingen-blad.component.html',
   styleUrls: ['./opmerkingen-blad.component.scss']
 })
-export class OpmerkingenBladComponent implements OnInit {
+export class OpmerkingenBladComponent implements OnChanges, OnInit {
+
   @Input() public datum: Date;
-  public opmerkingFormGroup: FormGroup;
-  public loadingError: HttpErrorResponse;
-  public opmerkingen = Array<Opmerking>();
+  public opmerkingen = Array<IOpmerking>();
+
   public loaded = false;
-  public opmerking: Opmerking;
-  public huidigeOpmerking: Opmerking;
-  public opmerkingInt: Number;
+  public opmerkingForm: FormGroup[];
+  // = [this.fb.group({
+  //   tekst: ["test", Validators.required]
+  // })];
+  //public opmerkingType: string;
 
   constructor(private opmerkingenService: OpmerkingenService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.opmerkingenService.GetOpmerkingenVanSpecifiekeDag$(this.datum)
+
+  }
+
+  public initFormGroups() {
+    this.opmerkingForm = new Array<FormGroup>();
+    for (let i = 0; i < this.opmerkingen.length; i++) {
+      this.opmerkingForm[i] = this.fb.group({
+        tekst: [this.opmerkingen[i].tekst, Validators.required]
+      })
+    }
+  }
+
+  ngOnChanges() {
+    this.callAlleOpmerkingen(this.datum);
+  }
+
+  public callAlleOpmerkingen(date: Date): void {
+    this.opmerkingenService.GetOpmerkingenVanSpecifiekeDag$(date)
       .pipe(finalize(() => (this.loaded = true)))
       .subscribe(
-        entry =>
-          entry.forEach(element =>
-            this.opmerkingen.push(element)));
-    // this.initializeerFormGroup();
+        entry => {
+          entry.forEach(e => this.opmerkingen.push(e));
+          this.initFormGroups();
+        })
   }
 
-  // private initializeerFormGroup() {
-  //   this.opmerkingFormGroup = this.fb.group({
-  //     tekst: [this.opmerking ? this.opmerking.tekst : ''],
-  //   }
-  //   );
-  // }
+  onSubmit(opmerking: Opmerking, i: number) {
+    console.log("submitted gelukt");
 
-  // public onSubmit() {
-
-  //   const nieuweOpmerking = {
-  //     id: '',
-  //     tekst: this.opmerkingFormGroup.controls.tekst.value
-  //   };
-  //   if (this.opmerking) {
-  //     this.opmerkingInt = parseInt(nieuweOpmerking.id, 10);
-  //     this.opmerkingInt = this.opmerking.opmerkingId;
-  //   }
-
-
-  //   // Stuur Opmerking naar de databank
-  //   if (this.opmerking) {
-  //     this.opmerkingenService.postUpdateOpmerking(nieuweOpmerking).subscribe((response) => {
-  //       alert('Opmerking geüpdate.');
-  //     });
-  //   } else {
-  //     this.opmerkingenService.postNieuweOpmerking(nieuweOpmerking).subscribe((response) => {
-  //       alert('Opmerking toegevoegd.');
-  //     });
-  //   }
-  // }
-
-  public zetOpmerkingTypeEnumOmInTekst(enumNr) {//omzetten in pipemethod
-    var enumNaarWaarde;
-    switch (enumNr) {
-      case 0: enumNaarWaarde = "Undefined"; break;
-      case 1: enumNaarWaarde = "Vervoer"; break;
-      case 2: enumNaarWaarde = "Cliënten"; break;
-      case 3: enumNaarWaarde = "Ateliers en weekschema"; break;
-      case 4: enumNaarWaarde = "Varia"; break;
-      case 5: enumNaarWaarde = "Logistiek"; break;
-      case 6: enumNaarWaarde = "Begeleiding"; break;
-      case 7: enumNaarWaarde = "Stagiairs"; break;
-      case 8: enumNaarWaarde = "Vrijwilligers"; break;
-      case 9: enumNaarWaarde = "Uur registratie"; break;
-      default: enumNaarWaarde = "Varia"; break;
-    }
-    return enumNaarWaarde;
-
+    this.opmerkingenService.postOpmerking(
+      opmerking.opmerkingId, {
+      tekst: this.opmerkingForm[i].controls.tekst.value,
+      opmerkingType: opmerking.opmerkingType,
+      datum: this.datum.toJSON()
+    }).subscribe();
   }
-
 }
+
+
+
+

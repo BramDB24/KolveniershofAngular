@@ -14,6 +14,7 @@ import { RegisterGebruikerComponent } from './register-gebruiker/register-gebrui
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.component';
+import { OpmerkingPipe } from './pipes/opmerking.pipe';
 
 registerLocaleData(localeNl);
 
@@ -27,7 +28,8 @@ registerLocaleData(localeNl);
     HomepageEditComponent,
     HomepageEditAtelierComponent,
     RegisterGebruikerComponent,
-    OpmerkingenBladComponent
+    OpmerkingenBladComponent,
+    OpmerkingPipe
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
