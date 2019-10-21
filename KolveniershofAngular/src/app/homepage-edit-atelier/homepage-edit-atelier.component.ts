@@ -47,7 +47,11 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // initialiseer dagAtelierCopy
-    this.dagAtelierCopy = new DagAtelier({ ...this.dagAtelier });
+    if (this.dagAtelier) {
+      this.dagAtelierCopy = new DagAtelier({ ...this.dagAtelier });
+    } else {
+      this.dagAtelierCopy = new DagAtelier({});
+    }
     // initialiseer form
     if (this.loaded()) {
       this.initialiseerFormGroup();
@@ -93,8 +97,9 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
 
   private initialiseerFormGroup() {
     this.dagAtelierFormGroup = this.fb.group({
-      atelierNaam: [this.dagAtelier ? this.dagAtelier.atelier.naam : 'test', this.valideerAtelierNaam.bind(this)],
-      dagMoment: [this.dagAtelier ? this.dagAtelier.dagMoment : DagMoment.VolledigeDag]
+      atelierNaam: [this.dagAtelier ? this.dagAtelier.atelier.naam : '', this.valideerAtelierNaam.bind(this)],
+      dagMoment: [this.dagAtelier ? this.dagAtelier.dagMoment :
+        (this.dagAtelierCopy ? this.dagAtelierCopy.dagMoment : DagMoment.VolledigeDag)]
     });
   }
 
@@ -182,7 +187,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
 
     this.dagAtelierCopy.dagMoment = this.dagAtelierFormGroup.controls.dagMoment.value;
     const formAtelierNaam = this.dagAtelierFormGroup.controls.atelierNaam.value;
-    if (this.dagAtelier.atelier.naam !== formAtelierNaam) {
+    if (!this.dagAtelier || (this.dagAtelier.atelier.naam !== formAtelierNaam)) {
       this.dagAtelierCopy.atelier = this.ateliers.find(atelier => atelier.naam = formAtelierNaam);
     }
 
