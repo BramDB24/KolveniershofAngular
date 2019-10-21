@@ -6,7 +6,7 @@ import { DagService } from '../services/dag.service';
 import { GebruikerService } from '../services/gebruiker.service';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { IDagAtelier } from '../interfaces/dag-atelier';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, ValidationErrors } from '@angular/forms';
 import { DagMoment } from '../enums/dag-moment.enum';
 
 @Component({
@@ -18,7 +18,8 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   @Input() private dagAtelier: IDagAtelier;
   @Input() public isEdit: boolean;
   @Input() public dagplanningId: number;
-  public loaded = false;
+  public gebruikersLoaded = false;
+  public ateliersLoaded = false;
   public ateliers: Array<Atelier> = [];
   public alleGebruikers = new Array<Gebruiker>();
   public aanwezigen = new Array<Gebruiker>();
@@ -29,16 +30,17 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     { key: 'Namiddag', value: DagMoment.Namiddag },
     { key: 'Volledige dag', value: DagMoment.VolledigeDag }
   ];
+  public submitted = false;
 
   /**
    * dagAtelierCopy wordt gebruikt als een mannier om data aan te passen in het dagAtelier
    * zonder het volledig op te slaan.
-   * Gebruik dagAtelierCopy voor iedere situatie tenzij je effectief data wilt opslaan.
+   * Gebruik dagAtelierCopy voor iedere situatie tenzij je data effectief wilt opslaan.
    */
   public dagAtelierCopy: IDagAtelier;
 
   constructor(
-    private userService: GebruikerService,
+    private gebruikerService: GebruikerService,
     private dagService: DagService,
     private fb: FormBuilder
   ) { }
@@ -46,10 +48,8 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   ngOnChanges() {
     // initialiseer dagAtelierCopy
     this.dagAtelierCopy = new DagAtelier({ ...this.dagAtelier });
-
     // initialiseer form
-    console.log('1: ' + this.ateliers);
-    if (this.ateliers) {
+    if (this.loaded()) {
       this.initialiseerFormGroup();
     }
 
@@ -62,27 +62,38 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.userService
+    this.gebruikerService
       .getUsers()
-      .pipe(
-        finalize(() => {
-          this.loaded = true;
-        })
-      )
+      .pipe(finalize(() => {
+        this.gebruikersLoaded = true;
+        if (this.loaded()) {
+          this.initialiseerFormGroup();
+        }
+      }))
       .subscribe(entry => {
         this.alleGebruikers = entry;
       });
     this.dagService
       .getAteliers()
-      .pipe(finalize(() => (this.loaded = true)))
-      .subscribe(entry => entry.forEach(e => this.ateliers.push(new Atelier(e))));
+      .pipe(finalize(() => {
+        this.ateliersLoaded = true;
+        if (this.loaded()) {
+          this.initialiseerFormGroup();
+        }
+      }))
+      .subscribe(entry => {
+        entry.forEach(e => this.ateliers.push(new Atelier(e)));
+      });
     this.initialiseerFormGroup();
+  }
+
+  public loaded() {
+    return this.gebruikersLoaded && this.ateliersLoaded;
   }
 
   private initialiseerFormGroup() {
     this.dagAtelierFormGroup = this.fb.group({
-      // default value wordt niet toegevoegd
-      atelierNaam: [this.dagAtelier ? this.dagAtelier.atelier.naam : '', this.valideerAtelierNaam.bind(this)],
+      atelierNaam: [this.dagAtelier ? this.dagAtelier.atelier.naam : 'test', this.valideerAtelierNaam.bind(this)],
       dagMoment: [this.dagAtelier ? this.dagAtelier.dagMoment : DagMoment.VolledigeDag]
     });
   }
@@ -91,11 +102,10 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     const naam = control.value;
 
     if (!naam) {
-      return { naamNietIngevuld: true };
+      return { naamNietIngevuld: 'Voeg een atelier naam toe' };
     }
-    console.log(this.ateliers);
     if (!this.ateliers.find(atelier => atelier.naam === naam)) {
-      return { atelierBestaatNiet: true };
+      return { atelierBestaatNiet: 'Het opgegeven atelier bestaat niet' };
     }
     return null;
   }
@@ -133,21 +143,57 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     );
   }
 
-  public editAtelier(): void {
-    this.aanwezigen.forEach(e => this.dagAtelierCopy.gebruikers.push(e));
+  // public editAtelier(): void {
+  //   this.aanwezigen.forEach(e => this.dagAtelierCopy.gebruikers.push(e));
+  // }
+
+  // public saveAtelier(): void {
+  //   this.dagAtelier = new DagAtelier({
+  //     atelier: {
+  //       atelierType: 1,
+  //       naam: "change me please"
+  //     },
+  //     dagMoment: 1,
+  //     gebruikers: this.aanwezigen
+  //   });
+
+  //   // this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe();
+  // }
+
+  public onSubmit(): void {
+    this.submitted = true;
+
+    // stop het process hier als de form invalid is
+    if (this.dagAtelierFormGroup.invalid) {
+      console.log('submit error')
+      console.log(this.dagAtelierFormGroup);
+      return;
+    }
+
+    this.dagAtelierCopy.dagMoment = this.dagAtelierFormGroup.controls.dagMoment.value;
+    const formAtelierNaam = this.dagAtelierFormGroup.controls.atelierNaam.value;
+    if (this.dagAtelier.atelier.naam !== formAtelierNaam) {
+      this.dagAtelierCopy.atelier = this.ateliers.find(atelier => atelier.naam = formAtelierNaam);
+    }
+
+    this.dagAtelier = this.dagAtelierCopy;
+
+    console.log('submitted');
+    console.log(this.dagAtelierFormGroup);
+    // if (this.isEdit) {
+    //   this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier);
+    // } else {
+    //   this.dagService.postDagAtelier(this.dagplanningId, this.dagAtelier);
+    // }
   }
 
-  public saveAtelier(): void {
-    this.dagAtelier = new DagAtelier({
-      atelier: {
-        atelierType: 1,
-        naam: "change me please"
-      },
-      dagMoment: 1,
-      gebruikers: this.aanwezigen
+  public atelierNaamFormErrors(): string[] {
+    const errors = this.dagAtelierFormGroup.controls.atelierNaam.errors;
+    const errorBerichten: string[] = [];
+    Object.keys(errors).forEach(key => {
+      errorBerichten.push(errors[key]);
     });
-
-    // this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe();
+    return errorBerichten;
   }
 
   public voegGebruikerToeAanCopy(): void {
