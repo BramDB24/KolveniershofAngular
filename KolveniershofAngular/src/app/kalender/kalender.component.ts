@@ -28,7 +28,11 @@ export class KalenderComponent implements OnInit {
   }
 
   public veranderDatum(nr: number): void {
-    this.veranderState(State.Dag);
+
+    if (this.state === State.DagEdit) {
+      this.veranderState(State.Dag);
+    }
+
     this.datum = new Date(
       this.datum.getFullYear(),
       this.datum.getMonth(),

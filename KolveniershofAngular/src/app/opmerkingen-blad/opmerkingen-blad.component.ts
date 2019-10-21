@@ -40,10 +40,13 @@ export class OpmerkingenBladComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges() {
+
     this.callAlleOpmerkingen(this.datum);
   }
 
   public callAlleOpmerkingen(date: Date): void {
+    this.opmerkingen = [];
+    console.log(this.datum);
     this.opmerkingenService.GetOpmerkingenVanSpecifiekeDag$(date)
       .pipe(finalize(() => (this.loaded = true)))
       .subscribe(
@@ -51,6 +54,7 @@ export class OpmerkingenBladComponent implements OnChanges, OnInit {
           entry.forEach(e => this.opmerkingen.push(e));
           this.initFormGroups();
         })
+    console.log(this.opmerkingen);
   }
 
   onSubmit(opmerking: Opmerking, i: number) {
@@ -62,6 +66,7 @@ export class OpmerkingenBladComponent implements OnChanges, OnInit {
       opmerkingType: opmerking.opmerkingType,
       datum: this.datum.toJSON()
     }).subscribe();
+    alert("Je gegevens werden succesvol opgeslagen!");
   }
 }
 
