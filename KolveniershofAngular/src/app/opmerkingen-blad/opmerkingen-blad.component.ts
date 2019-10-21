@@ -12,7 +12,7 @@ import { OpmerkingType } from '../enums/opmerking-type.enum';
   templateUrl: './opmerkingen-blad.component.html',
   styleUrls: ['./opmerkingen-blad.component.scss']
 })
-export class OpmerkingenBladComponent implements OnChanges, OnInit {
+export class OpmerkingenBladComponent implements OnChanges {
 
   @Input() public datum: Date;
   public opmerkingen = Array<IOpmerking>();
@@ -25,10 +25,6 @@ export class OpmerkingenBladComponent implements OnChanges, OnInit {
   //public opmerkingType: string;
 
   constructor(private opmerkingenService: OpmerkingenService, private fb: FormBuilder) { }
-
-  ngOnInit() {
-
-  }
 
   public initFormGroups() {
     this.opmerkingForm = new Array<FormGroup>();

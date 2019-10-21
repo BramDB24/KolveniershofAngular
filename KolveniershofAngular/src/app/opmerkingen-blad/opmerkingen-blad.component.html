@@ -1,16 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col col-xs-12 col-md-6">
-      <div *ngFor="let opmerking of opmerkingen; let i = index ">
-        <div class="card m-2">
-          <h5>{{opmerking.opmerkingType|opmerkingPipe}}</h5>
-          <form [formGroup]="opmerkingForm[i]" (ngSubmit)="onSubmit(opmerking, i)">
-            <textarea type="text" name="opmerkingTekst" formControlName="tekst">{{opmerking.tekst}}</textarea>
-            <button type="submit">Save</button>
-          </form>
-        </div>
-      </div>
+    <div class="col-xs-12 col-md-6" *ngFor="let opmerking of opmerkingen; let i = index ">
+      <h5>{{opmerking.opmerkingType|opmerkingPipe}}</h5>
+      <form class="spaceNaOpmerking" [formGroup]="opmerkingForm[i]" (ngSubmit)="onSubmit(opmerking, i)">
+        <textarea class="textareawidth d-block" rows="4" type="text" name="opmerkingTekst"
+          formControlName="tekst">{{opmerking.tekst}}</textarea>
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+      </form>
     </div>
   </div>
-  
 </div>
