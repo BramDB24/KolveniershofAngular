@@ -121,6 +121,16 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     }
   }
 
+  public verwijderGebruiker(gebruiker: Gebruiker): void {
+    if (!confirm(`Weet je zeker dat je ${gebruiker.voornaam} ${gebruiker.achternaam} niet meer in het atelier mag zijn?`)) {
+      return;
+    }
+    const index = this.dagAtelierCopy.gebruikers.findIndex(entry =>
+      entry.voornaam === gebruiker.voornaam &&
+      entry.achternaam === entry.achternaam);
+    this.dagAtelierCopy.gebruikers.splice(index, 1);
+  }
+
   public onChange(atelierkeuze: string) {
     // this.atelierNaam = atelierkeuze;
   }
@@ -165,7 +175,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
 
     // stop het process hier als de form invalid is
     if (this.dagAtelierFormGroup.invalid) {
-      console.log('submit error')
+      console.log('submit error');
       console.log(this.dagAtelierFormGroup);
       return;
     }
@@ -222,9 +232,5 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     this.gebruikerToevoegenLijstError = '';
     (document.getElementById('gebruikerToevoegenLijst') as HTMLInputElement).value = '';
     this.dagAtelierCopy.gebruikers.push(gevondenGebruiker);
-
-
-
-
   }
 }

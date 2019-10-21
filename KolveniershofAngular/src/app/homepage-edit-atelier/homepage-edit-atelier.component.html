@@ -4,9 +4,9 @@
       <div class="row col-12 pb-3">
         <div class="col-12 col-md-5 pl-0">
           <h4>Atelier:</h4>
-          <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam" list="atelierNamen"
+          <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
+            list="atelierNamen"
             [ngClass]="{ 'is-invalid': submitted &amp;&amp; dagAtelierFormGroup.controls.atelierNaam.errors }" />
-          <!-- [value]="dagAtelier.atelier.naam" -->
           <datalist id="atelierNamen">
             <option *ngFor="let dagatelier of ateliers" [value]="dagatelier.naam">
               {{dagatelier.naam}}
@@ -32,9 +32,10 @@
         </select>
       </div>
       <h5>Begeleiders</h5>
-      <div class="naastelkaar" *ngFor="let client of dagAtelierCopy.getBegeleiders()">
-        <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
-        <p class="tekst">{{ client.voornaam }}</p>
+      <div class="naastelkaar clickable" *ngFor="let begeleider of dagAtelierCopy.getBegeleiders()" (click)="verwijderGebruiker(begeleider)">
+        <img id="{{ begeleider.voornaam }}" class="begeleider" src="{{ begeleider.foto }}" />
+        <p class="tekst">{{ begeleider.voornaam }}</p>
+        <i class="fas fa-minus-circle removeBtn"></i>
       </div>
       <!-- <div class="naastelkaar" *ngFor="let begeleider of alleBegeleiders">
         <img id="{{ begeleider.voornaam }}" class="client" src="{{ begeleider.foto }}" (click)="select(begeleider)"
@@ -42,9 +43,10 @@
         <p class="tekst">{{ begeleider.voornaam }}</p>
       </div> -->
       <h5>Cliënten</h5>
-      <div class="naastelkaar" *ngFor="let client of dagAtelierCopy.getClienten()">
+      <div class="naastelkaar clickable" *ngFor="let client of dagAtelierCopy.getClienten()" (click)="verwijderGebruiker(client)">
         <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
         <p class="tekst">{{ client.voornaam }}</p>
+        <i class="fas fa-minus-circle removeBtn"></i>
       </div>
       <!-- <div class="naastelkaar" *ngFor="let client of alleGebruikers">
         <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" (click)="select(client)"
@@ -60,7 +62,8 @@
             {{gebruiker.voornaam + ' ' + gebruiker.achternaam}}
           </option>
         </datalist>
-        <button type="button" (click)="voegGebruikerToeAanCopy()" class="btn col-2 offset-1"><i class="fas fa-user-plus"></i></button>
+        <button type="button" (click)="voegGebruikerToeAanCopy()" class="btn col-2 offset-1"><i
+            class="fas fa-user-plus"></i></button>
       </div>
       <div *ngIf="gebruikerToevoegenLijstError" class="text-danger">
         {{gebruikerToevoegenLijstError}}
