@@ -11,6 +11,9 @@
                   <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
                     {{ ateliers.atelier.naam }}
                   </button>
+                  <a (click)="deleteAtelierUitDagplanning(ateliers, volledigeDag)">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
                 </li>
               </div>
             </ul>
@@ -21,6 +24,9 @@
                   <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
                     {{ ateliers.atelier.naam }}
                   </button>
+                  <a (click)="deleteAtelierUitDagplanning(ateliers, voormiddag)">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
                 </li>
               </div>
             </ul>
@@ -32,6 +38,9 @@
                   <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
                     {{ ateliers.atelier.naam }}
                   </button>
+                  <a (click)="deleteAtelierUitDagplanning(ateliers, namiddag)">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
                 </li>
               </div>
             </ul>

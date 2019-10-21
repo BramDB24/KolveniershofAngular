@@ -12,7 +12,7 @@ import { IDagAtelier } from '../interfaces/dag-atelier';
   providedIn: 'root'
 })
 export class DagService {
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public getDag(date: Date): Observable<IDagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -21,11 +21,16 @@ export class DagService {
     );
   }
 
-  public putDagAtelier(id: number, dagAtelier: IDagAtelier): Observable<object> {
+  public putDagAtelier(id: number, dagAtelier: IDagAtelier) {
     return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
   }
 
   public getAteliers(): Observable<Array<Atelier>> {
     return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
   }
+
+  public deleteAterlierUitDagplanning(datum, dagAtelier: IDagAtelier) {
+    return this.http.post(`${environment.apiUrl}/dagplanning/${datum}`, dagAtelier);
+  }
+
 }
