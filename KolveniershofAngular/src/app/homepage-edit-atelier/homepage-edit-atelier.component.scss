@@ -1,6 +1,7 @@
 .naastelkaar {
   display: inline-block;
   text-align: center;
+  position: relative;
 }
 
 .client {
@@ -12,6 +13,7 @@
 .style1 {
   box-shadow: 0px 12px 22px 1px rgb(71, 177, 88);
 }
+
 .rechts {
   float: right;
 }
@@ -35,7 +37,6 @@
   width: 75px;
   margin-right: 30px;
   font-size: 14pt;
-  background-color: crimson;
   color: white;
   border-radius: 5px;
 }
@@ -52,4 +53,17 @@
 
 .btn:hover {
   background-color: slategray;
+}
+
+.removeBtn {
+  background-color: white;
+  border-radius: 100%;
+  position: absolute;
+  color: crimson;
+  top: -13%;
+  right: 30%;
+}
+
+.clickable:hover{
+  cursor: pointer;
 }

@@ -9,6 +9,7 @@ import { DagPlanning } from '../models/dag-planning.model';
 
 // States worden gebruikt om te bepalen of een subcomponent getoond moet worden of niet
 export enum State {
+  Standard = 'standard',
   Edit = 'edit'
 }
 
@@ -26,7 +27,7 @@ export class HomepageEditComponent implements OnInit {
   public namiddag = new Array<IDagAtelier>();
   public volledigeDag = new Array<IDagAtelier>();
   public isEdit = false;
-  public state: State;
+  public state = State.Standard;
   StateType = State;
 
   constructor(private dagService: DagService) {}

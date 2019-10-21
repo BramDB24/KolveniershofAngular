@@ -1,46 +1,91 @@
-<ng-container *ngIf="loaded">
-  <div class="card">
-    <div class="card-body">
-      <ng-container *ngIf="!isEdit; else editAtelierTemplate">
-        <h4>Ateliers</h4>
-        <select (change)="onChange($event.target.value)" class="dropdown">
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="dagAtelierFormGroup" (ngSubmit)="onSubmit()">
+      <div class="row col-12 pb-3">
+        <div class="col-12 col-md-5 pl-0">
+          <h4>Atelier:</h4>
+          <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
+            list="atelierNamen"
+            [ngClass]="{ 'is-invalid': submitted &amp;&amp; dagAtelierFormGroup.controls.atelierNaam.errors }" />
+          <datalist id="atelierNamen">
+            <option *ngFor="let dagatelier of ateliers" [value]="dagatelier.naam">
+              {{dagatelier.naam}}
+            </option>
+          </datalist>
+          <div *ngIf="submitted &amp;&amp; dagAtelierFormGroup.controls.atelierNaam.errors" class="text-danger">
+            <div class="d-block" *ngFor="let error of atelierNaamFormErrors()">
+              {{error}}
+            </div>
+          </div>
+        </div>
+        <!-- <select (change)="onChange($event.target.value)" class="dropdown">
           <option *ngFor="let dagatelier of ateliers" [value]="dagatelier.naam">{{
             dagatelier.naam
           }}</option>
+        </select> -->
+
+        <select id="dagMomentSelect" class="form-control col-12 offset-md-3 col-md-3" formControlName="dagMoment">
+          <!-- [value]="dagAtelier.dagMoment" -->
+          <option *ngFor="let moment of dagMomenten" [value]=moment.value>
+            {{moment.key}}
+          </option>
         </select>
-      </ng-container>
-      <h4>Begeleiders</h4>
-      <div class="naastelkaar" *ngFor="let client of dagAtelier.getBegeleiders()">
-        <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
-        <p class="tekst">{{ client.voornaam }}</p>
+      </div>
+      <h5>Begeleiders</h5>
+      <div class="naastelkaar clickable" *ngFor="let begeleider of dagAtelierCopy.getBegeleiders()" (click)="verwijderGebruiker(begeleider)">
+        <img id="{{ begeleider.voornaam }}" class="begeleider" src="{{ begeleider.foto }}" />
+        <p class="tekst">{{ begeleider.voornaam }}</p>
+        <i class="fas fa-minus-circle removeBtn"></i>
       </div>
       <!-- <div class="naastelkaar" *ngFor="let begeleider of alleBegeleiders">
         <img id="{{ begeleider.voornaam }}" class="client" src="{{ begeleider.foto }}" (click)="select(begeleider)"
           [class.style1]="getAanwezigen(begeleider)" />
         <p class="tekst">{{ begeleider.voornaam }}</p>
       </div> -->
-      <h4>Cliënten</h4>
-      <div class="naastelkaar" *ngFor="let client of dagAtelier.getClienten()">
+      <h5>Cliënten</h5>
+      <div class="naastelkaar clickable" *ngFor="let client of dagAtelierCopy.getClienten()" (click)="verwijderGebruiker(client)">
         <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
         <p class="tekst">{{ client.voornaam }}</p>
+        <i class="fas fa-minus-circle removeBtn"></i>
       </div>
       <!-- <div class="naastelkaar" *ngFor="let client of alleGebruikers">
         <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" (click)="select(client)"
           [class.style1]="getAanwezigen(client)" />
         <p class="tekst">{{ client.voornaam }}</p>
       </div> -->
-      <div *ngIf="isEdit; else saveAtelierTemplate">
-        <button (click)="editAtelier()" type="button" class="btn rechts">
-          Aanpassen
-        </button>
+      <p>Persoon toevoegen:</p>
+      <div class="col-12 col-md-7 col-lg-5 row">
+        <input id="gebruikerToevoegenLijst" type="text" class="col-9 form-control" list="gebruikerList"
+          name="gebruikerToevoegen" [ngClass]="{ 'is-invalid': gebruikerToevoegenLijstError}" />
+        <datalist id="gebruikerList">
+          <option *ngFor="let gebruiker of this.getNietAanwezigen()">
+            {{gebruiker.voornaam + ' ' + gebruiker.achternaam}}
+          </option>
+        </datalist>
+        <button type="button" (click)="voegGebruikerToeAanCopy()" class="btn col-2 offset-1"><i
+            class="fas fa-user-plus"></i></button>
       </div>
-    </div>
+      <div *ngIf="gebruikerToevoegenLijstError" class="text-danger">
+        {{gebruikerToevoegenLijstError}}
+      </div>
+      <ng-container *ngIf="loaded()">
+        <button type="submit" class="btn rechts">
+          Opslaan
+        </button>
+      </ng-container>
+      <!-- <div *ngIf="isEdit; else saveAtelierTemplate">
+          <button (click)="editAtelier()" type="button" class="btn rechts">
+            Aanpassen
+          </button>
+        </div> -->
+    </form>
   </div>
-</ng-container>
+</div>
 
-<ng-template #editAtelierTemplate>
-  <h4>{{ dagAtelier.atelier.naam }}</h4>
-</ng-template>
+
+<!-- <ng-template #editAtelierTemplate>
+  <h4>{{ dagAtelierCopy.atelier.naam }}</h4>
+</ng-template> -->
 
 <ng-template #saveAtelierTemplate>
   <div>
