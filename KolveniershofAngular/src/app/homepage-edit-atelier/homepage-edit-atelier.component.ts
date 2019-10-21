@@ -46,7 +46,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         this.alleGebruikers = entry;
       });
     this.dagService
-      .getEditInformatie()
+      .getAteliers()
       .pipe(finalize(() => (this.loaded = true)))
       .subscribe(entry => entry.forEach(e => this.ateliers.push(e)));
   }

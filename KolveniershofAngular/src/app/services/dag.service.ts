@@ -25,7 +25,7 @@ export class DagService {
     return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
   }
 
-  public getEditInformatie(): Observable<Array<Atelier>> {
+  public getAteliers(): Observable<Array<Atelier>> {
     return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
   }
 }
