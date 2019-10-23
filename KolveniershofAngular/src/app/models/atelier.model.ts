@@ -6,7 +6,7 @@ export class Atelier implements IAtelier {
     naam: string;
 
     constructor(json: any) {
-        this.atelierId = json.aterlierId;
+        this.atelierId = json.atelierId;
         this.atelierType = json.atelierType;
         this.naam = json.naam;
     }

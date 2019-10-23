@@ -21,19 +21,16 @@ export class DagService {
     );
   }
 
-  public putDagAtelier(dagPlanningId: number, dagAtelier: IDagAtelier): Observable<object> {
-    console.log('ERROR: putDagAtelier nog niet geïmplementeerd');
-    return null;
-    // return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
-  }
-
-  public postDagAtelier(dagPlanningId: number, dagAtelier: IDagAtelier): Observable<object> {
-    console.log('ERROR: postDagAtelier nog niet geïmplementeerd');
-    return null;
-    // return this.http.post(`${environment.apiUrl}/dagplanning`, dagAtelier);
+  public putDagAtelier(id: number, dagAtelier: IDagAtelier) {
+    return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
   }
 
   public getAteliers(): Observable<Array<Atelier>> {
     return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
   }
+
+  public deleteAterlierUitDagplanning(datum, dagAtelier: IDagAtelier) {
+    return this.http.post(`${environment.apiUrl}/dagplanning/${datum}`, dagAtelier);
+  }
+
 }

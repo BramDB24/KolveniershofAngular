@@ -30,7 +30,7 @@ export class HomepageEditComponent implements OnInit {
   public state = State.Standard;
   StateType = State;
 
-  constructor(private dagService: DagService) {}
+  constructor(private dagService: DagService) { }
 
   ngOnInit() {
     this.dagService
@@ -41,6 +41,7 @@ export class HomepageEditComponent implements OnInit {
         })
       )
       .subscribe(entry => {
+        console.log(entry);
         this.dagPlanning = new DagPlanning(entry);
         this.setDagMoment();
       });
@@ -61,5 +62,19 @@ export class HomepageEditComponent implements OnInit {
     this.atelier = null;
     this.isEdit = false;
     this.state = State.Edit;
+  }
+
+  public deleteAtelierUitDagplanning(atelier, list) {
+    this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
+
+    var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+    if (indexAteliers > -1) {
+      this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
+    }
+
+    var indexLijst = list.indexOf(atelier);
+    if (indexLijst > -1) {
+      list.splice(indexLijst, 1);
+    }
   }
 }
