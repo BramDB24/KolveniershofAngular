@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { Atelier } from '../models/atelier.model';
 import { Gebruiker } from '../interfaces/gebruiker';
@@ -18,6 +18,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   @Input() private dagAtelier: IDagAtelier;
   @Input() public isEdit: boolean;
   @Input() public dagplanningId: number;
+  @Output() public newDagAtelierAddedEvent = new EventEmitter();
   public gebruikersLoaded = false;
   public ateliersLoaded = false;
   public ateliers: Array<Atelier> = [];
@@ -188,18 +189,21 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     this.dagAtelierCopy.dagMoment = this.dagAtelierFormGroup.controls.dagMoment.value;
     const formAtelierNaam = this.dagAtelierFormGroup.controls.atelierNaam.value;
     if (!this.dagAtelier || (this.dagAtelier.atelier.naam !== formAtelierNaam)) {
-      this.dagAtelierCopy.atelier = this.ateliers.find(atelier => atelier.naam = formAtelierNaam);
+      this.dagAtelierCopy.atelier = this.ateliers.find(atelier => atelier.naam === formAtelierNaam);
     }
 
     this.dagAtelier = this.dagAtelierCopy;
 
-    console.log('submitted');
-    console.log(this.dagAtelierFormGroup);
-    // if (this.isEdit) {
-    //   this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier);
-    // } else {
-    //   this.dagService.postDagAtelier(this.dagplanningId, this.dagAtelier);
-    // }
+    this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(entry => {},
+    err => {
+      console.log(err);
+      alert('Er was een probleem bij het opslaan van de aanpassing.\nEen techische beschrijving over te fout werd in de console geschreven.');
+    },
+    () => {
+      this.newDagAtelierAddedEvent.emit();
+      alert('De aanpassingen zijn opgeslagen');
+    }
+    );
   }
 
   public atelierNaamFormErrors(): string[] {

@@ -137,7 +137,7 @@ export class RegisterGebruikerComponent implements OnInit {
       type: this.gebruikerFormGroup.controls.gebruikerType.value
     };
     if (this.huidigeGebruiker) {
-      nieuweGebruiker.id = this.huidigeGebruiker.id;
+      nieuweGebruiker.id = this.huidigeGebruiker.gebruikerId;
     }
 
     // Uploaden van de foto

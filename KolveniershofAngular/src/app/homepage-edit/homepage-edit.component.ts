@@ -33,6 +33,7 @@ export class HomepageEditComponent implements OnInit {
   constructor(private dagService: DagService) { }
 
   ngOnInit() {
+    this.state = State.Standard;
     this.dagService
       .getDag(this.datum)
       .pipe(
