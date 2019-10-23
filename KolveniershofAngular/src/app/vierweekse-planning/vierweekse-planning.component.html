@@ -1,0 +1,26 @@
+<div class="container">
+  <div>
+    <h4>4-Weekse Planning</h4>
+    <h2>Selecteer een week en een weekdag</h2>
+    <div class="row">
+      <div class="col-3" *ngFor="let number of [1,2,3,4]">
+        <button (click)="SelecteerWeek(number)" type="btn">Week {number}</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2" *ngFor="let weekdag of weekdagen">
+        <button (click)="SelecteerWeekdag(weekdag)" type="btn">{weekdag}</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>Week {{geselecteerdeWeek}}, {{geselecteerdeWeekdag}}</h4>
+  </div>
+  <div>
+    <h2>Voormiddag</h2>
+  </div>
+  <div>
+    <h2>Namiddag</h2>
+  </div>
+
+</div>
