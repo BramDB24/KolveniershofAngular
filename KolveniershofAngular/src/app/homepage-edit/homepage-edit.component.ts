@@ -66,16 +66,19 @@ export class HomepageEditComponent implements OnInit {
   }
 
   public deleteAtelierUitDagplanning(atelier, list) {
-    this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
+    if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
 
-    var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
-    if (indexAteliers > -1) {
-      this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
-    }
+      this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
 
-    var indexLijst = list.indexOf(atelier);
-    if (indexLijst > -1) {
-      list.splice(indexLijst, 1);
+      var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+      if (indexAteliers > -1) {
+        this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
+      }
+
+      var indexLijst = list.indexOf(atelier);
+      if (indexLijst > -1) {
+        list.splice(indexLijst, 1);
+      }
     }
   }
 }
