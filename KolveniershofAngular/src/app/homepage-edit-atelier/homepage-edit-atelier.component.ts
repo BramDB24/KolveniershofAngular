@@ -88,6 +88,15 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       }))
       .subscribe(entry => {
         entry.forEach(e => this.ateliers.push(new Atelier(e)));
+        this.ateliers.sort((a1, a2) => {
+          if (a1.naam > a2.naam) {
+            return 1;
+          }
+          if (a1.naam < a2.naam) {
+            return -1;
+          }
+          return 0;
+        });
       });
     this.initialiseerFormGroup();
   }
@@ -156,7 +165,19 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       this.dagAtelierCopy.gebruikers.filter(aanwezige =>
         aanwezige.voornaam === gebruiker.voornaam && aanwezige.achternaam === gebruiker.achternaam
       ).length <= 0
-    );
+    ).sort((g1, g2) => {
+      const g1Naam = g1.voornaam + ' ' + g1.achternaam;
+      const g2Naam = g2.voornaam + ' ' + g2.achternaam;
+      if (g1Naam > g2Naam) {
+        return 1;
+      }
+
+      if (g1Naam < g2Naam) {
+        return -1;
+      }
+
+      return 0;
+    });
   }
 
   // public editAtelier(): void {
@@ -194,15 +215,16 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
 
     this.dagAtelier = this.dagAtelierCopy;
 
-    this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(entry => {},
-    err => {
-      console.log(err);
-      alert('Er was een probleem bij het opslaan van de aanpassing.\nEen techische beschrijving over te fout werd in de console geschreven.');
-    },
-    () => {
-      this.newDagAtelierAddedEvent.emit();
-      alert('De aanpassingen zijn opgeslagen');
-    }
+    this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(entry => { },
+      err => {
+        console.log(err);
+        alert('Er was een probleem bij het opslaan van de aanpassing.\n'
+          + 'Een techische beschrijving over te fout werd in de console geschreven.');
+      },
+      () => {
+        this.newDagAtelierAddedEvent.emit();
+        alert('De aanpassingen zijn opgeslagen');
+      }
     );
   }
 
