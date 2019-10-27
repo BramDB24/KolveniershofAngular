@@ -32,7 +32,8 @@
         </select>
       </div>
       <h5>Begeleiders</h5>
-      <div class="naastelkaar clickable" *ngFor="let begeleider of dagAtelierCopy.getBegeleiders()" (click)="verwijderGebruiker(begeleider)">
+      <div class="naastelkaar clickable" *ngFor="let begeleider of dagAtelierCopy.getBegeleiders()"
+        (click)="verwijderGebruiker(begeleider)">
         <img id="{{ begeleider.voornaam }}" class="begeleider" src="{{ begeleider.foto }}" />
         <p class="tekst">{{ begeleider.voornaam }}</p>
         <i class="fas fa-minus-circle removeBtn"></i>
@@ -43,7 +44,8 @@
         <p class="tekst">{{ begeleider.voornaam }}</p>
       </div> -->
       <h5>Cliënten</h5>
-      <div class="naastelkaar clickable" *ngFor="let client of dagAtelierCopy.getClienten()" (click)="verwijderGebruiker(client)">
+      <div class="naastelkaar clickable" *ngFor="let client of dagAtelierCopy.getClienten()"
+        (click)="verwijderGebruiker(client)">
         <img id="{{ client.voornaam }}" class="client" src="{{ client.foto }}" />
         <p class="tekst">{{ client.voornaam }}</p>
         <i class="fas fa-minus-circle removeBtn"></i>

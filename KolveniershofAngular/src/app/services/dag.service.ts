@@ -30,7 +30,7 @@ export class DagService {
   }
 
   public putDagAtelier(id: number, dagAtelier: IDagAtelier) {
-    return this.http.put(`${environment.apiUrl}/dagplanning/${id}`, dagAtelier);
+    return this.http.put(`${environment.apiUrl}/dagplanning/dagAtelier/${id}`, dagAtelier);
   }
 
   public getAteliers(): Observable<Array<Atelier>> {

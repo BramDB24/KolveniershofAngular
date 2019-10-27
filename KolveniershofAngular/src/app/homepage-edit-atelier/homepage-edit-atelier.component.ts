@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { Atelier } from '../models/atelier.model';
 import { Gebruiker } from '../interfaces/gebruiker';
@@ -18,6 +18,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   @Input() private dagAtelier: IDagAtelier;
   @Input() public isEdit: boolean;
   @Input() public dagplanningId: number;
+  @Output() public newDagAtelierAddedEvent = new EventEmitter();
   public gebruikersLoaded = false;
   public ateliersLoaded = false;
   public ateliers: Array<Atelier> = [];
@@ -87,6 +88,15 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       }))
       .subscribe(entry => {
         entry.forEach(e => this.ateliers.push(new Atelier(e)));
+        this.ateliers.sort((a1, a2) => {
+          if (a1.naam > a2.naam) {
+            return 1;
+          }
+          if (a1.naam < a2.naam) {
+            return -1;
+          }
+          return 0;
+        });
       });
     this.initialiseerFormGroup();
   }
@@ -155,7 +165,19 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       this.dagAtelierCopy.gebruikers.filter(aanwezige =>
         aanwezige.voornaam === gebruiker.voornaam && aanwezige.achternaam === gebruiker.achternaam
       ).length <= 0
-    );
+    ).sort((g1, g2) => {
+      const g1Naam = g1.voornaam + ' ' + g1.achternaam;
+      const g2Naam = g2.voornaam + ' ' + g2.achternaam;
+      if (g1Naam > g2Naam) {
+        return 1;
+      }
+
+      if (g1Naam < g2Naam) {
+        return -1;
+      }
+
+      return 0;
+    });
   }
 
   // public editAtelier(): void {
@@ -188,18 +210,22 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
     this.dagAtelierCopy.dagMoment = this.dagAtelierFormGroup.controls.dagMoment.value;
     const formAtelierNaam = this.dagAtelierFormGroup.controls.atelierNaam.value;
     if (!this.dagAtelier || (this.dagAtelier.atelier.naam !== formAtelierNaam)) {
-      this.dagAtelierCopy.atelier = this.ateliers.find(atelier => atelier.naam = formAtelierNaam);
+      this.dagAtelierCopy.atelier = this.ateliers.find(atelier => atelier.naam === formAtelierNaam);
     }
 
     this.dagAtelier = this.dagAtelierCopy;
 
-    console.log('submitted');
-    console.log(this.dagAtelierFormGroup);
-    // if (this.isEdit) {
-    //   this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier);
-    // } else {
-    //   this.dagService.postDagAtelier(this.dagplanningId, this.dagAtelier);
-    // }
+    this.dagService.putDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(entry => { },
+      err => {
+        console.log(err);
+        alert('Er was een probleem bij het opslaan van de aanpassing.\n'
+          + 'Een techische beschrijving over te fout werd in de console geschreven.');
+      },
+      () => {
+        this.newDagAtelierAddedEvent.emit();
+        alert('De aanpassingen zijn opgeslagen');
+      }
+    );
   }
 
   public atelierNaamFormErrors(): string[] {
