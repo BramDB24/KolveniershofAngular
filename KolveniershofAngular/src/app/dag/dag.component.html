@@ -49,11 +49,16 @@
           <div class="card-body">
             <h4 class="card-title">Namiddag</h4>
             <div *ngFor="let dagAteliers of [namiddag, volledigeDag]">
-              <div *ngFor="let ateliers of dagAteliers">
+              <div *ngFor="let dagAtelier of dagAteliers">
                 <p class="atelier">
-                  {{ ateliers.atelier.naam }}
+                  {{ dagAtelier.atelier.naam }}
                 </p>
-                <div class="naastelkaar" *ngFor="let gebruiker of ateliers.gebruikers">
+                <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.getBegeleiders()">
+                  <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
+                  <p class="tekst">{{ gebruiker.voornaam }}</p>
+                </div>
+                <hr />
+                <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.getClienten()">
                   <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
                   <p class="tekst">{{ gebruiker.voornaam }}</p>
                 </div>

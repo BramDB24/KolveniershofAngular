@@ -51,8 +51,8 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-9">
-        <app-homepage-edit-atelier *ngIf="state == StateType.Edit || state == StateType.VoegToe" [isEdit]="isEdit"
-          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId"></app-homepage-edit-atelier>
+        <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit"
+          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="ngOnInit()"></app-homepage-edit-atelier>
       </div>
     </div>
   </div>
