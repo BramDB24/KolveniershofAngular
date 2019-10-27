@@ -41,4 +41,10 @@ export class DagService {
     return this.http.post(`${environment.apiUrl}/dagplanning/${datum}`, dagAtelier);
   }
 
+  public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: IDagAtelier) {
+    return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}`, dagAtelier);
+  }
+
+
+
 }

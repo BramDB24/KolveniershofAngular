@@ -45,11 +45,11 @@ export class DagComponent implements OnChanges {
       error => {
         this.loadingError = error;
       },
-      ()=>{console.log("request complete")}
+      () => { console.log("request complete") }
     )
   }
 
-  public haalDagplanningOpMetDatum(date: Date): void {
+  public haalDagplanningOpMetDatum(date: Date) {
     this.dagService.getDag(date).subscribe(
       dag => {
         this.dagplanning = new DagPlanning(dag);
@@ -58,11 +58,11 @@ export class DagComponent implements OnChanges {
       error => {
         this.loadingError = error;
       },
-      ()=>{console.log("request complete")}
+      () => { console.log("request complete") }
     );
   }
 
-  public setDagMoment(): void {
+  public setDagMoment() {
     this.namiddag = this.dagplanning.getDagAteliersOpDagMoment(DagMoment.Namiddag);
     this.voormiddag = this.dagplanning.getDagAteliersOpDagMoment(DagMoment.Voormiddag);
     this.volledigeDag = this.dagplanning.getDagAteliersOpDagMoment(DagMoment.VolledigeDag);

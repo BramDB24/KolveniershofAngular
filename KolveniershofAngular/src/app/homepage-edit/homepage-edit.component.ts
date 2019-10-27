@@ -22,6 +22,8 @@ export enum State {
 })
 export class HomepageEditComponent implements OnInit {
   @Input() public datum: Date;
+  @Input() public geselecteerdeWeekdag: number;
+  @Input() public geselecteerdeWeek: number;
   public atelier: IDagAtelier;
   public loaded = false;
   public dagPlanning: IDagPlanning;
@@ -31,25 +33,49 @@ export class HomepageEditComponent implements OnInit {
   public isEdit = false;
   public state = State.Standard;
   StateType = State;
-  @Input() public geselecteerdeWeekdag: number;
-  @Input() public geselecteerdeWeek: number;
+
 
   constructor(private dagService: DagService) { }
 
   ngOnInit() {
-    this.dagService
-      .getDag(this.datum)
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+    }
+    else { this.haalDagplanningOpMetDatum(this.datum); }
+  }
+
+
+  public haalDagplanningOpMetDatum(date: Date): void {
+    this.dagService.getDag(date)
       .pipe(
         finalize(() => {
           this.loaded = true;
         })
       )
-      .subscribe(entry => {
-        console.log(entry);
-        this.dagPlanning = new DagPlanning(entry);
-        this.setDagMoment();
-      });
+      .subscribe(
+        dag => {
+          this.dagPlanning = new DagPlanning(dag);
+          this.setDagMoment();
+        }
+      );
   }
+
+  public haalDagplanningTemplateOpMetWeekdagEnWeek(week: number, weekdag: number) {
+    this.dagService.getDagTemplate(week, weekdag)
+      .pipe(
+        finalize(() => {
+          this.loaded = true;
+        })
+      )
+      .subscribe(
+        dag => {
+          this.dagPlanning = new DagPlanning(dag);
+          this.setDagMoment();
+        }
+      )
+  }
+
+
 
   public setDagMoment(): void {
     this.namiddag = this.dagPlanning.getDagAteliersOpDagMoment(DagMoment.Namiddag);
@@ -71,8 +97,13 @@ export class HomepageEditComponent implements OnInit {
   public deleteAtelierUitDagplanning(atelier, list) {
     if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
 
-      this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
+      if (this.datum == null) {
+        this.dagService.deleteAterlierUitDagplanningTemplate(this.dagPlanning.weeknummer, this.dagPlanning.weekdag, atelier)
+          .subscribe();
+      } else {
+        this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
 
+      }
       var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
       if (indexAteliers > -1) {
         this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
