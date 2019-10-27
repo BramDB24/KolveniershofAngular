@@ -1,26 +1,39 @@
-<!-- <div class="container">
-  <div>
-    <h4>4-Weekse Planning</h4>
-    <h2>Selecteer een week en een weekdag</h2>
-    <div class="row">
-      <div class="col-3" *ngFor="let number of [1,2,3,4]">
-        <button (click)="SelecteerWeek(number)" type="btn">Week {number}</button>
+<div class="container">
+  <div class="vierweeksePlanning">
+    <div>
+      <h4>4-Weekse Planning</h4>
+      <h2>Selecteer een week en een weekdag</h2>
+      <div class="row">
+        <div class="col-1" *ngFor="let number of [1,2,3,4]">
+          <button (click)="SelecteerWeek(number)" type="btn">Week {{number}}</button>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-2" *ngFor="let weekdag of weekdagen">
-        <button (click)="SelecteerWeekdag(weekdag)" type="btn">{weekdag}</button>
+      <div class="row">
+        <div class="col-1" *ngFor="let weekdag of weekdagen; let i = index">
+          <button (click)="SelecteerWeekdag(weekdag, i)" type="btn">{{weekdag}}</button>
+        </div>
       </div>
     </div>
   </div>
+
   <div>
     <h4>Week {{geselecteerdeWeek}}, {{geselecteerdeWeekdag}}</h4>
   </div>
-  <div>
-    <h2>Voormiddag</h2>
-  </div>
-  <div>
-    <h2>Namiddag</h2>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <button type="button" (click)="veranderState(StateType.Dag)"
+        [ngClass]="{ 'geselecteerd' : state == StateType.Dag || state == StateType.DagEdit }"
+        [disabled]="state == StateType.Dag">Dagplanning Template</button>
+      <button type="button" (click)="veranderState(StateType.DagEdit)"
+        [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.Dag"><i
+          class="far fa-edit"></i> Dagplanning Template
+        aanpassen</button>
+    </div>
   </div>
 
-</div> -->
+
+  <app-dag *ngIf="state == StateType.Dag" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex"></app-dag>
+  <app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex">
+  </app-homepage-edit>

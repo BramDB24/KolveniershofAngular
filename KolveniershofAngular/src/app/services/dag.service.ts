@@ -12,12 +12,20 @@ import { IDagAtelier } from '../interfaces/dag-atelier';
   providedIn: 'root'
 })
 export class DagService {
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+
+
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public getDag(date: Date): Observable<IDagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
     return this.http.get<IDagPlanning>(
       `${environment.apiUrl}/dagplanning/${convertedDate}`
+    );
+  }
+
+  public getDagTemplate(weeknr: number, weekdag: number) {
+    return this.http.get<IDagPlanning>(
+      `${environment.apiUrl}/dagplanning/vanWeek/${weeknr}/vandag/${weekdag}`
     );
   }
 

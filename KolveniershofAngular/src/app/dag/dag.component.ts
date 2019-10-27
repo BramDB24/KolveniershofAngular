@@ -13,7 +13,10 @@ import { DagPlanning } from '../models/dag-planning.model';
   styleUrls: ['./dag.component.scss']
 })
 export class DagComponent implements OnChanges {
+
   @Input() public datum: Date;
+  @Input() public geselecteerdeWeekdag: number;
+  @Input() public geselecteerdeWeek: number;
   public loadingError: HttpErrorResponse;
   public dagplanning: IDagPlanning;
   public volledigeDag = new Array<DagAtelier>();
@@ -21,24 +24,41 @@ export class DagComponent implements OnChanges {
   public namiddag = new Array<DagAtelier>();
   public specialeAteliers = new Array<DagAtelier>();
 
+
   constructor(private dagService: DagService) {
   }
 
+
   ngOnChanges() {
-    this.callApi(this.datum);
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+    }
+    else { this.haalDagplanningOpMetDatum(this.datum); }
   }
 
-  public callApi(date: Date): void {
-    this.dagService.getDag(date).subscribe(
+  public haalDagplanningTemplateOpMetWeekdagEnWeek(week: number, weekdag: number) {
+    this.dagService.getDagTemplate(week, weekdag).subscribe(
       dag => {
         this.dagplanning = new DagPlanning(dag);
-        console.log(dag);
-        console.log(this.dagplanning);
         this.setDagMoment();
       },
       error => {
         this.loadingError = error;
-      }
+      },
+      ()=>{console.log("request complete")}
+    )
+  }
+
+  public haalDagplanningOpMetDatum(date: Date): void {
+    this.dagService.getDag(date).subscribe(
+      dag => {
+        this.dagplanning = new DagPlanning(dag);
+        this.setDagMoment();
+      },
+      error => {
+        this.loadingError = error;
+      },
+      ()=>{console.log("request complete")}
     );
   }
 
