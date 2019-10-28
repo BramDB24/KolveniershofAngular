@@ -1,28 +1,45 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { IDagPlanning } from '../interfaces/dag-planning';
-import { Atelier } from '../models/atelier.model';
-import { DagAtelier } from '../models/dag-atelier.model';
 import { IDagAtelier } from '../interfaces/dag-atelier';
+import { Atelier } from '../models/atelier.model';
+import { DagPlanning } from '../models/dag-planning.model';
+import { DagAtelier } from '../models/dag-atelier.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DagService {
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
-  public getDag(date: Date): Observable<IDagPlanning> {
+  public huidigeGeselecteerdeDag: DagPlanning;
+
+  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+
+  public getDag(date: Date): Observable<DagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return this.http.get<IDagPlanning>(
-      `${environment.apiUrl}/dagplanning/${convertedDate}`
-    );
+    return this.http
+      .get<DagPlanning>(`${environment.apiUrl}/dagplanning/${convertedDate}`)
+      .pipe(
+        map(x => {
+          // er moeten een object.assign gebeuren omdat de mapping van json naar object automatisch gebeurd
+          // op deze manier moet er geen constructors voorzien worden voor de mapping te laten slagen
+          // echter moet er wel een 'echt' object gemaakt worden zodat we methodes normaal kunnen aanroepen
+          // zonder expliciet new Class() te moeten doen
+          this.huidigeGeselecteerdeDag = Object.assign(new DagPlanning(), x);
+          this.huidigeGeselecteerdeDag.dagAteliers = x.dagAteliers.map(t => Object.assign(new DagAtelier(), t));
+          return this.huidigeGeselecteerdeDag;
+        })
+      );
   }
 
   public putDagAtelier(id: number, dagAtelier: IDagAtelier) {
-    return this.http.put(`${environment.apiUrl}/dagplanning/dagAtelier/${id}`, dagAtelier);
+    return this.http.put(
+      `${environment.apiUrl}/dagplanning/dagAtelier/${id}`,
+      dagAtelier
+    );
   }
 
   public getAteliers(): Observable<Array<Atelier>> {
@@ -30,7 +47,9 @@ export class DagService {
   }
 
   public deleteAterlierUitDagplanning(datum, dagAtelier: IDagAtelier) {
-    return this.http.post(`${environment.apiUrl}/dagplanning/${datum}`, dagAtelier);
+    return this.http.post(
+      `${environment.apiUrl}/dagplanning/${datum}`,
+      dagAtelier
+    );
   }
-
 }

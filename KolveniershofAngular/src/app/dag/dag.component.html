@@ -1,4 +1,4 @@
-<ng-container *ngIf="loadingError !== undefined; else loadingError">
+<ng-container *ngIf="loadingError !== undefined && loading; else loadingError">
   <div class="container">
     <h2 style="margin-bottom: 10px">Dagplanning</h2>
     <!-- rij met afwezigen, zieken en vervoer -->
@@ -19,14 +19,13 @@
         </div>
       </div>
     </div>
-    <!-- rij met voor en namiddag activiteiten -->
+    <!-- rij met voor en voormiddag activiteiten -->
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Voormiddag</h4>
-            <div *ngFor="let dagAteliers of [voormiddag, volledigeDag]">
-              <div *ngFor="let dagAtelier of dagAteliers">
+              <div *ngFor="let dagAtelier of dagplanning.getVoormiddagAteliers()">
                 <p class="atelier">
                   {{ dagAtelier.atelier.naam }}
                 </p>
@@ -39,7 +38,6 @@
                   <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
                   <p class="tekst">{{ gebruiker.voornaam }}</p>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -48,8 +46,7 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Namiddag</h4>
-            <div *ngFor="let dagAteliers of [namiddag, volledigeDag]">
-              <div *ngFor="let dagAtelier of dagAteliers">
+              <div *ngFor="let dagAtelier of dagplanning.getNamiddagAteliers()">
                 <p class="atelier">
                   {{ dagAtelier.atelier.naam }}
                 </p>
@@ -63,7 +60,6 @@
                   <p class="tekst">{{ gebruiker.voornaam }}</p>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

@@ -20,40 +20,25 @@ export enum State {
 })
 export class HomepageEditComponent implements OnInit {
   @Input() public datum: Date;
-  public atelier: IDagAtelier;
-  public loaded = false;
-  public dagPlanning: IDagPlanning;
-  public voormiddag = new Array<IDagAtelier>();
-  public namiddag = new Array<IDagAtelier>();
-  public volledigeDag = new Array<IDagAtelier>();
+  public atelier: DagAtelier;
+  public dagPlanning: DagPlanning;
   public isEdit = false;
   public state = State.Standard;
   StateType = State;
-
-  constructor(private dagService: DagService) { }
+  loaded = true;
+  constructor(private dagService: DagService) {
+  }
 
   ngOnInit() {
     this.state = State.Standard;
-    this.dagService
-      .getDag(this.datum)
-      .pipe(
-        finalize(() => {
-          this.loaded = true;
-        })
-      )
-      .subscribe(entry => {
-        console.log(entry);
-        this.dagPlanning = new DagPlanning(entry);
-        this.setDagMoment();
-      });
+    // in een vorig component hebben we api call gedaan naar een bepaalde datum
+    // als we in dit component terecht komen weten we dat we de reeds opgehaalde dag willen aanpassen
+    // ipv een nieuwe call te doen kunnen we dus hetzelfde object gebruiken
+    this.dagPlanning = this.dagService.huidigeGeselecteerdeDag;
   }
 
-  public setDagMoment(): void {
-    this.namiddag = this.dagPlanning.getDagAteliersOpDagMoment(DagMoment.Namiddag);
-    this.voormiddag = this.dagPlanning.getDagAteliersOpDagMoment(DagMoment.Voormiddag);
-    this.volledigeDag = this.dagPlanning.getDagAteliersOpDagMoment(DagMoment.VolledigeDag);
-  }
-  public setAtelier(atelier: IDagAtelier) {
+
+  public setAtelier(atelier: DagAtelier) {
     this.atelier = atelier;
     this.isEdit = true;
     this.state = State.Edit;
@@ -66,16 +51,21 @@ export class HomepageEditComponent implements OnInit {
   }
 
   public deleteAtelierUitDagplanning(atelier, list) {
-    if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
+    if (
+      confirm(
+        'Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?'
+      )
+    ) {
+      this.dagService
+        .deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier)
+        .subscribe();
 
-      this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
-
-      var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+      let indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
       if (indexAteliers > -1) {
         this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
       }
 
-      var indexLijst = list.indexOf(atelier);
+      let indexLijst = list.indexOf(atelier);
       if (indexLijst > -1) {
         list.splice(indexLijst, 1);
       }
