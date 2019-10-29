@@ -1,30 +1,32 @@
 <div class="container">
   <div class="vierweeksePlanning">
-    <div>
-      <h4>4-Weekse Planning</h4>
-      <h2>Selecteer een week en een weekdag</h2>
-      <div class="row">
-        <div class="col-1" *ngFor="let number of [1,2,3,4]">
-          <button (click)="SelecteerWeek(number)" type="btn">Week {{number}}</button>
+    <div class="selecteerWeekEnWeekdag">
+      <h2>4-Weekse Planning</h2>
+      <div class="border rounded-sm">
+        <div class="row weken">
+          <div *ngFor="let number of [1,2,3,4]">
+            <button (click)="SelecteerWeek(number)" type="button" class="btn">Week {{number}}</button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-1" *ngFor="let weekdag of weekdagen; let i = index">
-          <button (click)="SelecteerWeekdag(weekdag, i)" type="btn">{{weekdag}}</button>
+        <hr>
+        <div class="row weekdagen">
+          <div *ngFor="let weekdag of weekdagen; let i = index">
+            <button (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn">{{weekdag}}</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div>
-    <h4>Week {{geselecteerdeWeek}}, {{geselecteerdeWeekdag}}</h4>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-6">
-      <button type="button" (click)="veranderState(StateType.Dag)"
+  <div class="row sectiondag">
+    <div class="col-xs-12 col-md-3">
+      <h4 class="font-weight-bold">Week {{geselecteerdeWeek}}, {{geselecteerdeWeekdag}}</h4>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <button class="btn" type="button" (click)="veranderState(StateType.Dag)"
         [ngClass]="{ 'geselecteerd' : state == StateType.Dag || state == StateType.DagEdit }"
         [disabled]="state == StateType.Dag">Dagplanning Template</button>
-      <button type="button" (click)="veranderState(StateType.DagEdit)"
+      <button class="btn" type="button" (click)="veranderState(StateType.DagEdit)"
         [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.Dag"><i
           class="far fa-edit"></i> Dagplanning Template
         aanpassen</button>

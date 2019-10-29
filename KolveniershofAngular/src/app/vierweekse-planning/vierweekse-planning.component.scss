@@ -1,0 +1,46 @@
+.btn {
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+  font-size: 12pt;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  &.geselecteerd {
+    background-color: rgb(96, 55, 194);
+    font-weight: bold;
+  }
+
+  &:hover {
+    background-color: rgb(66, 102, 138);
+  }
+
+  margin-right: 5px;
+  margin-left: 5px;
+
+}
+
+.weken {
+  padding-left: 3%;
+}
+
+.weekdagen {
+  padding-left: 3%;
+}
+
+h2,
+h4 {
+  padding: 1%;
+}
+
+.sectiondag {
+  padding: 2%;
+  padding-bottom: 4%;
+  padding-top: 4%;
+}
+
+.selecteerWeekEnWeekdag {
+  padding-bottom: 2%;
+}

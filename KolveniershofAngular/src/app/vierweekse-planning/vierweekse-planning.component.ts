@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 export class VierweeksePlanningComponent implements OnInit {
 
   public geselecteerdeWeek: number;
-  public weekdagen = ["Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag", "Maandag"];
+  //public weekdagen = ["Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag", "Maandag"];
+  public weekdagen = ["Di", "Woe", "Do", "Vr", "Za", "Zo", "Ma"];
   public geselecteerdeWeekdag: string;
   public geselecteerdeWeekdagIndex: number;
   public state = State.Dag;
