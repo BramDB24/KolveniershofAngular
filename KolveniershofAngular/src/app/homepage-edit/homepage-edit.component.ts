@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { IDagPlanning } from '../interfaces/dag-planning';
 import { DagService } from '../services/dag.service';
@@ -20,7 +20,8 @@ export enum State {
   templateUrl: './homepage-edit.component.html',
   styleUrls: ['./homepage-edit.component.scss']
 })
-export class HomepageEditComponent implements OnInit {
+export class HomepageEditComponent implements OnInit, OnChanges {
+
   @Input() public datum: Date;
   @Input() public geselecteerdeWeekdag: number;
   @Input() public geselecteerdeWeek: number;
@@ -38,6 +39,13 @@ export class HomepageEditComponent implements OnInit {
   constructor(private dagService: DagService) { }
 
   ngOnInit() {
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+    }
+    else { this.haalDagplanningOpMetDatum(this.datum); }
+  }
+
+  ngOnChanges() {
     if (this.datum == null) {
       this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
     }
