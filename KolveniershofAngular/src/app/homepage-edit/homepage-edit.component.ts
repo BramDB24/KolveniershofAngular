@@ -39,6 +39,8 @@ export class HomepageEditComponent implements OnInit, OnChanges {
   constructor(private dagService: DagService) { }
 
   ngOnInit() {
+    console.log(this.geselecteerdeWeek);
+    console.log(this.geselecteerdeWeekdag);
     if (this.datum == null) {
       this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
     }
@@ -46,6 +48,8 @@ export class HomepageEditComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log(this.geselecteerdeWeek);
+    console.log(this.geselecteerdeWeekdag);
     if (this.datum == null) {
       this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
     }
@@ -104,7 +108,8 @@ export class HomepageEditComponent implements OnInit, OnChanges {
 
   public deleteAtelierUitDagplanning(atelier, list) {
     if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
-
+      console.log(this.dagPlanning.weeknummer);
+      console.log(this.dagPlanning.weekdag);
       if (this.datum == null) {
         this.dagService.deleteAterlierUitDagplanningTemplate(this.dagPlanning.weeknummer, this.dagPlanning.weekdag, atelier)
           .subscribe();
