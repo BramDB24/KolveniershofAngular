@@ -31,10 +31,17 @@
   &:hover {
     background-color: rgb(66, 102, 138);
   }
+
+  max-width: 5em;
+  margin-bottom: 3em;
+  padding : 0.5em;
 }
 
 .spaceNaOpmerking {
   padding-bottom: 2em;
   padding-top: 0.5em;
+}
 
+textarea {
+  resize: none;
 }

@@ -26,15 +26,13 @@ export class OpmerkingenService {
     );
   }
 
-  public postOpmerking(id, opmerking) {
-    console.log(opmerking);
-    console.log(id);
-    return this.http.put(`${environment.apiUrl}/Opmerking/${id}`, opmerking).pipe(
-      tap(x=>console.log("requst done")),
+  public putOpmerking(opmerking) {
+    return this.http.put(`${environment.apiUrl}/Opmerking/${opmerking.opmerkingId}`, opmerking).pipe(
+      tap(x => console.log("requst done")),
       catchError(err => {
         console.log(err);
         return of([]);
       })
-      );
+    );
   }
 }

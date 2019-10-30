@@ -19,10 +19,6 @@ export class OpmerkingenBladComponent implements OnChanges {
 
   public loaded = false;
   public opmerkingForm: FormGroup[];
-  // = [this.fb.group({
-  //   tekst: ["test", Validators.required]
-  // })];
-  //public opmerkingType: string;
 
   constructor(private opmerkingenService: OpmerkingenService, private fb: FormBuilder) { }
 
@@ -36,13 +32,11 @@ export class OpmerkingenBladComponent implements OnChanges {
   }
 
   ngOnChanges() {
-
     this.callAlleOpmerkingen(this.datum);
   }
 
   public callAlleOpmerkingen(date: Date): void {
     this.opmerkingen = [];
-    console.log(this.datum);
     this.opmerkingenService.GetOpmerkingenVanSpecifiekeDag$(date)
       .pipe(finalize(() => (this.loaded = true)))
       .subscribe(
@@ -50,22 +44,20 @@ export class OpmerkingenBladComponent implements OnChanges {
           entry.forEach(e => this.opmerkingen.push(e));
           this.initFormGroups();
         })
-    console.log(this.opmerkingen);
   }
 
-  onSubmit(opmerking: Opmerking, i: number) {
-    console.log("submitted gelukt");
+  onSubmit() {
+    console.log("submitbutton pressed");
+    for (let i = 0; i < this.opmerkingForm.length; i++) {
+      this.opmerkingenService.putOpmerking({
+        opmerkingId: this.opmerkingen[i].opmerkingId,
+        tekst: this.opmerkingForm[i].controls.tekst.value,
+        opmerkingType: this.opmerkingen[i].opmerkingType,
+        datum: this.datum.toJSON()
+      }
+      ).subscribe();
 
-    this.opmerkingenService.postOpmerking(
-      opmerking.opmerkingId, {
-      tekst: this.opmerkingForm[i].controls.tekst.value,
-      opmerkingType: opmerking.opmerkingType,
-      datum: this.datum.toJSON()
-    }).subscribe();
+    }
     alert("Je gegevens werden succesvol opgeslagen!");
   }
 }
-
-
-
-
