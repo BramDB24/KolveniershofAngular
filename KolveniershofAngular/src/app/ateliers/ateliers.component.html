@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="atelierFormGroup">
+      <div class="row col-12 pb-3">
+        <div class="col-12 col-md-5 pl-0">
+          <h2>Atelier toevoegen:</h2>
+
+          <div id="atelierdiv">
+            <p>Kies een naam voor het nieuwe atelier:</p>
+            <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
+              [ngClass]="{ 'is-invalid': submitted &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
+            <div *ngIf="submitted &amp;&amp; atelierFormGroup.controls.atelierNaam.errors" class="text-danger">
+              <div class="d-block" *ngFor="let error of atelierNaamFormErrors()">
+                {{error}}
+              </div>
+            </div>
+          </div>
+
+          <div id="atelierdiv">
+            <p>Kies een picto:</p>
+            <app-file-upload></app-file-upload>
+          </div>
+
+          <div>
+            <button (click)="saveAtelier()" type="button" class="btn rechts">
+              Opslaan
+            </button>
+          </div>
+
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

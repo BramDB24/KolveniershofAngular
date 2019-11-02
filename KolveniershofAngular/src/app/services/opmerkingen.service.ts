@@ -27,12 +27,6 @@ export class OpmerkingenService {
   }
 
   public putOpmerking(opmerking) {
-    return this.http.put(`${environment.apiUrl}/Opmerking/${opmerking.opmerkingId}`, opmerking).pipe(
-      tap(x => console.log("requst done")),
-      catchError(err => {
-        console.log(err);
-        return of([]);
-      })
-    );
+    return this.http.put(`${environment.apiUrl}/Opmerking/${opmerking.opmerkingId}`, opmerking);
   }
 }

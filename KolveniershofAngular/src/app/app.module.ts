@@ -16,6 +16,7 @@ import { KalenderComponent } from './kalender/kalender.component';
 import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.component';
 import { OpmerkingPipe } from './pipes/opmerking.pipe';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
+import { AteliersComponent } from './ateliers/ateliers.component';
 
 registerLocaleData(localeNl);
 
@@ -31,7 +32,8 @@ registerLocaleData(localeNl);
     RegisterGebruikerComponent,
     OpmerkingenBladComponent,
     OpmerkingPipe,
-    VierweeksePlanningComponent
+    VierweeksePlanningComponent,
+    AteliersComponent
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
