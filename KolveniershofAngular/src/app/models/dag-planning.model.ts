@@ -1,7 +1,5 @@
-import { IDagAtelier } from '../interfaces/dag-atelier';
-import { IDagPlanning } from '../interfaces/dag-planning';
-import { DagAtelier } from './dag-atelier.model';
 import { DagMoment } from '../enums/dag-moment.enum';
+import { DagAtelier } from './dag-atelier.model';
 
 export class DagPlanning {
     eten: string;
@@ -23,7 +21,7 @@ export class DagPlanning {
     //     });
     // }
 
-    public getDagAteliersOpDagMoment(dagMoment: number): IDagAtelier[] {
+    public getDagAteliersOpDagMoment(dagMoment: number): DagAtelier[] {
         return this.dagAteliers.filter(dagAtelier => dagAtelier.dagMoment === dagMoment);
     }
 

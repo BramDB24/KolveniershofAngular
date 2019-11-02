@@ -1,39 +1,48 @@
 import { GebruikerType } from '../enums/gebruiker-type.enum';
-import { IDagAtelier } from '../interfaces/dag-atelier';
-import { Gebruiker } from '../interfaces/gebruiker';
 import { Atelier } from './atelier.model';
+import { Gebruiker } from './gebruiker.model';
 
-export class DagAtelier implements IDagAtelier {
-    dagAtelierId?: number;
-    dagMoment: number;
-    atelier: Atelier;
-    gebruikers: Gebruiker[];
+export class DagAtelier {
+  dagAtelierId?: number;
+  dagMoment: number;
+  atelier: Atelier = new Atelier();
+  gebruikers: Gebruiker[] = new Array<Gebruiker>();
 
-    // constructor(json: any) {
-    //     this.dagAtelierId = json.dagAtelierId;
-    //     this.dagMoment = json.dagMoment ? json.dagMoment : DagMoment.VolledigeDag;
-    //     this.atelier = json.atelier ? new Atelier(json.atelier) : null;
-    //     this.gebruikers = json.gebruikers ? json.gebruikers : [];
+  public getBegeleiders(): Gebruiker[] {
+    return this.gebruikers
+      ? this.gebruikers.filter(
+          g =>
+            g.type === GebruikerType.Begeleider ||
+            g.type === GebruikerType.Admin
+        )
+      : null;
+  }
 
-    // }
+  public getClienten(): Gebruiker[] {
+    return this.gebruikers.filter(g => g.type === GebruikerType.Cliënt);
+  }
 
-    getBegeleiders(): Gebruiker[] {
-        const begeleiders: Gebruiker[] = [];
-        this.gebruikers.forEach(gebruiker => {
-            if (gebruiker.type === GebruikerType.Begeleider || gebruiker.type === GebruikerType.Admin) {
-                begeleiders.push(gebruiker);
-            }
-        });
-        return begeleiders;
-    }
+  public verwijderGebruikerVanDagatelier(gebruiker: Gebruiker): void {
+    this.gebruikers = this.gebruikers.filter(g => g !== gebruiker);
+  }
 
-    getClienten(): Gebruiker[] {
-        const cliënten: Gebruiker[] = [];
-        this.gebruikers.forEach(gebruiker => {
-            if (gebruiker.type === GebruikerType.Cliënt) {
-                cliënten.push(gebruiker);
-            }
-        });
-        return cliënten;
-    }
+  public voegGebruikerToeAanDagplanning(gebruiker: Gebruiker): void {
+    this.gebruikers.push(gebruiker);
+  }
+
+  public getAanwezigenVanDagatelier(gebruiker: Gebruiker): boolean {
+    return this.gebruikers.some(g => g === gebruiker);
+  }
+
+  public getNiewAanwezigen(alleGebruikers: Array<Gebruiker>): Array<Gebruiker> {
+    return alleGebruikers.filter(
+          gebruiker =>
+            this.gebruikers.filter(
+              aanwezige =>
+                aanwezige.voornaam === gebruiker.voornaam &&
+                aanwezige.achternaam === gebruiker.achternaam
+            ).length <= 0
+        )
+      ;
+  }
 }

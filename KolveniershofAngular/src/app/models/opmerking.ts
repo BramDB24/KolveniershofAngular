@@ -1,6 +1,5 @@
-import { IOpmerking } from '../interfaces/opmerking';
 
-export class Opmerking implements IOpmerking {
+export class Opmerking {
     opmerkingId?: number;
     opmerkingType: number;
     tekst: string;

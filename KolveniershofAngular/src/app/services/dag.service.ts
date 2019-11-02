@@ -1,19 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { IDagAtelier } from '../interfaces/dag-atelier';
 import { Atelier } from '../models/atelier.model';
-import { DagPlanning } from '../models/dag-planning.model';
 import { DagAtelier } from '../models/dag-atelier.model';
+import { DagPlanning } from '../models/dag-planning.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DagService {
-
   public huidigeGeselecteerdeDag: DagPlanning;
 
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
@@ -29,13 +27,15 @@ export class DagService {
           // echter moet er wel een 'echt' object gemaakt worden zodat we methodes normaal kunnen aanroepen
           // zonder expliciet new Class() te moeten doen
           this.huidigeGeselecteerdeDag = Object.assign(new DagPlanning(), x);
-          this.huidigeGeselecteerdeDag.dagAteliers = x.dagAteliers.map(t => Object.assign(new DagAtelier(), t));
+          this.huidigeGeselecteerdeDag.dagAteliers = x.dagAteliers.map(t =>
+            Object.assign(new DagAtelier(), t)
+          );
           return this.huidigeGeselecteerdeDag;
         })
       );
   }
 
-  public putDagAtelier(id: number, dagAtelier: IDagAtelier) {
+  public putDagAtelier(id: number, dagAtelier: DagAtelier) {
     return this.http.put(
       `${environment.apiUrl}/dagplanning/dagAtelier/${id}`,
       dagAtelier
@@ -43,10 +43,12 @@ export class DagService {
   }
 
   public getAteliers(): Observable<Array<Atelier>> {
-    return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
+    return this.http
+      .get<Array<Atelier>>(`${environment.apiUrl}/atelier`)
+      .pipe(map(x => x.sort((a, b) => a.naam.localeCompare(b.naam))));
   }
 
-  public deleteAterlierUitDagplanning(datum, dagAtelier: IDagAtelier) {
+  public deleteAterlierUitDagplanning(datum, dagAtelier: DagAtelier) {
     return this.http.post(
       `${environment.apiUrl}/dagplanning/${datum}`,
       dagAtelier

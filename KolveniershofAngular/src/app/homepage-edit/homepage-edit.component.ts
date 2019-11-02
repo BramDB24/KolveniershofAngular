@@ -1,11 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-import { IDagPlanning } from '../interfaces/dag-planning';
-import { DagService } from '../services/dag.service';
 import { DagAtelier } from '../models/dag-atelier.model';
-import { IDagAtelier } from '../interfaces/dag-atelier';
-import { DagMoment } from '../enums/dag-moment.enum';
 import { DagPlanning } from '../models/dag-planning.model';
+import { DagService } from '../services/dag.service';
 
 // States worden gebruikt om te bepalen of een subcomponent getoond moet worden of niet
 export enum State {
@@ -38,6 +34,10 @@ export class HomepageEditComponent implements OnInit {
   }
 
 
+  public updateAtelierLijst(): void {
+    this.dagService.getDag(this.datum).subscribe(entry => this.dagPlanning =  this.dagService.huidigeGeselecteerdeDag);
+  }
+
   public setAtelier(atelier: DagAtelier) {
     this.atelier = atelier;
     this.isEdit = true;
@@ -45,7 +45,7 @@ export class HomepageEditComponent implements OnInit {
   }
 
   public nieuwAtelier() {
-    this.atelier = null;
+    this.atelier = Object.assign(new DagAtelier());
     this.isEdit = false;
     this.state = State.Edit;
   }
@@ -60,15 +60,15 @@ export class HomepageEditComponent implements OnInit {
         .deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier)
         .subscribe();
 
-      let indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
-      if (indexAteliers > -1) {
-        this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
-      }
+      // const indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+      // if (indexAteliers > -1) {
+      //   this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
+      // }
 
-      let indexLijst = list.indexOf(atelier);
-      if (indexLijst > -1) {
-        list.splice(indexLijst, 1);
-      }
+      // const indexLijst = list.indexOf(atelier);
+      // if (indexLijst > -1) {
+      //   list.splice(indexLijst, 1);
+      // }
     }
   }
 }

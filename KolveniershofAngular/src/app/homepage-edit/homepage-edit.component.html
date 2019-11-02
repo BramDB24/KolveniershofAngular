@@ -52,7 +52,7 @@
       </div>
       <div class="col-12 col-sm-6 col-md-9">
         <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit"
-          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="ngOnInit()"></app-homepage-edit-atelier>
+          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()"></app-homepage-edit-atelier>
       </div>
     </div>
   </div>
