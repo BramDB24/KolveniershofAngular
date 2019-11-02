@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
+import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,10 @@ export const routes: Routes = [
   {
     path: 'register/:id',
     component: RegisterGebruikerComponent
+  },
+  {
+    path: 'login',
+    component: LoginGebruikerComponent
   },
   {
     path: '',
