@@ -13,7 +13,12 @@ export class AtelierService {
   constructor(private http: HttpClient) { }
 
   public postAtelier(atelier: Atelier) {
-    return this.http.post(`${environment.apiUrl}/atelier`, atelier);
+    return this.http.post(`${environment.apiUrl}/atelier`, atelier
+      // , {
+      //   reportProgress: true,
+      //   observe: 'events'
+      // }
+    );
   }
 
   public getAteliers(): Observable<Array<Atelier>> {

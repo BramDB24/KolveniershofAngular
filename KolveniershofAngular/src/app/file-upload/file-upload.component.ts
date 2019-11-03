@@ -14,12 +14,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class FileUploadComponent implements ControlValueAccessor {
-  // @Input() progress;
+  @Input() progress;
   @Input() errorGevonden;
   onChange: Function;
   public file: File | null = null;
-  // @Input() formcontrolname;
-  // @Input() atelierFormGroup;
 
 
   @HostListener('change', ['$event.target.files']) emitFiles(event: FileList) {
@@ -43,7 +41,5 @@ export class FileUploadComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: Function) {
   }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
-  }
+
 }
