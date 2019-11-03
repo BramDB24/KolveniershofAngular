@@ -13,7 +13,15 @@ export class AtelierService {
   constructor(private http: HttpClient) { }
 
   public postAtelier(atelier: Atelier) {
-    return this.http.post(`${environment.apiUrl}/atelier/`, atelier);
+    return this.http.post(`${environment.apiUrl}/atelier`, atelier);
+  }
+
+  public getAteliers(): Observable<Array<Atelier>> {
+    return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
+  }
+
+  public deleteAtelier(atelierId: Number) {
+    return this.http.delete(`${environment.apiUrl}/atelier/${atelierId}`);
   }
 
 

@@ -108,8 +108,6 @@ export class HomepageEditComponent implements OnInit, OnChanges {
 
   public deleteAtelierUitDagplanning(atelier, list) {
     if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
-      console.log(this.dagPlanning.weeknummer);
-      console.log(this.dagPlanning.weekdag);
       if (this.datum == null) {
         this.dagService.deleteAterlierUitDagplanningTemplate(this.dagPlanning.weeknummer, this.dagPlanning.weekdag, atelier)
           .subscribe();
