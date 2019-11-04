@@ -43,6 +43,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
     console.log(this.geselecteerdeWeekdag);
     if (this.datum == null) {
       this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+      console.log("pizza");
     }
     else { this.haalDagplanningOpMetDatum(this.datum); }
   }
@@ -52,6 +53,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
     console.log(this.geselecteerdeWeekdag);
     if (this.datum == null) {
       this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+      console.log("pizza");
     }
     else { this.haalDagplanningOpMetDatum(this.datum); }
   }
@@ -82,6 +84,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
       .subscribe(
         dag => {
           this.dagPlanning = new DagPlanning(dag);
+          console.log(this.dagPlanning);
           this.setDagMoment();
         }
       )
@@ -108,6 +111,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
 
   public deleteAtelierUitDagplanning(atelier, list) {
     if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
+      console.log(this.dagPlanning);
       console.log(this.dagPlanning.weeknummer);
       console.log(this.dagPlanning.weekdag);
       if (this.datum == null) {

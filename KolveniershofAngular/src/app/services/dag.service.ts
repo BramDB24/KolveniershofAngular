@@ -25,7 +25,7 @@ export class DagService {
 
   public getDagTemplate(weeknr: number, weekdag: number) {
     return this.http.get<IDagPlanning>(
-      `${environment.apiUrl}/dagplanning/vanWeek/${weeknr}/vandag/${weekdag}`
+      `${environment.apiUrl}/dagplanning/vanWeek/${weeknr}/vanDag/${weekdag}`
     );
   }
 

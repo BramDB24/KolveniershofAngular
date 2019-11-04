@@ -61,47 +61,6 @@
       </div>
 
       <div class="col-md-5 m-1">
-        <label for="straat">Straat*</label>
-        <input type="text" id="straat" class="form-control" formControlName="straat"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.straat.errors }">
-        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.straat.errors" class="text-danger">
-          <div *ngIf="gebruikerFormGroup.controls.straat.errors.required">Straat is verplicht</div>
-        </div>
-      </div>
-
-      <div class="col-md-5 m-1">
-        <label for="huisnummer">Huisnummer*</label>
-        <input type="text" id="huisnummer" class="form-control" formControlName="huisnummer"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.huisnummer.errors }">
-        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.huisnummer.errors" class="text-danger">
-          <div *ngIf="gebruikerFormGroup.controls.huisnummer.errors.required">Huisnummer is verplicht</div>
-        </div>
-      </div>
-
-      <div class="col-md-5 m-1">
-        <label for="busnummer">Busnummer</label>
-        <input type="text" id="busnummer" class="form-control" formControlName="busnummer"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.busnummer.errors }">
-      </div>
-
-      <div class="col-md-5 m-1">
-        <label for="gemeente">Gemeente*</label>
-        <input type="text" id="gemeente" class="form-control" formControlName="gemeente"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.gemeente.errors }">
-        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.gemeente.errors" class="text-danger">
-          <div *ngIf="gebruikerFormGroup.controls.gemeente.errors.required">Gemeente is verplicht</div>
-        </div>
-      </div>
-
-      <div class="col-md-5 m-1">
-        <label for="postcode">Postcode*</label>
-        <input type="text" id="postcode" class="form-control" formControlName="postcode"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.postcode.errors }">
-        <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.postcode.errors" class="text-danger">
-          <div *ngIf="gebruikerFormGroup.controls.postcode.errors.required">Postcode is verplicht</div>
-        </div>
-      </div>
-      <div class="col-md-5 m-1">
         <label for="foto">Foto*</label>
         <app-file-upload formControlName="foto" [errorGevonden]="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors"></app-file-upload> <!-- [progress]="progress" -->
         <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors" class="text-danger">

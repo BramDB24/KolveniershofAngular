@@ -87,15 +87,8 @@ export class RegisterGebruikerComponent implements OnInit {
     this.gebruikerFormGroup = this.fb.group({
       achternaam: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '', Validators.required],
       voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
-      achternaamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaamOuder : ''],
-      voornaamOuder: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaamOuder : ''],
       email: [this.huidigeGebruiker ? this.huidigeGebruiker.email : '', [Validators.required, Validators.email]],
       wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '', Validators.required],
-      straat: [this.huidigeGebruiker ? this.huidigeGebruiker.straatnaam : '', Validators.required],
-      huisnummer: [this.huidigeGebruiker ? this.huidigeGebruiker.huisnummer : '', Validators.required],
-      busnummer: [this.huidigeGebruiker ? this.huidigeGebruiker.busnummer : ''],
-      gemeente: [this.huidigeGebruiker ? this.huidigeGebruiker.gemeente : '', Validators.required],
-      postcode: [this.huidigeGebruiker ? this.huidigeGebruiker.postcode : '', Validators.required],
       gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required],
       foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', valideerBestandType]
     }
@@ -120,20 +113,21 @@ export class RegisterGebruikerComponent implements OnInit {
       return;
     }
 
+    // maak bestandnaam uniek
+    const bestandNaam = Date.now().toString() + this.gebruikerFormGroup.controls.foto.value.name;
+    // folder naam voor bestand
+    const folderNaam = 'gebruiker-foto';
+
+    // this.gebruikerFormGroup.controls.foto.value.name = bestandNaam;
+
+    // bewaar alle gebruiker gegevens in een object
     const nieuweGebruiker = {
       id: '',
       achternaam: this.gebruikerFormGroup.controls.achternaam.value,
       voornaam: this.gebruikerFormGroup.controls.voornaam.value,
-      achternaamOuder: this.gebruikerFormGroup.controls.achternaamOuder.value,
-      voornaamOuder: this.gebruikerFormGroup.controls.voornaamOuder.value,
       email: this.gebruikerFormGroup.controls.email.value,
       wachtwoord: this.gebruikerFormGroup.controls.wachtwoord.value,
-      straat: this.gebruikerFormGroup.controls.straat.value,
-      huisnummer: this.gebruikerFormGroup.controls.huisnummer.value,
-      busnummer: this.gebruikerFormGroup.controls.busnummer.value,
-      gemeente: this.gebruikerFormGroup.controls.gemeente.value,
-      postcode: this.gebruikerFormGroup.controls.postcode.value,
-      foto: this.gebruikerFormGroup.controls.foto.value.name,
+      foto: folderNaam + '/' + bestandNaam,
       type: this.gebruikerFormGroup.controls.gebruikerType.value
     };
     if (this.huidigeGebruiker) {
@@ -141,23 +135,19 @@ export class RegisterGebruikerComponent implements OnInit {
     }
 
     // Uploaden van de foto
-    const fotoFormGroup = new FormGroup({
-      foto: new FormControl(this.gebruikerFormGroup.controls.foto.value)
-    });
+    this.bestandService.postFile(folderNaam, bestandNaam, this.gebruikerFormGroup.controls.foto.value)
+      .subscribe();
 
-
-    this.bestandService.postFile('gebruiker-foto', fotoFormGroup);
-
-    // Stuur nieuweGebruiker naar de databank
-    if (this.huidigeGebruiker) {
-      this.gebruikerService.postUpdateGebruiker(nieuweGebruiker).subscribe((response) => {
-        alert('Gebruiker geüpdate.');
-      });
-    } else {
-      this.gebruikerService.postNieuweGebruiker(nieuweGebruiker).subscribe((response) => {
-        alert('Gebruiker toegevoegd.');
-      });
-    }
+    // // Stuur nieuweGebruiker naar de databank
+    // if (this.huidigeGebruiker) {
+    //   this.gebruikerService.postUpdateGebruiker(nieuweGebruiker).subscribe((response) => {
+    //     alert('Gebruiker geüpdate.');
+    //   });
+    // } else {
+    //   this.gebruikerService.postNieuweGebruiker(nieuweGebruiker).subscribe((response) => {
+    //     alert('Gebruiker toegevoegd.');
+    //   });
+    // }
   }
   hasRequiredField(abstractControl: AbstractControl): boolean {
     if (abstractControl.validator) {
