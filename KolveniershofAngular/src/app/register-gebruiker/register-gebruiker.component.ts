@@ -4,7 +4,8 @@ import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { BestandService } from '../services/bestand.service';
-import { Gebruiker } from '../interfaces/gebruiker';
+import { Gebruiker } from '../models/gebruiker.model';
+
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
   const foto = control.value;
@@ -30,7 +31,7 @@ export class RegisterGebruikerComponent implements OnInit {
   public gebruikerFormGroup: FormGroup;
   public loader = false;
   public huidigeGebruiker: Gebruiker;
-  public _gebruikerTypes: string[];
+  public gebruikerTypes: string[];
   public submitButtonText: string;
   public readonly standaardTypeChecked = 2;
   public readonly typesMetOuderInfo = [2];
@@ -46,7 +47,7 @@ export class RegisterGebruikerComponent implements OnInit {
 
   ngOnInit() {
     // this.gebruikerService.getUserTypes().subscribe(
-    //   types => this._gebruikerTypes = types,
+    //   types => this.gebruikerTypes = types,
     //   err => {
     //     alert('Er was een error bij het ophalen van de gebruiker soorten.');
     //     console.log(err);

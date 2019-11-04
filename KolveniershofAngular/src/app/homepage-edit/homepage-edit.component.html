@@ -6,7 +6,7 @@
           <div class="card-body">
             <h4>Volledige Dag</h4>
             <ul>
-              <div *ngFor="let ateliers of volledigeDag">
+              <div *ngFor="let ateliers of dagPlanning.getVolledigedagAteliers()">
                 <li>
                   <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
                     {{ ateliers.atelier.naam }}
@@ -19,7 +19,7 @@
             </ul>
             <h4>Voormiddag</h4>
             <ul>
-              <div *ngFor="let ateliers of voormiddag">
+              <div *ngFor="let ateliers of dagPlanning.getVoormiddagAteliers()">
                 <li>
                   <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
                     {{ ateliers.atelier.naam }}
@@ -33,7 +33,7 @@
 
             <h4>Namiddag</h4>
             <ul>
-              <div *ngFor="let ateliers of namiddag">
+              <div *ngFor="let ateliers of dagPlanning.getNamiddagAteliers()">
                 <li>
                   <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
                     {{ ateliers.atelier.naam }}
@@ -52,7 +52,7 @@
       </div>
       <div class="col-12 col-sm-6 col-md-9">
         <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit"
-          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="ngOnInit()"></app-homepage-edit-atelier>
+          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()"></app-homepage-edit-atelier>
       </div>
     </div>
   </div>

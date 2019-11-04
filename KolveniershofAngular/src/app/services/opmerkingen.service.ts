@@ -1,38 +1,41 @@
-import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { IOpmerking } from '../interfaces/opmerking';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { Opmerking } from '../models/opmerking';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OpmerkingenService {
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
-  public GetOpmerkingenVanSpecifiekeDag$(date: Date): Observable<IOpmerking[]> {
+  public GetOpmerkingenVanSpecifiekeDag$(date: Date): Observable<Opmerking[]> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return this.http.get<IOpmerking[]>(
+    return this.http.get<Opmerking[]>(
       `${environment.apiUrl}/Opmerking/opmerkingOp/${convertedDate}`
     );
   }
 
-  public GetOpmerkingenVanSpecifiekeDagEnType$(date: Date, type: number): Observable<IOpmerking[]> {
+  public GetOpmerkingenVanSpecifiekeDagEnType$(
+    date: Date,
+    type: number
+  ): Observable<Opmerking[]> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return this.http.get<IOpmerking[]>(
+    return this.http.get<Opmerking[]>(
       `${environment.apiUrl}/Opmerking/opmerkingOp/${convertedDate}/typeOpmerking/${type}`
     );
   }
 
-  public putOpmerking(opmerking) {
-    return this.http.put(`${environment.apiUrl}/Opmerking/${opmerking.opmerkingId}`, opmerking).pipe(
-      tap(x => console.log("requst done")),
-      catchError(err => {
-        console.log(err);
-        return of([]);
-      })
-    );
+  public postOpmerking(id, opmerking) {
+    return this.http
+      .put(`${environment.apiUrl}/Opmerking/${id}`, opmerking)
+      .pipe(
+        catchError(err => {
+          return of([]);
+        })
+      );
   }
 }

@@ -1,4 +1,4 @@
-export interface Gebruiker {
+export class Gebruiker {
     gebruikerId?: string;
     voornaam: string;
     achternaam: string;
