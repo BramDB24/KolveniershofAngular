@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="vierweeksePlanning">
+    <div class="selecteerWeekEnWeekdag">
+      <h2>4-Weekse Planning</h2>
+      <div class="border rounded-sm">
+        <div class="row weken">
+          <div *ngFor="let number of [1,2,3,4]">
+            <button (click)="SelecteerWeek(number)" type="button" class="btn">Week {{number}}</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row weekdagen">
+          <div *ngFor="let weekdag of weekdagen; let i = index">
+            <button (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn">{{weekdag}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row sectiondag">
+    <div class="col-xs-12 col-md-3">
+      <h4 class="font-weight-bold">Week {{geselecteerdeWeek}}, {{geselecteerdeWeekdag}}</h4>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <button class="btn" type="button" (click)="veranderState(StateType.Dag)"
+        [ngClass]="{ 'geselecteerd' : state == StateType.Dag || state == StateType.DagEdit }"
+        [disabled]="state == StateType.Dag">Dagplanning Template</button>
+      <button class="btn" type="button" (click)="veranderState(StateType.DagEdit)"
+        [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.Dag"><i
+          class="far fa-edit"></i> Dagplanning Template
+        aanpassen</button>
+    </div>
+  </div>
+
+
+  <app-dag *ngIf="state == StateType.Dag" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex"></app-dag>
+  <app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex">
+  </app-homepage-edit>

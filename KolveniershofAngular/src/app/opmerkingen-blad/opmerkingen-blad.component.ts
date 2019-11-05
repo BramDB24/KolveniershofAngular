@@ -15,10 +15,6 @@ export class OpmerkingenBladComponent implements OnChanges {
 
   public loaded = false;
   public opmerkingForm: FormGroup[];
-  // = [this.fb.group({
-  //   tekst: ["test", Validators.required]
-  // })];
-  //public opmerkingType: string;
 
   constructor(
     private opmerkingenService: OpmerkingenService,

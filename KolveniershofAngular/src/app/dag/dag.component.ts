@@ -15,6 +15,8 @@ import { DagService } from '../services/dag.service';
 export class DagComponent implements OnChanges {
   // Geeft ons de input van de het kalender component
   @Input() public datum: Date;
+  @Input() public geselecteerdeWeekdag: number;
+  @Input() public geselecteerdeWeek: number;
   public loadingError: HttpErrorResponse;
   public loading = false;
 
