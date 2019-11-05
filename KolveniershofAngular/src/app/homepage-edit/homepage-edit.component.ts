@@ -1,14 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { DagPlanning } from '../models/dag-planning.model';
 import { DagService } from '../services/dag.service';
+import { finalize } from 'rxjs/operators';
+import { DagMoment } from '../enums/dag-moment.enum';
 
 // States worden gebruikt om te bepalen of een subcomponent getoond moet worden of niet
 export enum State {
   Standard = 'standard',
   Edit = 'edit',
-  Dag = "Dag",
-  DagEdit = "DagEdit"
+  Dag = 'Dag',
+  DagEdit = 'DagEdit'
 }
 
 @Component({
@@ -16,29 +18,71 @@ export enum State {
   templateUrl: './homepage-edit.component.html',
   styleUrls: ['./homepage-edit.component.scss']
 })
-export class HomepageEditComponent implements OnInit {
-
+export class HomepageEditComponent implements OnInit, OnChanges {
+  @Input() public geselecteerdeWeekdag: number;
+  @Input() public geselecteerdeWeek: number;
   @Input() public datum: Date;
   public atelier: DagAtelier;
   public dagPlanning: DagPlanning;
   public isEdit = false;
   public state = State.Standard;
   StateType = State;
-  loaded = true;
-  constructor(private dagService: DagService) {
-  }
+  loaded = false;
+  constructor(private dagService: DagService) {}
 
   ngOnInit() {
     this.state = State.Standard;
     // in een vorig component hebben we api call gedaan naar een bepaalde datum
     // als we in dit component terecht komen weten we dat we de reeds opgehaalde dag willen aanpassen
     // ipv een nieuwe call te doen kunnen we dus hetzelfde object gebruiken
-    this.dagPlanning = this.dagService.huidigeGeselecteerdeDag;
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(
+        this.geselecteerdeWeek,
+        this.geselecteerdeWeekdag
+      );
+    } else {
+      this.haalDagplanningOpMetDatum(this.datum);
+    }
   }
 
+  ngOnChanges() {
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(
+        this.geselecteerdeWeek,
+        this.geselecteerdeWeekdag
+      );
+    } else {
+      this.haalDagplanningOpMetDatum(this.datum);
+    }
+  }
 
-  public updateAtelierLijst(): void {
-    this.dagService.getDag(this.datum).subscribe(entry => this.dagPlanning =  this.dagService.huidigeGeselecteerdeDag);
+  public haalDagplanningOpMetDatum(date: Date): void {
+    this.dagService
+      .getDag(date)
+      .pipe(
+        finalize(() => {
+          this.loaded = true;
+        })
+      )
+      .subscribe(dag => {
+        this.dagPlanning = this.dagService.huidigeGeselecteerdeDag;
+      });
+  }
+
+  public haalDagplanningTemplateOpMetWeekdagEnWeek(
+    week: number,
+    weekdag: number
+  ) {
+    this.dagService
+      .getDagTemplate(week, weekdag)
+      .pipe(
+        finalize(() => {
+          this.loaded = true;
+        })
+      )
+      .subscribe(dag => {
+        this.dagPlanning = this.dagService.huidigeGeselecteerdeDag;
+      });
   }
 
   public setAtelier(atelier: DagAtelier) {
@@ -63,15 +107,15 @@ export class HomepageEditComponent implements OnInit {
         .deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier)
         .subscribe();
 
-      // const indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
-      // if (indexAteliers > -1) {
-      //   this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
-      // }
+      const indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+      if (indexAteliers > -1) {
+        this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
+      }
 
-      // const indexLijst = list.indexOf(atelier);
-      // if (indexLijst > -1) {
-      //   list.splice(indexLijst, 1);
-      // }
+      const indexLijst = list.indexOf(atelier);
+      if (indexLijst > -1) {
+        list.splice(indexLijst, 1);
+      }
     }
   }
 }
