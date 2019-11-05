@@ -1,9 +1,17 @@
 <div class="jumbotron">
   <div class="container">
-    <div class="row">
+   <div class="col">
+      <div class="col-md-6">
+          <h1>Welkom bij het kolveniershof</h1>
+      </div>
+      <div class="col-md-2 portrait">
+        <img src="../../assets/42181_Kolveniershof_Leuven.jpg" alt="">
+      </div>
+   </div> 
+    <div class="row">      
       <div class="col-md-6 offset-md-3">
         <form name="form" (ngSubmit)="login()" #f="ngForm">
-          <h1 style="text-align:center">Login</h1>
+          <h3 style="text-align:center">Login</h3>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -16,7 +24,6 @@
               class="form-control sty1"
               placeholder="Gebruikers naam"
               required
-              
             />
           </div>
           <div class="input-group mb-4">
@@ -30,11 +37,10 @@
               class="form-control"
               placeholder="Wachtwoord"
               required
-              
             />
           </div>
-          <div >
-            <p 
+          <div>
+            <p
               error-cy="errorMessage"
               style="color:#E92626;font-size:20px;font-weight:normal"
               Class="success"
@@ -48,11 +54,14 @@
               <button type="submit" class="btn btn-primary px-4">Login</button>
             </div>
             <div class="col-6 text-right">
-              <button type="button" (click)="router.navigate(['/register'])" class="btn btn-link px-0">
+              <button
+                type="button"
+                (click)="router.navigate(['/register'])"
+                class="btn btn-link px-0"
+              >
                 Registreer als nieuwe gebruiker
               </button>
             </div>
-            
           </div>
         </form>
       </div>

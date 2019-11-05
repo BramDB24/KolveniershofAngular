@@ -3,11 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
-<<<<<<< HEAD
 import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
-=======
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
->>>>>>> develop
 
 export const routes: Routes = [
   {

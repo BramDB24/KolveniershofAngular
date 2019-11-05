@@ -29,20 +29,20 @@ export class AccountService {
   }
 
   public login(
-    loginCredential: string,
-    wachtwoord: string
+    email: string,
+    password: string
   ): Observable<boolean> {
     return this.http
       .post(
         `${environment.apiUrl}/account`,
-        { loginCredential, wachtwoord },
+        { email,  password },
         { responseType: 'text' }
       )
       .pipe(
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
-            this._user$.next(loginCredential);
+            this._user$.next(email);
             return true;
           } else {
             return false;
