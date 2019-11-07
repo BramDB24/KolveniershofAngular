@@ -10,8 +10,15 @@
               <h4 class="card-title d-inline-block">
                 {{ dagAtelier.atelier.naam }}
               </h4>
-              <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.gebruikers">
-                <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
+              <div
+                class="naastelkaar"
+                *ngFor="let gebruiker of dagAtelier.gebruikers"
+              >
+                <img
+                  id="{{ gebruiker.voornaam }}"
+                  class="client"
+                  src="{{ gebruiker.foto }}"
+                />
                 <p class="tekst">{{ gebruiker.voornaam }}</p>
               </div>
             </div>
@@ -19,25 +26,38 @@
         </div>
       </div>
     </div>
-    <!-- rij met voor en voormiddag activiteiten -->
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Voormiddag</h4>
-              <div *ngFor="let dagAtelier of dagplanning.getVoormiddagAteliers()">
-                <p class="atelier">
-                  {{ dagAtelier.atelier.naam }}
-                </p>
-                <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.getBegeleiders()">
-                  <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
-                  <p class="tekst">{{ gebruiker.voornaam }}</p>
-                </div>
-                <hr />
-                <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.getClienten()">
-                  <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
-                  <p class="tekst">{{ gebruiker.voornaam }}</p>
-                </div>
+            <div *ngFor="let dagAtelier of dagplanning.getVoormiddagAteliers()">
+              <p class="atelier">
+                {{ dagAtelier.atelier.naam }}
+              </p>
+              <div
+                class="naastelkaar"
+                *ngFor="let gebruiker of dagAtelier.getBegeleiders()"
+              >
+                <img
+                  id="{{ gebruiker.voornaam }}"
+                  class="client"
+                  src="{{ gebruiker.foto }}"
+                />
+                <p class="tekst">{{ gebruiker.voornaam }}</p>
+              </div>
+              <hr />
+              <div
+                class="naastelkaar"
+                *ngFor="let gebruiker of dagAtelier.getClienten()"
+              >
+                <img
+                  id="{{ gebruiker.voornaam }}"
+                  class="client"
+                  src="{{ gebruiker.foto }}"
+                />
+                <p class="tekst">{{ gebruiker.voornaam }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -46,25 +66,65 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Namiddag</h4>
-              <div *ngFor="let dagAtelier of dagplanning.getNamiddagAteliers()">
-                <p class="atelier">
-                  {{ dagAtelier.atelier.naam }}
-                </p>
-                <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.getBegeleiders()">
-                  <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
-                  <p class="tekst">{{ gebruiker.voornaam }}</p>
-                </div>
-                <hr />
-                <div class="naastelkaar" *ngFor="let gebruiker of dagAtelier.getClienten()">
-                  <img id="{{ gebruiker.voornaam }}" class="client" src="{{ gebruiker.foto }}" />
-                  <p class="tekst">{{ gebruiker.voornaam }}</p>
-                </div>
+            <div *ngFor="let dagAtelier of dagplanning.getNamiddagAteliers()">
+              <p class="atelier">
+                {{ dagAtelier.atelier.naam }}
+              </p>
+              <div
+                class="naastelkaar"
+                *ngFor="let gebruiker of dagAtelier.getBegeleiders()"
+              >
+                <img
+                  id="{{ gebruiker.voornaam }}"
+                  class="client"
+                  src="{{ gebruiker.foto }}"
+                />
+                <p class="tekst">{{ gebruiker.voornaam }}</p>
               </div>
+              <hr />
+              <div
+                class="naastelkaar"
+                *ngFor="let gebruiker of dagAtelier.getClienten()"
+              >
+                <img
+                  id="{{ gebruiker.voornaam }}"
+                  class="client"
+                  src="{{ gebruiker.foto }}"
+                />
+                <p class="tekst">{{ gebruiker.voornaam }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <ng-container *ngFor="let dagAtelier of dagplanning.getSpecialeAteliers()">
+                <h4
+                class="card-title"
+              >
+                {{ dagAtelier.atelier.naam }}
+              </h4>
+              <div
+                class="naastelkaar"
+                *ngFor="let gebruiker of dagAtelier.getClienten()"
+              >
+                <img
+                  id="{{ gebruiker.voornaam }}"
+                  class="client"
+                  src="{{ gebruiker.foto }}"
+                />
+                <p class="tekst">{{ gebruiker.voornaam }}</p>
+              </div>
+            </ng-container>
+            
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- <div class="row">
       <div class="col-12 col-sm-12 col-md-6">
         <div class="card">
