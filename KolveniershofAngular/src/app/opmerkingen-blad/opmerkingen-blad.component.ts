@@ -36,7 +36,6 @@ export class OpmerkingenBladComponent implements OnChanges {
 
   public callAlleOpmerkingen(date: Date): void {
     this.opmerkingen = [];
-    console.log(this.datum);
     this.opmerkingenService
       .GetOpmerkingenVanSpecifiekeDag$(date)
       .pipe(finalize(() => (this.loaded = true)))
@@ -44,11 +43,9 @@ export class OpmerkingenBladComponent implements OnChanges {
         entry.forEach(e => this.opmerkingen.push(e));
         this.initFormGroups();
       });
-    console.log(this.opmerkingen);
   }
 
   onSubmit(opmerking: Opmerking, i: number) {
-    console.log('submitted gelukt');
 
     this.opmerkingenService
       .postOpmerking(opmerking.opmerkingId, {

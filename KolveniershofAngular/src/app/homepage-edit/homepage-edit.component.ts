@@ -85,6 +85,10 @@ export class HomepageEditComponent implements OnInit, OnChanges {
       });
   }
 
+  public updateAtelierLijst(): void {
+    this.ngOnChanges();
+  }
+
   public setAtelier(atelier: DagAtelier) {
     this.atelier = atelier;
     this.isEdit = true;
@@ -112,10 +116,10 @@ export class HomepageEditComponent implements OnInit, OnChanges {
         this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
       }
 
-      const indexLijst = list.indexOf(atelier);
-      if (indexLijst > -1) {
-        list.splice(indexLijst, 1);
-      }
+      // const indexLijst = list.indexOf(atelier);
+      // if (indexLijst > -1) {
+      //   list.splice(indexLijst, 1);
+      // }
     }
   }
 }

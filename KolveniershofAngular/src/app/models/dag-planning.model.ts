@@ -9,18 +9,6 @@ export class DagPlanning {
   dagplanningId: number;
   dagAteliers: DagAtelier[];
 
-  // constructor(json: any) {
-  //     this.eten = json.eten;
-  //     this.datum = json.datum;
-  //     this.weeknummer = json.weeknummer;
-  //     this.weekdag = json.weekdag;
-  //     this.dagplanningId = json.dagplanningId;
-  //     this.dagAteliers = new Array<IDagAtelier>();
-  //     json.dagAteliers.forEach(entry => {
-  //         this.dagAteliers.push(new DagAtelier(entry));
-  //     });
-  // }
-
   public getDagAteliersOpDagMoment(dagMoment: number): DagAtelier[] {
     return this.dagAteliers.filter(
       dagAtelier => dagAtelier.dagMoment === dagMoment

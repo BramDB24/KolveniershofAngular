@@ -6,8 +6,16 @@
   font-weight: 600;
 }
 
+.spinner{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+}
+
 .atelier {
-  font-size: 14pt;
+  color: cornflowerblue;
   font-weight: 400;
 }
 
@@ -15,6 +23,7 @@
   display: inline-block;
   text-align: center;
 }
+
 
 .client {
   width: 75px;
@@ -27,6 +36,11 @@
   font-size: 11pt;
   margin-bottom: 10px;
 }
+
+.begeleidertekst{
+  font-size: 15px;
+}
+
 
 hr{
   margin-top: 0;

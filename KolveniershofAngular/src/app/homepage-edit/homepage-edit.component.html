@@ -5,54 +5,66 @@
         <div class="card">
           <div class="card-body">
             <h4>Volledige Dag</h4>
-            <ul>
-              <div *ngFor="let ateliers of dagPlanning.getVolledigedagAteliers()">
-                <li>
-                  <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
-                    {{ ateliers.atelier.naam }}
-                  </button>
-                  <a (click)="deleteAtelierUitDagplanning(ateliers, volledigeDag)">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </li>
-              </div>
-            </ul>
+            <div  class="dagmoment" *ngFor="let ateliers of dagPlanning.getVolledigedagAteliers()">
+              <button
+                type="button"
+                class="btn btn-link"
+                (click)="setAtelier(ateliers)"
+              >
+                {{ ateliers.atelier.naam }}
+              </button>
+              <a (click)="deleteAtelierUitDagplanning(ateliers, volledigeDag)">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
             <h4>Voormiddag</h4>
-            <ul>
-              <div *ngFor="let ateliers of dagPlanning.getVoormiddagAteliers()">
-                <li>
-                  <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
-                    {{ ateliers.atelier.naam }}
-                  </button>
-                  <a (click)="deleteAtelierUitDagplanning(ateliers, voormiddag)">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </li>
-              </div>
-            </ul>
+            <div  class="dagmoment" *ngFor="let ateliers of dagPlanning.getVoormiddagAteliers()">
+              <button
+                type="button"
+                class="btn btn-link"
+                (click)="setAtelier(ateliers)"
+              >
+                {{ ateliers.atelier.naam }}
+              </button>
+              <a (click)="deleteAtelierUitDagplanning(ateliers, voormiddag)">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
 
             <h4>Namiddag</h4>
-            <ul>
-              <div *ngFor="let ateliers of dagPlanning.getNamiddagAteliers()">
-                <li>
-                  <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
-                    {{ ateliers.atelier.naam }}
-                  </button>
-                  <a (click)="deleteAtelierUitDagplanning(ateliers, namiddag)">
-                    <i class="fas fa-trash-alt"></i>
-                  </a>
-                </li>
-              </div>
-            </ul>
-            <button (click)="nieuwAtelier()" type="button" class="btn atelierbtn nieuw">
-              Atelier toevoegen
-            </button>
+            <div class="dagmoment" *ngFor="let ateliers of dagPlanning.getNamiddagAteliers()">
+              <button
+                type="button"
+                class="btn btn-link"
+                (click)="setAtelier(ateliers)"
+              >
+                {{ ateliers.atelier.naam }}
+              </button>
+              <a (click)="deleteAtelierUitDagplanning(ateliers, namiddag)">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
+            <div class="buttonClass">
+                <button
+                (click)="nieuwAtelier()"
+                type="button"
+                class="btn atelierbtn nieuw"
+              >
+                Atelier toevoegen
+              </button>
+            </div>
+           
           </div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-9">
-        <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit"
-          [dagAtelier]="atelier" [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()"></app-homepage-edit-atelier>
+        <app-homepage-edit-atelier
+          *ngIf="state == StateType.Edit"
+          [isEdit]="isEdit"
+          [dagAtelier]="atelier"
+          [dagplanningId]="dagPlanning.dagplanningId"
+          (newDagAtelierAddedEvent)="updateAtelierLijst()"
+        ></app-homepage-edit-atelier>
       </div>
     </div>
   </div>

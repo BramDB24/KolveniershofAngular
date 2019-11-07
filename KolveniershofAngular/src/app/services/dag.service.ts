@@ -70,7 +70,7 @@ export class DagService {
 
   public deleteAterlierUitDagplanning(datum, dagAtelier: DagAtelier) {
     return this.http.post(
-      `${environment.apiUrl}/dagplanning/${datum}`,
+      `${environment.apiUrl}/dagplanning/${datum}/dagateliers`,
       dagAtelier
     );
   }

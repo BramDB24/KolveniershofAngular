@@ -19,7 +19,7 @@ export class DagComponent implements OnChanges {
   @Input() public geselecteerdeWeek: number;
   public loadingError: HttpErrorResponse;
   public loading = false;
-
+  public bool = false;
   public dagplanning: DagPlanning;
   public specialeAteliers = new Array<DagAtelier>();
 
@@ -54,5 +54,9 @@ export class DagComponent implements OnChanges {
           this.specialeAteliers.push(entry);
         }
       });
+  }
+
+  public toonSpecialeAteliers(): void {
+    this.bool = !this.bool;
   }
 }
