@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AccountService {
   private readonly _tokenKey = 'currentUser';
-  private _user$: BehaviorSubject<string>;
+  public user: BehaviorSubject<string>;
   public redirectUrl: string;
 
   constructor(private http: HttpClient) {
@@ -23,7 +23,7 @@ export class AccountService {
         parsedToken = null;
       }
     }
-    this._user$ = new BehaviorSubject<string>(
+    this.user = new BehaviorSubject<string>(
       parsedToken && parsedToken.unique_name
     );
   }
@@ -42,7 +42,7 @@ export class AccountService {
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
-            this._user$.next(email);
+            this.user.next(email);
             return true;
           } else {
             return false;
@@ -50,6 +50,14 @@ export class AccountService {
         })
       );
   }
+
+  public logout(): void {
+    if (this.user.getValue()) {
+      localStorage.removeItem('currentUser');
+      this.user.next(null);
+    }
+  }
+
 }
 
 function parseJwt(token) {

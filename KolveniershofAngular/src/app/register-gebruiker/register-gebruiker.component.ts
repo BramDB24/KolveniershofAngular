@@ -51,15 +51,16 @@ export class RegisterGebruikerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.gebruikerService.getUserTypes().subscribe(
-    //   types => this.gebruikerTypes = types,
-    //   err => {
-    //     alert('Er was een error bij het ophalen van de gebruiker soorten.');
-    //     console.log(err);
-    //   },
-    //   () => {
-    //     this.initializeFormGroup();
-    //   });
+    this.gebruikerService.getGebruikerTypes().subscribe(
+      types => (this.gebruikerTypes = types),
+      err => {
+        alert('Er was een error bij het ophalen van de gebruiker soorten.');
+        console.log(err);
+      },
+      () => {
+        this.initialiseerFormGroup();
+      }
+    );
     // this.route.params.subscribe(params => {
     //   if (params.id) {
     //     this.gebruikerService.getUser(+params.id)
@@ -86,68 +87,36 @@ export class RegisterGebruikerComponent implements OnInit {
     //     alert('Er was een error bij laden van de pagina.');
     //     console.log(err);
     //   });
-    this.initialiseerFormGroup();
   }
 
   private initialiseerFormGroup() {
-    // this.gebruikerFormGroup = this.fb.group({
-    //   achternaam: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '',
-    //     Validators.required
-    //   ],
-    //   voornaam: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '',
-    //     Validators.required
-    //   ],
-    //   achternaamOuder: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.achternaamOuder : ''
-    //   ],
-    //   voornaamOuder: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.voornaamOuder : ''
-    //   ],
-    //   email: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.email : '',
-    //     [Validators.required, Validators.email]
-    //   ],
-    //   wachtwoord: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '',
-    //     Validators.required
-    //   ],
-    //   straat: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.straatnaam : '',
-    //     Validators.required
-    //   ],
-    //   huisnummer: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.huisnummer : '',
-    //     Validators.required
-    //   ],
-    //   busnummer: [this.huidigeGebruiker ? this.huidigeGebruiker.busnummer : ''],
-    //   gemeente: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.gemeente : '',
-    //     Validators.required
-    //   ],
-    //   postcode: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.postcode : '',
-    //     Validators.required
-    //   ],
-    //   gebruikerType: [
-    //     this.huidigeGebruiker
-    //       ? this.huidigeGebruiker.type
-    //       : this.standaardTypeChecked,
-    //     Validators.required
-    //   ],
-    //   foto: [
-    //     this.huidigeGebruiker ? this.huidigeGebruiker.type : '',
-    //     valideerBestandType
-    //   ]
-    // });
-    // this.typeVeranderd(
-    //   this.huidigeGebruiker
-    //     ? this.huidigeGebruiker.type
-    //     : this.standaardTypeChecked
-    // );
+    this.gebruikerFormGroup = this.fb.group({
+      achternaam: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '',
+        Validators.required
+      ],
+      voornaam: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '',
+        Validators.required
+      ],
+      gebruikerType: [
+        this.huidigeGebruiker
+          ? this.huidigeGebruiker.type
+          : this.standaardTypeChecked,
+        Validators.required
+      ],
+      foto: [
+        this.huidigeGebruiker ? this.huidigeGebruiker.type : '',
+        valideerBestandType
+      ]
+    });
+    this.typeVeranderd(
+      this.huidigeGebruiker
+        ? this.huidigeGebruiker.type
+        : this.standaardTypeChecked
+    );
 
-    // this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
+    this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
   }
 
   typeVeranderd(type: number) {
@@ -169,15 +138,9 @@ export class RegisterGebruikerComponent implements OnInit {
       id: '',
       achternaam: this.gebruikerFormGroup.controls.achternaam.value,
       voornaam: this.gebruikerFormGroup.controls.voornaam.value,
-      achternaamOuder: this.gebruikerFormGroup.controls.achternaamOuder.value,
-      voornaamOuder: this.gebruikerFormGroup.controls.voornaamOuder.value,
+
       email: this.gebruikerFormGroup.controls.email.value,
-      wachtwoord: this.gebruikerFormGroup.controls.wachtwoord.value,
-      straat: this.gebruikerFormGroup.controls.straat.value,
-      huisnummer: this.gebruikerFormGroup.controls.huisnummer.value,
-      busnummer: this.gebruikerFormGroup.controls.busnummer.value,
-      gemeente: this.gebruikerFormGroup.controls.gemeente.value,
-      postcode: this.gebruikerFormGroup.controls.postcode.value,
+
       foto: this.gebruikerFormGroup.controls.foto.value.name,
       type: this.gebruikerFormGroup.controls.gebruikerType.value
     };

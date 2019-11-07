@@ -8,6 +8,10 @@ import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-pl
 
 export const routes: Routes = [
   {
+    path: 'login',
+    component: LoginGebruikerComponent
+  },
+  {
     path: 'dag',
     redirectTo: '',
     pathMatch: 'full'
@@ -19,10 +23,6 @@ export const routes: Routes = [
   {
     path: 'register-gebruiker/:id',
     component: RegisterGebruikerComponent
-  },
-  {
-    path: 'login',
-    component: LoginGebruikerComponent
   },
   {
     path: '',

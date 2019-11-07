@@ -35,7 +35,13 @@ registerLocaleData(localeNl);
     LoginGebruikerComponent,
     VierweeksePlanningComponent
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
 
   bootstrap: [AppComponent]
