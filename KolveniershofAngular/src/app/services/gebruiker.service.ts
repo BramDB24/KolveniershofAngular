@@ -19,7 +19,6 @@ export class GebruikerService {
   }
 
   public getGebruikerTypes(): Observable<string[]> {
-    console.log('getGebruikerTypes');
     return of(['Admin', 'Begeleider', 'Cliënt']);
     //  return this.http.get<string[]>(`localhost:4200/usertypes`);
   }

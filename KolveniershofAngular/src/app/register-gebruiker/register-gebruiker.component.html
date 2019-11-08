@@ -29,18 +29,6 @@
         </div>
       </div>
 
-      <div class="col-md-5 m-1" [ngClass]="this.verbergOuderInfo">
-        <label for="achternaamOuder">Achternaam ouder</label>
-        <input type="text" id="achternaamOuder" class="form-control" formControlName="achternaamOuder"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.achternaamOuder.errors }">
-      </div>
-
-      <div class="col-md-5 m-1" [ngClass]="this.verbergOuderInfo">
-        <label for="voornaamOuder">Voornaam ouder</label>
-        <input type="text" id="voornaamOuder" class="form-control" formControlName="voornaamOuder"
-          [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.voornaamOuder.errors }">
-      </div>
-
       <div class="col-md-5 m-1">
         <label for="email">Email*</label>
         <input type="email" id="email" class="form-control" formControlName="email"

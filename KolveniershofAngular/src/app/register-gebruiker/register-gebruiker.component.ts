@@ -45,41 +45,41 @@ export class RegisterGebruikerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.gebruikerService.getUserTypes().subscribe(
-    //   types => this._gebruikerTypes = types,
-    //   err => {
-    //     alert('Er was een error bij het ophalen van de gebruiker soorten.');
-    //     console.log(err);
-    //   },
-    //   () => {
-    //     this.initializeFormGroup();
-    //   });
-    // this.route.params.subscribe(params => {
-    //   if (params.id) {
-    //     this.gebruikerService.getUser(+params.id)
-    //       .pipe(
-    //         finalize(() => {
-    //           this.loader = true;
-    //         })
-    //       )
-    //       .subscribe(user => {
-    //         this.huidigeGebruiker = user;
-    //       },
-    //         err => {
-    //           alert('Er was een error bij het ophalen van de gebruiker.');
-    //           console.log(err);
-    //         },
-    //         () => {
-    //           this.initializeFormGroup();
-    //         });
-    //   } else {
-    //     this.huidigeGebruiker = null;
-    //   }
-    // },
-    //   err => {
-    //     alert('Er was een error bij laden van de pagina.');
-    //     console.log(err);
-    //   });
+    this.gebruikerService.getGebruikerTypes().subscribe(
+      types => this._gebruikerTypes = types,
+      err => {
+        alert('Er was een error bij het ophalen van de gebruiker soorten.');
+        console.log(err);
+      },
+      () => {
+        this.initialiseerFormGroup();
+      });
+    this.route.params.subscribe(params => {
+      if (params.id) {
+        this.gebruikerService.getGebruikerViaId(+params.id)
+          .pipe(
+            finalize(() => {
+              this.loader = true;
+            })
+          )
+          .subscribe(user => {
+            this.huidigeGebruiker = user;
+          },
+            err => {
+              alert('Er was een error bij het ophalen van de gebruiker.');
+              console.log(err);
+            },
+            () => {
+              this.initialiseerFormGroup();
+            });
+      } else {
+        this.huidigeGebruiker = null;
+      }
+    },
+      err => {
+        alert('Er was een error bij laden van de pagina.');
+        console.log(err);
+      });
     this.initialiseerFormGroup();
   }
 
