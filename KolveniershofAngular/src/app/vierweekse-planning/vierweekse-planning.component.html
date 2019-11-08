@@ -24,10 +24,10 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <button class="btn" type="button" (click)="veranderState(StateType.Dag)"
-        [ngClass]="{ 'geselecteerd' : state == StateType.Dag || state == StateType.DagEdit }"
-        [disabled]="state == StateType.Dag">Dagplanning Template</button>
+        [ngClass]="{ 'geselecteerd' : state == StateType.Dag }" [disabled]="state == StateType.Dag">Dagplanning
+        Template</button>
       <button class="btn" type="button" (click)="veranderState(StateType.DagEdit)"
-        [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.Dag"><i
+        [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [disabled]="state != StateType.Dag"><i
           class="far fa-edit"></i> Dagplanning Template
         aanpassen</button>
     </div>

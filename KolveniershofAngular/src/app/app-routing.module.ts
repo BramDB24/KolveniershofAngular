@@ -3,9 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomepageEditComponent } from './homepage-edit/homepage-edit.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { RegisterGebruikerComponent } from './register-gebruiker/register-gebruiker.component';
+import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
+import { AteliersComponent } from './ateliers/ateliers.component';
 
 export const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginGebruikerComponent
+  },
   {
     path: 'dag',
     redirectTo: '',
@@ -35,6 +41,10 @@ export const routes: Routes = [
   {
     path: 'vierweekse-planning',
     component: VierweeksePlanningComponent
+  },
+  {
+    path: 'ateliers',
+    component: AteliersComponent
   },
   {
     path: '**',

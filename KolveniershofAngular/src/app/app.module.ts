@@ -2,7 +2,7 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import localeNl from '@angular/common/locales/nl';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +15,10 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.component';
 import { OpmerkingPipe } from './pipes/opmerking.pipe';
+import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
+import { AteliersComponent } from './ateliers/ateliers.component';
+import { ProgressComponent } from './progress/progress.component';
 
 registerLocaleData(localeNl);
 
@@ -31,11 +34,21 @@ registerLocaleData(localeNl);
     RegisterGebruikerComponent,
     OpmerkingenBladComponent,
     OpmerkingPipe,
+    VierweeksePlanningComponent,
+    AteliersComponent,
+    ProgressComponent,
+    LoginGebruikerComponent,
     VierweeksePlanningComponent
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule, 
+    FormsModule
+  ],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
 
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

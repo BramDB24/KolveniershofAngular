@@ -1,0 +1,71 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6" style="text-align: center;">
+        <h1>Welkom bij het kolveniershof</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 portrait  col-xs-12">
+        <img src="../../assets/42181_Kolveniershof_Leuven.jpg" alt="" />
+      </div>
+      <div class="col-md-6  col-xs-12" style="margin-top: 15%;">
+        <form name="form" (ngSubmit)="login()" #f="ngForm">
+          <h3 style="text-align:center">Login</h3>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="icon-user"></i></span>
+            </div>
+            <input
+              type="text"
+              name="UserName"
+              [(ngModel)]="loginCredential"
+              class="form-control sty1"
+              placeholder="Emailadres"
+              required
+            />
+          </div>
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="icon-lock"></i></span>
+            </div>
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              class="form-control"
+              placeholder="Wachtwoord"
+              required
+            />
+          </div>
+          <div>
+            <p
+              error-cy="errorMessage"
+              style="color:#E92626;font-size:20px;font-weight:normal"
+              Class="success"
+              align="left"
+            >
+              {{ errorMessage }}
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary px-4">Login</button>
+            </div>
+            <div class="col-8 text-right">
+              <button
+                type="button"
+                (click)="router.navigate(['/register'])"
+                class="btn btn-link"
+              >
+                Nieuwe gebruiker?
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

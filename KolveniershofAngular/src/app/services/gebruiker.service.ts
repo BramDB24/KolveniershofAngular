@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Gebruiker } from '../interfaces/gebruiker';
 import { environment } from 'src/environments/environment';
+import { Gebruiker } from '../models/gebruiker.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class GebruikerService {
   constructor(private http: HttpClient) {}
 
   public getUsers(): Observable<Gebruiker[]> {
-    return this.http.get<Gebruiker[]>(`${environment.apiUrl}/account`);
+    return this.http.get<Gebruiker[]>(`${environment.apiUrl}/account`).pipe(
+      map(
+        x => x.sort((a, b) => a.voornaam.localeCompare(b.voornaam))
+      ));
   }
 
   public getGebruikerViaId(id: number): Observable<Gebruiker> {
@@ -25,7 +29,6 @@ export class GebruikerService {
 
   public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
     if (!gebruikerJson.id) {
-      console.log('no id found');
       return null;
     }
     return this.http.post(`localhost:4200/${gebruikerJson.id}`, gebruikerJson);

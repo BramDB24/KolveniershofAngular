@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { GebruikerService } from '../services/gebruiker.service';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
 import { BestandService } from '../services/bestand.service';
-import { Gebruiker } from '../interfaces/gebruiker';
+import { Gebruiker } from '../models/gebruiker.model';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
   const foto = control.value;
@@ -30,7 +36,7 @@ export class RegisterGebruikerComponent implements OnInit {
   public gebruikerFormGroup: FormGroup;
   public loader = false;
   public huidigeGebruiker: Gebruiker;
-  public _gebruikerTypes: string[];
+  public gebruikerTypes: string[];
   public submitButtonText: string;
   public readonly standaardTypeChecked = 2;
   public readonly typesMetOuderInfo = [2];
@@ -42,7 +48,7 @@ export class RegisterGebruikerComponent implements OnInit {
     private bestandService: BestandService,
     private route: ActivatedRoute,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.gebruikerService.getGebruikerTypes().subscribe(
@@ -92,7 +98,6 @@ export class RegisterGebruikerComponent implements OnInit {
       gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required],
       foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', valideerBestandType]
     }
-    );
     this.typeVeranderd(this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked);
 
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
@@ -138,16 +143,20 @@ export class RegisterGebruikerComponent implements OnInit {
     this.bestandService.postFile(folderNaam, bestandNaam, this.gebruikerFormGroup.controls.foto.value)
       .subscribe();
 
-    // // Stuur nieuweGebruiker naar de databank
-    // if (this.huidigeGebruiker) {
-    //   this.gebruikerService.postUpdateGebruiker(nieuweGebruiker).subscribe((response) => {
-    //     alert('Gebruiker geüpdate.');
-    //   });
-    // } else {
-    //   this.gebruikerService.postNieuweGebruiker(nieuweGebruiker).subscribe((response) => {
-    //     alert('Gebruiker toegevoegd.');
-    //   });
-    // }
+    // Stuur nieuweGebruiker naar de databank
+    if (this.huidigeGebruiker) {
+      this.gebruikerService
+        .postUpdateGebruiker(nieuweGebruiker)
+        .subscribe(response => {
+          alert('Gebruiker geüpdate.');
+        });
+    } else {
+      this.gebruikerService
+        .postNieuweGebruiker(nieuweGebruiker)
+        .subscribe(response => {
+          alert('Gebruiker toegevoegd.');
+        });
+    }
   }
   hasRequiredField(abstractControl: AbstractControl): boolean {
     if (abstractControl.validator) {
