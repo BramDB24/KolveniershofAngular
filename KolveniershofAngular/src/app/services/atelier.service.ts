@@ -3,7 +3,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Atelier } from '../models/atelier.model';
 import { Observable } from 'rxjs';
-import { IDagPlanning } from '../interfaces/dag-planning';
 
 @Injectable({
   providedIn: 'root'
