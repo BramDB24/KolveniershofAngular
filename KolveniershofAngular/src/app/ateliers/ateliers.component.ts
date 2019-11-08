@@ -1,5 +1,5 @@
 //used https://netbasal.com/how-to-implement-file-uploading-in-angular-reactive-forms-89a3fffa1a03
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Atelier } from '../models/atelier.model';
 import { DagService } from '../services/dag.service';
@@ -34,9 +34,9 @@ export class AteliersComponent implements OnInit {
     this.atelierService
       .getAteliers()
       .subscribe(entry => {
-        entry.forEach(e => this.ateliers.push(Object.assign(new Atelier(), e)));
+        this.ateliers = entry;
+        //entry.forEach(e => this.ateliers.push(Object.assign(new Atelier(), e)));
       });
-
   }
 
   private initialiseerFormGroup() {
@@ -61,8 +61,7 @@ export class AteliersComponent implements OnInit {
   }
 
   saveAtelier() {
-    console.log(this.atelierFormGroup.value.atelierNaam);
-    console.log(this.atelierFormGroup.value.picto);
+
     this.atelierService.postAtelier({
       naam: this.atelierFormGroup.value.atelierNaam,
       atelierType: 4,
