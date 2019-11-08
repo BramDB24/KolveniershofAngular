@@ -34,7 +34,7 @@ export class AteliersComponent implements OnInit {
     this.atelierService
       .getAteliers()
       .subscribe(entry => {
-        entry.forEach(e => this.ateliers.push(new Atelier(e)));
+        entry.forEach(e => this.ateliers.push(Object.assign(new Atelier(), e)));
         this.ateliers.sort((a1, a2) => {
           if (a1.naam > a2.naam) {
             return 1;
