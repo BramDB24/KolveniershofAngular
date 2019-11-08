@@ -35,15 +35,6 @@ export class AteliersComponent implements OnInit {
       .getAteliers()
       .subscribe(entry => {
         entry.forEach(e => this.ateliers.push(Object.assign(new Atelier(), e)));
-        this.ateliers.sort((a1, a2) => {
-          if (a1.naam > a2.naam) {
-            return 1;
-          }
-          if (a1.naam < a2.naam) {
-            return -1;
-          }
-          return 0;
-        });
       });
 
   }
@@ -81,7 +72,7 @@ export class AteliersComponent implements OnInit {
         uploadProgress(progress => (this.progress = progress)),
         toResponseBody()
       )
-      .subscribe(
+      .subscribe(() => { },
         err => {
           console.log(err);
           alert('Er was een probleem bij het opslaan van de aanpassing.\n'
@@ -100,7 +91,7 @@ export class AteliersComponent implements OnInit {
 
     if (confirm("Bent u zeker dat u dit atelier permanent wilt verwijderen?")) {
       this.atelierService.deleteAtelier(atelierTeVerwijderen.atelierId)
-        .subscribe(
+        .subscribe(() => { },
           err => {
             console.log(err);
             alert('Er was een probleem bij het opslaan van de aanpassing.\n'
