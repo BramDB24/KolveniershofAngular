@@ -23,23 +23,39 @@ export class DagComponent implements OnChanges {
   public dagplanning: DagPlanning;
   public specialeAteliers = new Array<DagAtelier>();
 
-  constructor(private dagService: DagService) {}
+  constructor(private dagService: DagService) { }
 
-  // Dit triggered wanneer de input van de datum veranderd, waneer deze veranderd moet er een nieuwe call gebeurd worden
-  // Voor de nieuwe dag op te halen. de finalize() zorgt ervoor dat de html niet geladen kan worden alvorens de call afgerond is
   ngOnChanges() {
-    this.dagService
-      .getDag(this.datum)
-      .pipe(finalize(() => (this.loading = true)))
-      .subscribe(
-        dag => {
-          this.dagplanning = dag;
-          this.setDagMoment();
-        },
-        error => {
-          this.loadingError = error;
-        }
-      );
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+    }
+    else { this.haalDagplanningOpMetDatum(this.datum); }
+  }
+
+  public haalDagplanningTemplateOpMetWeekdagEnWeek(week: number, weekdag: number) {
+    this.dagService.getDagTemplate(week, weekdag).subscribe(
+      dag => {
+        this.dagplanning = Object.assign(new DagPlanning(), dag);
+        this.setDagMoment();
+      },
+      error => {
+        this.loadingError = error;
+      },
+      () => { this.loading = true; }
+    )
+  }
+
+  public haalDagplanningOpMetDatum(date: Date) {
+    this.dagService.getDag(date).subscribe(
+      dag => {
+        this.dagplanning = Object.assign(new DagPlanning(), dag);
+        this.setDagMoment();
+      },
+      error => {
+        this.loadingError = error;
+      },
+      () => { this.loading = true; }
+    );
   }
 
   public setDagMoment(): void {

@@ -19,7 +19,7 @@ export class OpmerkingenBladComponent implements OnChanges {
   constructor(
     private opmerkingenService: OpmerkingenService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   public initFormGroups() {
     this.opmerkingForm = new Array<FormGroup>();
@@ -45,15 +45,18 @@ export class OpmerkingenBladComponent implements OnChanges {
       });
   }
 
-  onSubmit(opmerking: Opmerking, i: number) {
-
-    this.opmerkingenService
-      .postOpmerking(opmerking.opmerkingId, {
+  onSubmit() {
+    console.log("submitbutton pressed");
+    for (let i = 0; i < this.opmerkingForm.length; i++) {
+      this.opmerkingenService.putOpmerking({
+        opmerkingId: this.opmerkingen[i].opmerkingId,
         tekst: this.opmerkingForm[i].controls.tekst.value,
-        opmerkingType: opmerking.opmerkingType,
+        opmerkingType: this.opmerkingen[i].opmerkingType,
         datum: this.datum.toJSON()
-      })
-      .subscribe();
-    alert('Je gegevens werden succesvol opgeslagen!');
+      }
+      ).subscribe();
+
+    }
+    alert("Je gegevens werden succesvol opgeslagen!");
   }
 }

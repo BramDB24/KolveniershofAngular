@@ -28,7 +28,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
   public state = State.Standard;
   StateType = State;
   loaded = false;
-  constructor(private dagService: DagService) {}
+  constructor(private dagService: DagService) { }
 
   ngOnInit() {
     this.state = State.Standard;
@@ -101,25 +101,24 @@ export class HomepageEditComponent implements OnInit, OnChanges {
     this.state = State.Edit;
   }
 
-  public deleteAtelierUitDagplanning(atelier, list) {
-    if (
-      confirm(
-        'Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?'
-      )
-    ) {
-      this.dagService
-        .deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier)
-        .subscribe();
+  public deleteAtelierUitDagplanning(atelier) {
+    console.log(this.dagPlanning.weekdag);
+    console.log(this.dagPlanning.weeknummer);
+    console.log(atelier);
+    if (confirm("Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?")) {
+      if (this.datum == null) {
+        this.dagService.deleteAterlierUitDagplanningTemplate(this.dagPlanning.weeknummer, this.dagPlanning.weekdag, atelier)
 
-      const indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+          .subscribe();
+      } else {
+        this.dagService.deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier).subscribe();
+
+      }
+      var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
       if (indexAteliers > -1) {
         this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
       }
-
-      // const indexLijst = list.indexOf(atelier);
-      // if (indexLijst > -1) {
-      //   list.splice(indexLijst, 1);
-      // }
     }
   }
 }
+

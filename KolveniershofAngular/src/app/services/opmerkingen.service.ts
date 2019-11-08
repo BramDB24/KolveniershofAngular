@@ -10,7 +10,7 @@ import { Opmerking } from '../models/opmerking';
   providedIn: 'root'
 })
 export class OpmerkingenService {
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public GetOpmerkingenVanSpecifiekeDag$(date: Date): Observable<Opmerking[]> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -19,23 +19,14 @@ export class OpmerkingenService {
     );
   }
 
-  public GetOpmerkingenVanSpecifiekeDagEnType$(
-    date: Date,
-    type: number
-  ): Observable<Opmerking[]> {
+  public GetOpmerkingenVanSpecifiekeDagEnType$(date: Date, type: number): Observable<Opmerking[]> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
     return this.http.get<Opmerking[]>(
       `${environment.apiUrl}/Opmerking/opmerkingOp/${convertedDate}/typeOpmerking/${type}`
     );
   }
 
-  public postOpmerking(id, opmerking) {
-    return this.http
-      .put(`${environment.apiUrl}/Opmerking/${id}`, opmerking)
-      .pipe(
-        catchError(err => {
-          return of([]);
-        })
-      );
+  public putOpmerking(opmerking) {
+    return this.http.put(`${environment.apiUrl}/Opmerking/${opmerking.opmerkingId}`, opmerking);
   }
 }

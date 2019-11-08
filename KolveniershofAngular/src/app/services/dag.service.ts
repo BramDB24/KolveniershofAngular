@@ -14,7 +14,7 @@ import { DagPlanning } from '../models/dag-planning.model';
 export class DagService {
   public huidigeGeselecteerdeDag: DagPlanning;
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public getDag(date: Date): Observable<DagPlanning> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -73,5 +73,10 @@ export class DagService {
       `${environment.apiUrl}/dagplanning/${datum}/dagateliers`,
       dagAtelier
     );
+  }
+
+  public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: DagAtelier) {
+    console.log(dagAtelier);
+    return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
   }
 }

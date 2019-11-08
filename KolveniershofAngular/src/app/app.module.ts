@@ -36,7 +36,7 @@ registerLocaleData(localeNl);
     OpmerkingPipe,
     VierweeksePlanningComponent,
     AteliersComponent,
-    ProgressComponent
+    ProgressComponent,
     LoginGebruikerComponent,
     VierweeksePlanningComponent
   ],
@@ -44,11 +44,11 @@ registerLocaleData(localeNl);
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, 
     FormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
 
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
