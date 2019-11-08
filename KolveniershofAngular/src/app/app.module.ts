@@ -17,6 +17,8 @@ import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.co
 import { OpmerkingPipe } from './pipes/opmerking.pipe';
 import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
+import { AteliersComponent } from './ateliers/ateliers.component';
+import { ProgressComponent } from './progress/progress.component';
 
 registerLocaleData(localeNl);
 
@@ -32,6 +34,9 @@ registerLocaleData(localeNl);
     RegisterGebruikerComponent,
     OpmerkingenBladComponent,
     OpmerkingPipe,
+    VierweeksePlanningComponent,
+    AteliersComponent,
+    ProgressComponent
     LoginGebruikerComponent,
     VierweeksePlanningComponent
   ],
