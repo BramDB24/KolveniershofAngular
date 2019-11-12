@@ -8,7 +8,7 @@ import { WeekDay } from '@angular/common';
 })
 export class PictoPageComponent implements OnInit {
 
-  public weekdagen = new Array<string>('Ma', 'Di', 'Woe', 'Do', 'Vr', 'Za', 'Zon');
+  public weekdagen = new Array<string>('Ma', 'Di', 'Woe', 'Do', 'Vr');
 
   constructor() { }
 

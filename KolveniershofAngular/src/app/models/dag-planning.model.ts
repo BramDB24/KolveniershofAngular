@@ -29,10 +29,10 @@ export class DagPlanning {
   public getSpecialeAteliers(): Array<DagAtelier> {
     return this.dagAteliers.filter(
       d =>
-        d.atelier.naam === 'Ziek' ||
-        d.atelier.naam === 'Afwezig' ||
-        d.atelier.naam === 'VervoerAtelier' ||
-        d.atelier.naam === 'Thuis'
+        d.atelier.atelierType === 'Ziek' ||
+        d.atelier.atelierType === 'Afwezig' ||
+        d.atelier.atelierType === 'VervoerAtelier' ||
+        d.atelier.atelierType === 'Thuis'
     );
   }
 }
