@@ -6,6 +6,7 @@ import { RegisterGebruikerComponent } from './register-gebruiker/register-gebrui
 import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
 import { AteliersComponent } from './ateliers/ateliers.component';
+import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
   {
     path: 'register-gebruiker/:id',
     component: RegisterGebruikerComponent
+  },
+  {
+    path: 'picto-agenda',
+    component: PictoPageComponent
   },
   {
     path: '',

@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { DagMoment } from '../enums/dag-moment.enum';
 import { Atelier } from '../models/atelier.model';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { Gebruiker } from '../models/gebruiker.model';
@@ -25,11 +24,6 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   public alleGebruikers = new Array<Gebruiker>();
   public gebruikerToevoegenLijstError = '';
   public dagAtelierFormGroup: FormGroup;
-  public dagMomenten = [
-    { key: 'Voormiddag', value: DagMoment.Voormiddag },
-    { key: 'Namiddag', value: DagMoment.Namiddag },
-    { key: 'Volledige dag', value: DagMoment.VolledigeDag }
-  ];
   public submitted = false;
   public initform = false;
   public geselecteerdeGebruiker: Gebruiker;
@@ -90,9 +84,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       dagMoment: [
         this.dagAtelier
           ? this.dagAtelier.dagMoment
-          : this.dagAtelier
-          ? this.dagAtelier.dagMoment
-          : DagMoment.VolledigeDag
+          : 'Volledige Dag'
       ]
     });
     this.initform = true;
@@ -197,4 +189,5 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       'gebruikerToevoegenLijst'
     ) as HTMLInputElement).value = '';
   }
+
 }

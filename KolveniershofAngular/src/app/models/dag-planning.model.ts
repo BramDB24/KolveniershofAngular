@@ -1,4 +1,3 @@
-import { DagMoment } from '../enums/dag-moment.enum';
 import { DagAtelier } from './dag-atelier.model';
 
 export class DagPlanning {
@@ -9,31 +8,31 @@ export class DagPlanning {
   dagplanningId: number;
   dagAteliers: DagAtelier[];
 
-  public getDagAteliersOpDagMoment(dagMoment: number): DagAtelier[] {
+  public getDagAteliersOpDagMoment(dagMoment: string): DagAtelier[] {
     return this.dagAteliers.filter(
       dagAtelier => dagAtelier.dagMoment === dagMoment
     );
   }
 
   public getVoormiddagAteliers(): Array<DagAtelier> {
-    return this.dagAteliers.filter(d => d.dagMoment === DagMoment.Voormiddag);
+    return this.dagAteliers.filter(d => d.dagMoment === 'Voormiddag');
   }
 
   public getNamiddagAteliers(): Array<DagAtelier> {
-    return this.dagAteliers.filter(d => d.dagMoment === DagMoment.Namiddag);
+    return this.dagAteliers.filter(d => d.dagMoment === 'Namiddag');
   }
 
   public getVolledigedagAteliers(): Array<DagAtelier> {
-    return this.dagAteliers.filter(d => d.dagMoment === DagMoment.VolledigeDag);
+    return this.dagAteliers.filter(d => d.dagMoment === 'VolledigeDag');
   }
 
   public getSpecialeAteliers(): Array<DagAtelier> {
     return this.dagAteliers.filter(
       d =>
-        d.atelier.naam === 'ziek' ||
-        d.atelier.naam === 'afwezig' ||
-        d.atelier.naam === 'vervoer' ||
-        d.atelier.naam === 'thuis verlof'
+        d.atelier.naam === 'Ziek' ||
+        d.atelier.naam === 'Afwezig' ||
+        d.atelier.naam === 'VervoerAtelier' ||
+        d.atelier.naam === 'Thuis'
     );
   }
 }

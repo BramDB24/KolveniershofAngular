@@ -64,7 +64,7 @@ export class AteliersComponent implements OnInit {
 
     this.atelierService.postAtelier({
       naam: this.atelierFormGroup.value.atelierNaam,
-      atelierType: 4,
+      atelierType: 'Gewoon',
       pictoURL: "TIJDELIJKE URL" // de juiste: this.atelierFormGroup.value.picto
     })
       .pipe(

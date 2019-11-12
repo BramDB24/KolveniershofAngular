@@ -46,9 +46,9 @@
               class="form-control"
               formControlName="dagMoment"
             >
-              <option *ngFor="let moment of dagMomenten" [value]="moment.value">
-                {{ moment.key }}
-              </option>
+              <option>Voormiddag</option>
+              <option>Namiddag</option>
+              <option value="VolledigeDag">Volledige Dag</option>
             </select>
           </div>
         </div>
@@ -100,7 +100,7 @@
                 id="{{ gebruiker.voornaam }}{{ gebruiker.achternaam }}"
                 [attr.data-index]="gebruiker.gebruikerId"
               >
-                {{ gebruiker.voornaam + ' ' + gebruiker.achternaam }}
+                {{ gebruiker.voornaam + " " + gebruiker.achternaam }}
               </option>
             </datalist>
           </div>

@@ -1,9 +1,8 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { DagPlanning } from '../models/dag-planning.model';
 import { DagService } from '../services/dag.service';
-import { finalize } from 'rxjs/operators';
-import { DagMoment } from '../enums/dag-moment.enum';
 
 // States worden gebruikt om te bepalen of een subcomponent getoond moet worden of niet
 export enum State {

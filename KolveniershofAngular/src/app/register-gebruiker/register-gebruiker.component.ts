@@ -113,18 +113,18 @@ export class RegisterGebruikerComponent implements OnInit {
     this.typeVeranderd(
       this.huidigeGebruiker
         ? this.huidigeGebruiker.type
-        : this.standaardTypeChecked
+        : 'Admin'
     );
 
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
   }
 
-  typeVeranderd(type: number) {
-    if (this.typesMetOuderInfo.includes(type)) {
-      this.verbergOuderInfo = '';
-    } else {
-      this.verbergOuderInfo = 'd-none';
-    }
+  typeVeranderd(type: string) {
+    // if (this.typesMetOuderInfo.includes(type)) {
+    //   this.verbergOuderInfo = '';
+    // } else {
+    //   this.verbergOuderInfo = 'd-none';
+    // }
   }
 
   onSubmit() {

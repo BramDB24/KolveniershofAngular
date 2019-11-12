@@ -46,7 +46,7 @@ export class OpmerkingenBladComponent implements OnChanges {
   }
 
   onSubmit() {
-    console.log("submitbutton pressed");
+    console.log('submitbutton pressed');
     for (let i = 0; i < this.opmerkingForm.length; i++) {
       this.opmerkingenService.putOpmerking({
         opmerkingId: this.opmerkingen[i].opmerkingId,
@@ -57,6 +57,6 @@ export class OpmerkingenBladComponent implements OnChanges {
       ).subscribe();
 
     }
-    alert("Je gegevens werden succesvol opgeslagen!");
+    alert('Je gegevens werden succesvol opgeslagen!');
   }
 }

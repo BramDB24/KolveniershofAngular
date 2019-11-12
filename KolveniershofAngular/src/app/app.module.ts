@@ -19,6 +19,8 @@ import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.compo
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
 import { AteliersComponent } from './ateliers/ateliers.component';
 import { ProgressComponent } from './progress/progress.component';
+import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
+import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component';
 
 registerLocaleData(localeNl);
 
@@ -38,13 +40,15 @@ registerLocaleData(localeNl);
     AteliersComponent,
     ProgressComponent,
     LoginGebruikerComponent,
-    VierweeksePlanningComponent
+    VierweeksePlanningComponent,
+    PictoPageComponent,
+    PictoDagComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],

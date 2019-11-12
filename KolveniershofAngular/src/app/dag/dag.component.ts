@@ -1,16 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnChanges } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-import { AtelierType } from '../enums/atelier-type.enum';
-import { DagMoment } from '../enums/dag-moment.enum';
-import { DagAtelier } from '../models/dag-atelier.model';
-import { DagPlanning } from '../models/dag-planning.model';
-import { DagService } from '../services/dag.service';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Component, Input, OnChanges } from "@angular/core";
+import { DagAtelier } from "../models/dag-atelier.model";
+import { DagPlanning } from "../models/dag-planning.model";
+import { DagService } from "../services/dag.service";
 
 @Component({
-  selector: 'app-dag',
-  templateUrl: './dag.component.html',
-  styleUrls: ['./dag.component.scss']
+  selector: "app-dag",
+  templateUrl: "./dag.component.html",
+  styleUrls: ["./dag.component.scss"]
 })
 export class DagComponent implements OnChanges {
   // Geeft ons de input van de het kalender component
@@ -23,16 +20,23 @@ export class DagComponent implements OnChanges {
   public dagplanning: DagPlanning;
   public specialeAteliers = new Array<DagAtelier>();
 
-  constructor(private dagService: DagService) { }
+  constructor(private dagService: DagService) {}
 
   ngOnChanges() {
     if (this.datum == null) {
-      this.haalDagplanningTemplateOpMetWeekdagEnWeek(this.geselecteerdeWeek, this.geselecteerdeWeekdag);
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(
+        this.geselecteerdeWeek,
+        this.geselecteerdeWeekdag
+      );
+    } else {
+      this.haalDagplanningOpMetDatum(this.datum);
     }
-    else { this.haalDagplanningOpMetDatum(this.datum); }
   }
 
-  public haalDagplanningTemplateOpMetWeekdagEnWeek(week: number, weekdag: number) {
+  public haalDagplanningTemplateOpMetWeekdagEnWeek(
+    week: number,
+    weekdag: number
+  ) {
     this.dagService.getDagTemplate(week, weekdag).subscribe(
       dag => {
         this.dagplanning = Object.assign(new DagPlanning(), dag);
@@ -41,8 +45,10 @@ export class DagComponent implements OnChanges {
       error => {
         this.loadingError = error;
       },
-      () => { this.loading = true; }
-    )
+      () => {
+        this.loading = true;
+      }
+    );
   }
 
   public haalDagplanningOpMetDatum(date: Date) {
@@ -54,18 +60,20 @@ export class DagComponent implements OnChanges {
       error => {
         this.loadingError = error;
       },
-      () => { this.loading = true; }
+      () => {
+        this.loading = true;
+      }
     );
   }
 
   public setDagMoment(): void {
     this.dagplanning
-      .getDagAteliersOpDagMoment(DagMoment.Undefined)
+      .getDagAteliersOpDagMoment('Undefined')
       .forEach(entry => {
         if (
-          entry.atelier.atelierType === AtelierType.Afwezig ||
-          entry.atelier.atelierType === AtelierType.Ziek ||
-          entry.atelier.atelierType === AtelierType.VervoerAtelier
+          entry.atelier.atelierType === "Afwezig" ||
+          entry.atelier.atelierType === "Ziek" ||
+          entry.atelier.atelierType === "VervoerAtelier"
         ) {
           this.specialeAteliers.push(entry);
         }
