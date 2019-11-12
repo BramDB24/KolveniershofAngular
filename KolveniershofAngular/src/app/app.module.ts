@@ -14,7 +14,6 @@ import { RegisterGebruikerComponent } from './register-gebruiker/register-gebrui
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.component';
-import { OpmerkingPipe } from './pipes/opmerking.pipe';
 import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
 import { AteliersComponent } from './ateliers/ateliers.component';
@@ -35,7 +34,6 @@ registerLocaleData(localeNl);
     HomepageEditAtelierComponent,
     RegisterGebruikerComponent,
     OpmerkingenBladComponent,
-    OpmerkingPipe,
     VierweeksePlanningComponent,
     AteliersComponent,
     ProgressComponent,
