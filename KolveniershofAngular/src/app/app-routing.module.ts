@@ -7,6 +7,7 @@ import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.compo
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
 import { AteliersComponent } from './ateliers/ateliers.component';
 import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
+import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,10 @@ export const routes: Routes = [
   {
     path: 'ateliers',
     component: AteliersComponent
+  },
+  {
+    path: 'aanwezigheden',
+    component: AanwezighedenComponent
   },
   {
     path: '**',
