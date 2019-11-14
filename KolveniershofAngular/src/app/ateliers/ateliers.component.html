@@ -8,12 +8,10 @@
           <div id="atelierdiv">
             <p>Kies een naam voor het nieuwe atelier:</p>
             <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
-              [ngClass]="{ 'is-invalid': submitted &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
-            <div *ngIf="submitted &amp;&amp; atelierFormGroup.controls.atelierNaam.errors" class="text-danger">
-              <div class="d-block" *ngFor="let error of atelierNaamFormErrors()">
-                {{error}}
+              [ngClass]="{ 'is-invalid': submittedSave &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
+              <div class="invalid-feedback" *ngIf="submittedSave && atelierFormGroup.controls.atelierNaam.errors">
+                Een atelier naam is verplicht
               </div>
-            </div>
           </div>
 
           <div id="atelierdiv">
@@ -48,7 +46,7 @@
 
             <input id="teVerwijderenAtelierInput" class="form-control" type="text"
               formControlName="teVerwijderenAtelier" list="atelierNamen"
-              [ngClass]="{ 'is-invalid': submitted &amp;&amp; atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
+              [ngClass]="{ 'is-invalid': submittedDelete &amp;&amp; atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
             <datalist id="atelierNamen">
               <option *ngFor="let atelier of ateliers" [value]="atelier.naam">
                 {{atelier.naam}}
@@ -57,7 +55,7 @@
           </div>
 
           <div>
-            <button (click)="deleteAtelier()" type="button" class="btn">
+            <button (click)="deleteAtelier()" type="submit" class="btn">
               Opslaan
             </button>
           </div>

@@ -160,6 +160,7 @@ export class RegisterGebruikerComponent implements OnInit {
                 });
         }
     }
+    
     hasRequiredField(abstractControl: AbstractControl): boolean {
         if (abstractControl.validator) {
             const validator = abstractControl.validator({} as AbstractControl);

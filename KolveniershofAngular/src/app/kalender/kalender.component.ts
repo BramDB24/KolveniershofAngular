@@ -2,37 +2,36 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import * as jsPDF from 'jspdf';
 import * as printJS from 'print-js';
-import html2canvas from 'html2canvas';  
+import html2canvas from 'html2canvas';
 
 export enum State {
-  Dag = 'dag',
-  DagEdit = 'dagEdit',
-  Opmerkingen = 'opmerkingen'
+    Dag = 'dag',
+    DagEdit = 'dagEdit',
+    Opmerkingen = 'opmerkingen',
 }
 
 @Component({
-  selector: 'app-kalender',
-  templateUrl: './kalender.component.html',
-  styleUrls: ['./kalender.component.scss']
+    selector: 'app-kalender',
+    templateUrl: './kalender.component.html',
+    styleUrls: ['./kalender.component.scss'],
 })
 export class KalenderComponent implements OnInit {
-  public datum: Date = new Date();
+    public datum: Date = new Date();
 
-  public state = State.Dag;
-  // StateType gelijk stellen aan enum State, anders kan html hier niet aan
-  StateType = State;
+    public state = State.Dag;
+    // StateType gelijk stellen aan enum State, anders kan html hier niet aan
+    StateType = State;
 
-  constructor(private _router: Router) {
-    this.state = State.Dag;
-  }
+    constructor(private _router: Router) {
+        this.state = State.Dag;
+    }
 
-  public veranderState(type: State) {
-    this.state = type;
-  }
+    public veranderState(type: State) {
+        this.state = type;
+    }
 
-  downloadPDF(){
-
-      /*let pdf = new jsPDF('p', 'mm', 'a4');
+    downloadPDF() {
+        /*let pdf = new jsPDF('p', 'mm', 'a4');
       pdf.text = 
       var pageHeight= pdf.internal.pageSize.height;
       var data = document.getElementById('printVolledigeDag');  
@@ -63,35 +62,37 @@ export class KalenderComponent implements OnInit {
       });  
       });  
 */
-  printJS({ printable: 'printVolledigeDag', type: 'html', honorColor:true, targetStyles: ['*'] })
-  
-  
-  }
-
-  public veranderDatum(nr: number): void {
-
-    if (this.state === State.DagEdit) {
-      this.veranderState(State.Dag);
+        printJS({
+            printable: 'printVolledigeDag',
+            type: 'html',
+            honorColor: true,
+            targetStyles: ['*'],
+        });
     }
 
-    this.datum = new Date(
-      this.datum.getFullYear(),
-      this.datum.getMonth(),
-      this.datum.getDate() + nr
-    );
-  }
+    public veranderDatum(nr: number): void {
+        if (this.state === State.DagEdit) {
+            this.veranderState(State.Dag);
+        }
 
-  public vorigeDatum(): void {
-    this.veranderDatum(-1);
-  }
+        this.datum = new Date(
+            this.datum.getFullYear(),
+            this.datum.getMonth(),
+            this.datum.getDate() + nr
+        );
+    }
 
-  public volgendeDatum(): void {
-    this.veranderDatum(+1);
-  }
+    public vorigeDatum(): void {
+        this.veranderDatum(-1);
+    }
 
-  public redirect(route: string) {
-    this._router.navigate([`${route}`]);
-  }
+    public volgendeDatum(): void {
+        this.veranderDatum(+1);
+    }
 
-  ngOnInit() { }
+    public redirect(route: string) {
+        this._router.navigate([`${route}`]);
+    }
+
+    ngOnInit() {}
 }

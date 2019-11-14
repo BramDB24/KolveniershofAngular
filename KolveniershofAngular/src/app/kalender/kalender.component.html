@@ -11,9 +11,7 @@
         </button>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-6">
-        <button type="button" (click)="downloadPDF()">
-            pdf afdrukken
-        </button>
+        
         <button type="button" (click)="veranderState(StateType.Dag)" class="btn keuzeknop"
           [ngClass]="{ 'geselecteerd' : state == StateType.Dag }"
           [disabled]="state == StateType.Dag">Dagplanning</button>
