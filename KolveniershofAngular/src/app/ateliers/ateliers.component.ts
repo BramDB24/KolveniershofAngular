@@ -1,13 +1,11 @@
-//used https://netbasal.com/how-to-implement-file-uploading-in-angular-reactive-forms-89a3fffa1a03
-import { Component, OnInit, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Atelier } from '../models/atelier.model';
-import { DagService } from '../services/dag.service';
-import { finalize, tap, filter, map } from 'rxjs/operators';
-import { AtelierService } from '../services/atelier.service';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
-import { HttpEventType, HttpEvent, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { pipe } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { Atelier } from '../models/atelier.model';
+import { AtelierService } from '../services/atelier.service';
 
 @Component({
   selector: 'app-ateliers',

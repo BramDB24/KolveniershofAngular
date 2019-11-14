@@ -20,37 +20,47 @@ import { AteliersComponent } from './ateliers/ateliers.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
 import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
 
 registerLocaleData(localeNl);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    KalenderComponent,
-    FileUploadComponent,
-    DagComponent,
-    NavigationComponent,
-    HomepageEditComponent,
-    HomepageEditAtelierComponent,
-    RegisterGebruikerComponent,
-    OpmerkingenBladComponent,
-    VierweeksePlanningComponent,
-    AteliersComponent,
-    ProgressComponent,
-    LoginGebruikerComponent,
-    VierweeksePlanningComponent,
-    PictoPageComponent,
-    PictoDagComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
+    declarations: [
+        AppComponent,
+        KalenderComponent,
+        FileUploadComponent,
+        DagComponent,
+        NavigationComponent,
+        HomepageEditComponent,
+        HomepageEditAtelierComponent,
+        RegisterGebruikerComponent,
+        OpmerkingenBladComponent,
+        VierweeksePlanningComponent,
+        AteliersComponent,
+        ProgressComponent,
+        LoginGebruikerComponent,
+        VierweeksePlanningComponent,
+        PictoPageComponent,
+        PictoDagComponent,
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule
+    ],
+    providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
 
-  bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

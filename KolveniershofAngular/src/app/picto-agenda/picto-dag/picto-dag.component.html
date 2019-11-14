@@ -1,54 +1,108 @@
-<div class="row">
-    <div class="col-12">
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
+<ng-container *ngIf="!isWeekend; else weekend">
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <img
+                    style="width: 60px; height: 60px; float: left; margin-right: 16px;"
+                    src="https://www.sclera.be/resources/pictos/datum.png"
+                    alt=""
+                />
+                <h3 style="margin-bottom: unset;">Dag</h3>
+                <p>DD MAAND YYYY</p>
+            </div>
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-12">
+            <div class="image-container">
+                <img
+                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
+                />
+            </div>
+            <div class="image-container">
+                <img
+                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
+                />
+            </div>
+            <div class="image-container">
+                <img src="https://www.sclera.be/resources/pictos/koffie.png" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="image-container">
+                <img src="https://www.sclera.be/resources/pictos/bakken.png" />
+            </div>
+            <div class="image-container">
+                <img src="https://www.sclera.be/resources/pictos/disco.png" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="image-container">
+                <img
+                    src="https://www.sclera.be/resources/pictos/vork naar bord.png"
+                />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="image-container">
+                <img
+                    src="https://www.sclera.be/resources/pictos/petanque.png"
+                />
+            </div>
+            <div class="image-container">
+                <img src="https://www.sclera.be/resources/pictos/zwemmen.png" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="image-container">
+                <img src="https://www.sclera.be/resources/pictos/koffie.png" />
+            </div>
+            <div class="image-container">
+                <img
+                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
+                />
+            </div>
+            <div class="image-container">
+                <img
+                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
+                />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+            <div class="col-12">
+                <p>Geef commentaar op voor de dag</p>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-12">
+            <textarea style="width: 100%; resize: none;"></textarea>
+        </div>
+    </div>
+</ng-container>
 
-<div class="row">
-    <div class="col-12">
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
+<ng-template #weekend>
+    <div class="row">
+        <div class="col-12">
+            <p>Geef commentaar op voor het weekend</p>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
+    <div class="row">
+        <div class="col-12">
+            <textarea style="width: 100%; resize: none;"></textarea>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-        <div class="image-container">
-            <img src="https://www.sclera.be/resources/pictos/bibliobus.png" />
-        </div>
-    </div>
-</div>
+</ng-template>
