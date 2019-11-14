@@ -1,23 +1,29 @@
 <div>
+  <div class="container">
     <h1>Aanwezigheidslijst</h1>
-  <div>
-      <table class="table table-striped">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Voornaam</th>
-            <th scope="col">Achternaam</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let user of aanwezigheden$ | async; index as i">
-            <th scope="row">{{ i + 1 }}</th>
-            <td>
-              {{ user.voornaam }}
-            </td>
-            <td>{{ user.achternaam }}</td>
-          </tr>
-          </tbody>
-        </table>
+    <mat-form-field>
+      <input matInput [matDatepicker]="datePicker" [ngModel]="date"
+        (dateChange)='filter$.next($event.target.value)'>
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker data-cy="datepicker" #datePicker></mat-datepicker>
+    </mat-form-field>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Voornaam</th>
+          <th scope="col">Achternaam</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of aanwezigheden$ | async; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ user.voornaam }}
+          </td>
+          <td>{{ user.achternaam }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

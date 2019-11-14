@@ -34,6 +34,10 @@ export class AanwezighedenComponent implements OnInit {
     return this._aanwezigheden$;
   }
 
+  get date(){
+    return this.filterDate;
+  }
+
  
 
   showDay(){
