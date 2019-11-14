@@ -21,10 +21,8 @@ import { ProgressComponent } from './progress/progress.component';
 import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
 import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
-import {MatInputModule} from '@angular/material/input';
+import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material'
+import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 
 registerLocaleData(localeNl);
 
@@ -46,6 +44,7 @@ registerLocaleData(localeNl);
         VierweeksePlanningComponent,
         PictoPageComponent,
         PictoDagComponent,
+        AanwezighedenComponent
     ],
     imports: [
         BrowserModule,
