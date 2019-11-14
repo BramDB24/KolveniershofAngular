@@ -8,8 +8,8 @@
           <div id="atelierdiv">
             <p>Kies een naam voor het nieuwe atelier:</p>
             <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
-              [ngClass]="{ 'is-invalid': submitted &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
-            <div *ngIf="submitted &amp;&amp; atelierFormGroup.controls.atelierNaam.errors" class="text-danger">
+              [ngClass]="{ 'is-invalid': atelierFormGroup.controls.atelierNaam.errors }" />
+            <div *ngIf="atelierFormGroup.controls.atelierNaam.errors" class="text-danger">
               <div class="d-block" *ngFor="let error of atelierNaamFormErrors()">
                 {{error}}
               </div>
@@ -48,7 +48,7 @@
 
             <input id="teVerwijderenAtelierInput" class="form-control" type="text"
               formControlName="teVerwijderenAtelier" list="atelierNamen"
-              [ngClass]="{ 'is-invalid': submitted &amp;&amp; atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
+              [ngClass]="{ 'is-invalid': atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
             <datalist id="atelierNamen">
               <option *ngFor="let atelier of ateliers" [value]="atelier.naam">
                 {{atelier.naam}}
