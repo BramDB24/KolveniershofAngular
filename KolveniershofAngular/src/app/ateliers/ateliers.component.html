@@ -46,7 +46,11 @@
 
             <input id="teVerwijderenAtelierInput" class="form-control" type="text"
               formControlName="teVerwijderenAtelier" list="atelierNamen"
+<<<<<<< HEAD
               [ngClass]="{ 'is-invalid': submittedDelete &amp;&amp; atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
+=======
+              [ngClass]="{ 'is-invalid': atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
+>>>>>>> 3bffbcd1290a238fba3198069ecb158e782501fb
             <datalist id="atelierNamen">
               <option *ngFor="let atelier of ateliers" [value]="atelier.naam">
                 {{atelier.naam}}

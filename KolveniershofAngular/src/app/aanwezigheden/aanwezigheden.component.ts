@@ -16,7 +16,7 @@ export class AanwezighedenComponent implements OnInit {
 
   private _aanwezigheden$: Observable<Gebruiker[]>;
   private filterDate: Date = new Date();
-  private filter$ = new Subject<Date>();
+  public filter$ = new Subject<Date>();
   
 
   constructor(private _dagService: DagService) { 
