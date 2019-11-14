@@ -1,9 +1,8 @@
 {
     "/api": {
       "target": {
-        "host": "localhost",
-        "protocol": "https:",
-        "port": 44339
+        "host": "kolveniershofapi.azurewebsites.net",
+        "protocol": "https:"
       },
       "secure": false,
       "changeOrigin": true,

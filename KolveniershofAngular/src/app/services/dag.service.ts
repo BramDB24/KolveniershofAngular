@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Atelier } from '../models/atelier.model';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { DagPlanning } from '../models/dag-planning.model';
+import { Gebruiker } from '../models/gebruiker.model';
 
 @Injectable({
   providedIn: 'root'
@@ -78,5 +79,11 @@ export class DagService {
   public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: DagAtelier) {
     console.log(dagAtelier);
     return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
+  }
+
+  public getAanwezigheidslijst(date:Date){
+    const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
+    return this.http.get<Array<Gebruiker>>(`${environment.apiUrl}/dagplanning/${convertedDate}/aanwezigen`)
+    .pipe(map(x => x.sort((a,b)=>a.achternaam.localeCompare(b.achternaam))));
   }
 }
