@@ -1,10 +1,13 @@
 <ng-container *ngIf="loadingError !== undefined && loading; else loadingError">
-    <div class="container">
+    <div    
+        class="container"
+        id="printVolledigeDag"
+    >
         <div class="row">
             <div class="col-12">
                 <h2>Dagplanning</h2>
             </div>
-            <div class="col-6">
+            <div class="col-6" id="nietPrinten">
                 <label
                 style="margin-top: 11px;"
                     ><input
@@ -13,9 +16,8 @@
                     />Toon afwezigheden, ziektes, vervoer</label
                 >
             </div>
-            <div class="col-6">
+            <div class="col-6" id="nietPrinten">
                 <button
-                
                     class="btn btn-primary"
                     type="button"
                     (click)="downloadPDF()"
@@ -27,7 +29,6 @@
 
         <ng-container *ngIf="!bool; else specialeAteliers">
             <div
-                id="printVolledigeDag"
                 class="row"
                 style="margin-bottom: 30px;"
             >
