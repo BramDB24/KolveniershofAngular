@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
+import { Gebruiker } from '../models/gebruiker.model';
 
 @Component({
   selector: 'app-navigation',
@@ -8,11 +9,16 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  public aangemelde = this.accountService.user;
+  public aangemelde: Gebruiker;
 
   constructor(private router: Router, private accountService: AccountService) { }
 
   ngOnInit() {
+    this.accountService.huidigeGebruiker.subscribe(t => this.aangemelde = t);
+  }
+
+  public isAdmin(): boolean {
+    return this.aangemelde && this.aangemelde.type === 'Begeleider';
   }
 
   public redirect(directory: string): void {

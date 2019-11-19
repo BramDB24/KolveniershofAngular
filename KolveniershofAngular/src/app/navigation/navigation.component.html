@@ -25,19 +25,19 @@
         <a class="nav-link" (click)="redirect('kalender')">kalender</a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" (click)="redirect('register-gebruiker')"
+        <a class="nav-link" *ngIf="isAdmin()" (click)="redirect('register-gebruiker')"
           >beheer personen</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="redirect('vierweekse-planning')"
+        <a class="nav-link" *ngIf="isAdmin()" (click)="redirect('vierweekse-planning')"
           >4-weekse planning</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="redirect('ateliers')">beheer ateliers</a>
+        <a class="nav-link" *ngIf="isAdmin()" (click)="redirect('ateliers')">beheer ateliers</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="redirect('aanwezigheden')">aanwezigheden</a>
+        <a class="nav-link" *ngIf="isAdmin()" (click)="redirect('aanwezigheden')">aanwezigheden</a>
       </li>
 
       
@@ -47,7 +47,7 @@
         class="nav-item dropdown"
         *ngIf="aangemelde | async as user; else nietaangemeld"
       >
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" >{{ user }}</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" >{{ user.voornaam }}</a>
         <div class="dropdown-menu" aria-labelledby="dropdownmenu">
           <a class="dropdown-item" (click)="afmelden()">Afmelden</a>
         </div>
