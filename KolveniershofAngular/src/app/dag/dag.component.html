@@ -1,7 +1,7 @@
 <ng-container *ngIf="loadingError !== undefined && loading; else loadingError">
     <div    
         class="container"
-        id="printVolledigeDag"
+        id="print"
     >
         <div class="row">
             <div class="col-12">
@@ -16,14 +16,8 @@
                     />Toon afwezigheden, ziektes, vervoer</label
                 >
             </div>
-            <div class="col-6" id="nietPrinten">
-                <button
-                    class="btn btn-primary"
-                    type="button"
-                    (click)="downloadPDF()"
-                >
-                    PDF afdrukken
-                </button>
+            <div class="col-6 aliginRight" id="nietPrinten">
+                    <app-print ></app-print>
             </div>
         </div>
 
@@ -82,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div id="printVoormiddag" class="row">
+            <div class="row">
                 <div class="col-12 col-sm-12 col-md-6">
                     <div class="card">
                         <div class="card-body">

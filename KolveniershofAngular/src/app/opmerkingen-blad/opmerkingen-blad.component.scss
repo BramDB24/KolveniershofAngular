@@ -1,3 +1,15 @@
+div {
+  border: 1px solid red;
+}
+
+.alignRight{
+  text-align: right;
+}
+
+.margin-left-10{
+  margin-left:10px;
+}
+
 @media (min-width: 900px) {
   .textareawidth {
     width: 20%;
@@ -33,7 +45,7 @@
   }
 
   max-width: 5em;
-  margin-bottom: 3em;
+ // margin-bottom: 3em;
   padding : 0.5em;
 }
 
