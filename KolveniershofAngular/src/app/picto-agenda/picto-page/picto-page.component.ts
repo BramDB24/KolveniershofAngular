@@ -9,20 +9,10 @@ import { MatFormField } from '@angular/material/form-field';
 })
 export class PictoPageComponent implements OnInit {
     public weekdagen = new Array<string>('Ma', 'Di', 'Woe', 'Do', 'Vr');
-    public weekendDagen = new Array<string>('Zat', 'Zon');
-    public isWeekend = false;
-
+    
     constructor() {}
 
     ngOnInit() {}
-
-    public switchWeekendState(): void {
-        this.isWeekend = !this.isWeekend;
-    }
-
-    public displayDagen(): Array<string> {
-        return this.isWeekend ? this.weekendDagen : this.weekdagen;
-    }
 
     public windBack(): void {
         setTimeout(() => {

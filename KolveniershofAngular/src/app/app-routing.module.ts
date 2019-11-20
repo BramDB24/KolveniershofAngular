@@ -8,6 +8,10 @@ import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-pl
 import { AteliersComponent } from './ateliers/ateliers.component';
 import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
+import { CanActivate } from '@angular/router/src/utils/preactivation';
+import { AuthGuard } from './guards/auth.guard';
+import { DagAtelier } from './models/dag-atelier.model';
+import { DagComponent } from './dag/dag.component';
 
 export const routes: Routes = [
   {
@@ -16,16 +20,22 @@ export const routes: Routes = [
   },
   {
     path: 'dag',
-    redirectTo: '',
-    pathMatch: 'full'
+    component: DagComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
+
   },
   {
     path: 'register-gebruiker',
-    component: RegisterGebruikerComponent
+    component: RegisterGebruikerComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: 'register-gebruiker/:id',
-    component: RegisterGebruikerComponent
+    component: RegisterGebruikerComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: 'picto-agenda',
@@ -33,28 +43,33 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: KalenderComponent
-    // ,
-    // children: [
-    //   {path: 'dag', component: DayComponent},
-    //   {path: 'edit', component: HomepageEditComponent}
-    // ]
+    component: KalenderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: 'homepage-edit',
-    component: HomepageEditComponent
+    component: HomepageEditComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: 'vierweekse-planning',
-    component: VierweeksePlanningComponent
+    component: VierweeksePlanningComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: 'ateliers',
-    component: AteliersComponent
+    component: AteliersComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: 'aanwezigheden',
-    component: AanwezighedenComponent
+    component: AanwezighedenComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Begeleider'] }
   },
   {
     path: '**',

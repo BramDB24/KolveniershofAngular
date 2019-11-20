@@ -1,38 +1,72 @@
 <div class="container">
-  <div class="kalenderNav">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-6 text-center justify-content-between d-flex">
-        <button (click)="vorigeDatum()" type="button" class="btn naastelkaar datumAanpassen datumButton">
-          <i class="fas fa-arrow-left"></i>
-        </button>
-        <p class="naastelkaar datum">{{ datum | date: 'EEEE dd MMMM yyyy' }}</p>
-        <button (click)="volgendeDatum()" type="button" class="btn naastelkaar datumAanpassen datumButton">
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-md-6">
-        
-        <button type="button" (click)="veranderState(StateType.Dag)" class="btn keuzeknop"
-          [ngClass]="{ 'geselecteerd' : state == StateType.Dag }"
-          [disabled]="state == StateType.Dag">Dagplanning</button>
-        <i class="fas fa-arrows-alt-h"></i>
-        <button type="button" (click)="veranderState(StateType.Opmerkingen)" class="btn keuzeknop"
-          [ngClass]="{ 'geselecteerd' : state == StateType.Opmerkingen }"
-          [disabled]="state == StateType.Opmerkingen">Opmerkingen</button>
-        <button type="button" (click)="veranderState(StateType.DagEdit)" class="btn rechts"
-          [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [disabled]="state != StateType.Dag"><i
-            class="far fa-edit"></i> Dagplanning
-          aanpassen</button>
-        <!-- Terug knop voor dagplanning aanpassen -->
-        <!-- <button type="button" (click)="veranderState(StateType.Dag)" class="btn rechts"
+    <div class="kalenderNav">
+        <div class="row">
+            <div
+                class="col-xs-12 col-sm-12 col-md-6 text-center justify-content-between d-flex"
+            >
+                <button
+                    (click)="vorigeDatum()"
+                    type="button"
+                    class="btn naastelkaar datumAanpassen datumButton"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <p class="naastelkaar datum">
+                    {{ datum | date: 'EEEE dd MMMM yyyy' }}
+                </p>
+                <button
+                    (click)="volgendeDatum()"
+                    type="button"
+                    class="btn naastelkaar datumAanpassen datumButton"
+                >
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <button
+                    type="button"
+                    (click)="veranderState(StateType.Dag)"
+                    class="btn keuzeknop"
+                    [ngClass]="{ geselecteerd: state == StateType.Dag }"
+                    [disabled]="state == StateType.Dag"
+                >
+                    Dagplanning
+                </button>
+                <i class="fas fa-arrows-alt-h"></i>
+                <button
+                    type="button"
+                    (click)="veranderState(StateType.Opmerkingen)"
+                    class="btn keuzeknop"
+                    [ngClass]="{ geselecteerd: state == StateType.Opmerkingen }"
+                    [disabled]="state == StateType.Opmerkingen"
+                >
+                    Opmerkingen
+                </button>
+                <button
+                    type="button"
+                    (click)="veranderState(StateType.DagEdit)"
+                    class="btn rechts"
+                    [ngClass]="{ geselecteerd: state == StateType.DagEdit }"
+                    [disabled]="state != StateType.Dag"
+                >
+                    <i class="far fa-edit"></i> Dagplanning aanpassen
+                </button>
+                <!-- Terug knop voor dagplanning aanpassen -->
+                <!-- <button type="button" (click)="veranderState(StateType.Dag)" class="btn rechts"
           [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.DagEdit"><i
             class="fas fa-arrow-circle-left"></i> Terug</button> -->
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-
 <app-dag *ngIf="state == StateType.Dag" [datum]="datum"></app-dag>
-<app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="datum"></app-homepage-edit>
-<app-opmerkingen-blad *ngIf="state == StateType.Opmerkingen" [datum]="datum"></app-opmerkingen-blad>
+
+<app-homepage-edit
+    *ngIf="state == StateType.DagEdit"
+    [datum]="datum"
+></app-homepage-edit>
+<app-opmerkingen-blad
+    *ngIf="state == StateType.Opmerkingen"
+    [datum]="datum"
+></app-opmerkingen-blad>
