@@ -23,6 +23,7 @@ import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material'
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
+import { PrintComponent } from './print/print.component';
 
 registerLocaleData(localeNl);
 
@@ -44,7 +45,8 @@ registerLocaleData(localeNl);
         VierweeksePlanningComponent,
         PictoPageComponent,
         PictoDagComponent,
-        AanwezighedenComponent
+        AanwezighedenComponent,
+        PrintComponent
     ],
     imports: [
         BrowserModule,
