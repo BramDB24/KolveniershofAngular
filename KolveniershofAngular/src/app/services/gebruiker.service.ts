@@ -6,37 +6,40 @@ import { Gebruiker } from '../models/gebruiker.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class GebruikerService {
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  public getUsers(): Observable<Gebruiker[]> {
-    return this.http.get<Gebruiker[]>(`${environment.apiUrl}/account`).pipe(
-      map(
-        x => x.sort((a, b) => a.voornaam.localeCompare(b.voornaam))
-      ));
-  }
-
-  public getGebruikerViaId(id: number): Observable<Gebruiker> {
-    return this.http.get<Gebruiker>(`localhost:4200/viaId/${id}`);
-  }
-
-  public getGebruikerTypes(): Observable<string[]> {
-    return of(['Admin', 'Begeleider', 'Cliënt']);
-    //  return this.http.get<string[]>(`localhost:4200/usertypes`);
-  }
-
-  public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
-    if (!gebruikerJson.id) {
-      return null;
+    public getUsers(): Observable<Gebruiker[]> {
+        return this.http
+            .get<Gebruiker[]>(`${environment.apiUrl}/account`)
+            .pipe(
+                map(x => x.sort((a, b) => a.voornaam.localeCompare(b.voornaam)))
+            );
     }
-    return this.http.post(`localhost:4200/${gebruikerJson.id}`, gebruikerJson);
-  }
 
-  public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
-    return null;
-    // WERKT NIET WERKT NIET ZIE API INFO
-    // return this.http.post(`localhost:4200/register`, gebruikerJson);
-  }
+    public getGebruikerViaId(id: number): Observable<Gebruiker> {
+        return this.http.get<Gebruiker>(`localhost:4200/viaId/${id}`);
+    }
+
+    public getGebruikerTypes(): Observable<string[]> {
+        return of(['Admin', 'Begeleider', 'Cliënt']);
+    }
+
+    public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
+        if (!gebruikerJson.id) {
+            return null;
+        }
+        return this.http.post(
+            `localhost:4200/${gebruikerJson.id}`,
+            gebruikerJson
+        );
+    }
+
+    public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
+        return null;
+        // WERKT NIET WERKT NIET ZIE API INFO
+        // return this.http.post(`localhost:4200/register`, gebruikerJson);
+    }
 }

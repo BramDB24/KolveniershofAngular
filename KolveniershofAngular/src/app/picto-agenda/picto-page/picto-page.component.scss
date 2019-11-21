@@ -1,0 +1,11 @@
+.arrowbutton{
+    all: unset;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.alignRight{
+    text-align: right;
+}
+

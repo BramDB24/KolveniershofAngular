@@ -14,41 +14,54 @@ import { RegisterGebruikerComponent } from './register-gebruiker/register-gebrui
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { KalenderComponent } from './kalender/kalender.component';
 import { OpmerkingenBladComponent } from './opmerkingen-blad/opmerkingen-blad.component';
-import { OpmerkingPipe } from './pipes/opmerking.pipe';
 import { LoginGebruikerComponent } from './login-gebruiker/login-gebruiker.component';
 import { VierweeksePlanningComponent } from './vierweekse-planning/vierweekse-planning.component';
 import { AteliersComponent } from './ateliers/ateliers.component';
 import { ProgressComponent } from './progress/progress.component';
+import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
+import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material'
+import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
+import { PrintComponent } from './print/print.component';
 
 registerLocaleData(localeNl);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    KalenderComponent,
-    FileUploadComponent,
-    DagComponent,
-    NavigationComponent,
-    HomepageEditComponent,
-    HomepageEditAtelierComponent,
-    RegisterGebruikerComponent,
-    OpmerkingenBladComponent,
-    OpmerkingPipe,
-    VierweeksePlanningComponent,
-    AteliersComponent,
-    ProgressComponent,
-    LoginGebruikerComponent,
-    VierweeksePlanningComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    ReactiveFormsModule, 
-    FormsModule
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
+    declarations: [
+        AppComponent,
+        KalenderComponent,
+        FileUploadComponent,
+        DagComponent,
+        NavigationComponent,
+        HomepageEditComponent,
+        HomepageEditAtelierComponent,
+        RegisterGebruikerComponent,
+        OpmerkingenBladComponent,
+        VierweeksePlanningComponent,
+        AteliersComponent,
+        ProgressComponent,
+        LoginGebruikerComponent,
+        VierweeksePlanningComponent,
+        PictoPageComponent,
+        PictoDagComponent,
+        AanwezighedenComponent,
+        PrintComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule
+    ],
+    providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
 
-  bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

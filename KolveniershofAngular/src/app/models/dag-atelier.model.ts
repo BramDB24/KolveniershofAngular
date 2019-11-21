@@ -1,25 +1,22 @@
-import { GebruikerType } from '../enums/gebruiker-type.enum';
 import { Atelier } from './atelier.model';
 import { Gebruiker } from './gebruiker.model';
 
 export class DagAtelier {
   dagAtelierId?: number;
-  dagMoment: number;
+  dagMoment: string;
   atelier: Atelier = new Atelier();
   gebruikers: Gebruiker[] = new Array<Gebruiker>();
 
   public getBegeleiders(): Gebruiker[] {
     return this.gebruikers
       ? this.gebruikers.filter(
-          g =>
-            g.type === GebruikerType.Begeleider ||
-            g.type === GebruikerType.Admin
+          g => g.type === 'Begeleider' || g.type === 'Admin'
         )
       : null;
   }
 
   public getClienten(): Gebruiker[] {
-    return this.gebruikers.filter(g => g.type === GebruikerType.Cliënt);
+    return this.gebruikers.filter(g => g.type === 'Cliënt');
   }
 
   public verwijderGebruikerVanDagatelier(gebruiker: Gebruiker): void {
@@ -36,13 +33,12 @@ export class DagAtelier {
 
   public getNiewAanwezigen(alleGebruikers: Array<Gebruiker>): Array<Gebruiker> {
     return alleGebruikers.filter(
-          gebruiker =>
-            this.gebruikers.filter(
-              aanwezige =>
-                aanwezige.voornaam === gebruiker.voornaam &&
-                aanwezige.achternaam === gebruiker.achternaam
-            ).length <= 0
-        )
-      ;
+      gebruiker =>
+        this.gebruikers.filter(
+          aanwezige =>
+            aanwezige.voornaam === gebruiker.voornaam &&
+            aanwezige.achternaam === gebruiker.achternaam
+        ).length <= 0
+    );
   }
 }
