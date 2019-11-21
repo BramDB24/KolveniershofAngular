@@ -8,7 +8,7 @@
   
   </div>
 
-  <div class="row" id="print">
+  <div class="row" id="print" >
     <div class="col-xs-12 col-md-6" *ngFor="let opmerking of opmerkingen; let i = index ">
       <h2>{{opmerking.opmerkingType}}</h2>
       <form class="spaceNaOpmerking" [formGroup]="opmerkingForm[i]" >
@@ -19,8 +19,7 @@
   </div>
 
   <div class="row">
-    <div class="col-10"></div>
-    <div class="col-2 alignRight">
+    <div class="offset-10 col-2 alignRight">
         <button class="btn btn-primary col-2" type="submit" (click)="onSubmit()">Opslaan</button>
     </div>
   </div>
