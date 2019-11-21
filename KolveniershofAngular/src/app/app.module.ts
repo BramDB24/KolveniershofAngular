@@ -21,7 +21,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
 import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material'
+import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material';
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 import { PrintComponent } from './print/print.component';
 

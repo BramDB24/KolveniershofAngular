@@ -3,28 +3,28 @@ import { GebruikerService } from '../services/gebruiker.service';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import {
-    FormGroup,
-    FormControl,
-    FormBuilder,
-    Validators,
-    AbstractControl,
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+  AbstractControl,
 } from '@angular/forms';
 import { BestandService } from '../services/bestand.service';
 import { Gebruiker } from '../models/gebruiker.model';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
-    const foto = control.value;
-    if (!foto) {
-        return { required: true };
-    }
-    if (foto.name.split('.').length !== 2) {
-        return { wrongFileType: true };
-    }
-    const extentie = foto.name.split('.')[1];
-    if (!['jpg', 'png'].includes(extentie.toLowerCase())) {
-        return { wrongFileType: true };
-    }
-    return null;
+  const foto = control.value;
+  if (!foto) {
+    return { required: true };
+  }
+  if (foto.name.split('.').length !== 2) {
+    return { wrongFileType: true };
+  }
+  const extentie = foto.name.split('.')[1];
+  if (!['jpg', 'png'].includes(extentie.toLowerCase())) {
+    return { wrongFileType: true };
+  }
+  return null;
 }
 
 @Component({
@@ -33,61 +33,61 @@ function valideerBestandType(control: FormControl): { [key: string]: any } {
   styleUrls: ['./register-gebruiker.component.scss']
 })
 export class RegisterGebruikerComponent implements OnInit {
-    public gebruikerFormGroup: FormGroup;
-    public loader = false;
-    public huidigeGebruiker: Gebruiker;
-    public gebruikerTypes: string[];
-    public submitButtonText: string;
-    public readonly standaardTypeChecked = 2;
-    public readonly typesMetOuderInfo = [2];
-    public verbergOuderInfo = '';
-    public submitted = false;
-    public loaded = false;
+  public gebruikerFormGroup: FormGroup;
+  public loader = false;
+  public huidigeGebruiker: Gebruiker;
+  public gebruikerTypes: string[];
+  public submitButtonText: string;
+  public readonly standaardTypeChecked = 'cliënt';
+  public verbergOuderInfo = '';
+  public submitted = false;
+  public loaded = false;
 
-    constructor(
-        private gebruikerService: GebruikerService,
-        private bestandService: BestandService,
-        private route: ActivatedRoute,
-        private fb: FormBuilder
-    ) {}
+  constructor(
+    private gebruikerService: GebruikerService,
+    private bestandService: BestandService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) { }
 
-    ngOnInit() {
-        this.gebruikerService
-            .getGebruikerTypes()
-            .pipe(
-                finalize(() => {
-                    this.loaded = true;
-                    this.initialiseerFormGroup();
-                })
-            )
-            .subscribe(entry => (this.gebruikerTypes = entry));
-        // this.route.params.subscribe(params => {
-        //   if (params.id) {
-        //     this.gebruikerService.getUser(+params.id)
-        //       .pipe(
-        //         finalize(() => {
-        //           this.loader = true;
-        //         })
-        //       )
-        //       .subscribe(user => {
-        //         this.huidigeGebruiker = user;
-        //       },
-        //         err => {
-        //           alert('Er was een error bij het ophalen van de gebruiker.');
-        //           console.log(err);
-        //         },
-        //         () => {
-        //           this.initializeFormGroup();
-        //         });
-        //   } else {
-        //     this.huidigeGebruiker = null;
-        //   }
-        // },
-        //   err => {
-        //     alert('Er was een error bij laden van de pagina.');
-        //     console.log(err);
-        //   });
-    }
+  ngOnInit() {
+    this.gebruikerService
+      .getGebruikerTypes()
+      .pipe(
+        finalize(() => {
+          this.loaded = true;
+          this.initialiseerFormGroup();
+        })
+      )
+      .subscribe(entry => (this.gebruikerTypes = entry));
+    // this.route.params.subscribe(params => {
+    //   if (params.id) {
+    //     this.gebruikerService.getUser(+params.id)
+    //       .pipe(
+    //         finalize(() => {
+    //           this.loader = true;
+    //         })
+    //       )
+    //       .subscribe(user => {
+    //         this.huidigeGebruiker = user;
+    //       },
+    //         err => {
+    //           alert('Er was een error bij het ophalen van de gebruiker.');
+    //           console.log(err);
+    //         },
+    //         () => {
+    //           this.initializeFormGroup();
+    //         });
+    //   } else {
+    //     this.huidigeGebruiker = null;
+    //   }
+    // },
+    //   err => {
+    //     alert('Er was een error bij laden van de pagina.');
+    //     console.log(err);
+    //   });
+    this.initialiseerFormGroup();
+  }
 
   private initialiseerFormGroup() {
     this.gebruikerFormGroup = this.fb.group({
@@ -95,23 +95,23 @@ export class RegisterGebruikerComponent implements OnInit {
       voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
       email: [this.huidigeGebruiker ? this.huidigeGebruiker.email : '', [Validators.required, Validators.email]],
       wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '', Validators.required],
-      gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked, Validators.required],
+      gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type.toLowerCase : this.standaardTypeChecked, Validators.required],
       foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', valideerBestandType]
-    }
-    this.typeVeranderd(this.huidigeGebruiker ? this.huidigeGebruiker.type : this.standaardTypeChecked);
+    });
 
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
   }
-
-    onSubmit() {
-        this.submitted = true;
-        // stop het process hier als de form invalid is
-        if (this.gebruikerFormGroup.invalid) {
-            return;
-        }
+  onSubmit() {
+    this.submitted = true;
+    // stop het process hier als de form invalid is
+    if (this.gebruikerFormGroup.invalid) {
+      return;
+    }
 
     // maak bestandnaam uniek
-    const bestandNaam = Date.now().toString() + this.gebruikerFormGroup.controls.foto.value.name;
+    const bestandNaam = this.gebruikerFormGroup.controls.voornaam.value + '_'
+      + this.gebruikerFormGroup.controls.achternaam.value + '.'
+      + this.gebruikerFormGroup.controls.foto.value.name.split('.')[1];
     // folder naam voor bestand
     const folderNaam = 'gebruiker-foto';
 
@@ -135,42 +135,42 @@ export class RegisterGebruikerComponent implements OnInit {
     this.bestandService.postFile(folderNaam, bestandNaam, this.gebruikerFormGroup.controls.foto.value)
       .subscribe();
 
-        // Stuur nieuweGebruiker naar de databank
-        if (this.huidigeGebruiker) {
-            this.gebruikerService
-                .postUpdateGebruiker(nieuweGebruiker)
-                .subscribe(response => {
-                    alert('Gebruiker geüpdate.');
-                });
-        } else {
-            this.gebruikerService
-                .postNieuweGebruiker(nieuweGebruiker)
-                .subscribe(response => {
-                    alert('Gebruiker toegevoegd.');
-                });
-        }
+    // Stuur nieuweGebruiker naar de databank
+    if (this.huidigeGebruiker) {
+      this.gebruikerService
+        .postUpdateGebruiker(nieuweGebruiker)
+        .subscribe(response => {
+          alert('Gebruiker geüpdate.');
+        });
+    } else {
+      this.gebruikerService
+        .postNieuweGebruiker(nieuweGebruiker)
+        .subscribe(response => {
+          alert('Gebruiker toegevoegd.');
+        });
     }
-    
-    hasRequiredField(abstractControl: AbstractControl): boolean {
-        if (abstractControl.validator) {
-            const validator = abstractControl.validator({} as AbstractControl);
-            if (validator && validator.required) {
-                return true;
-            }
-        }
-        if (abstractControl['controls']) {
-            for (const controlName in abstractControl['controls']) {
-                if (abstractControl['controls'][controlName]) {
-                    if (
-                        this.hasRequiredField(
-                            abstractControl['controls'][controlName]
-                        )
-                    ) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+  }
+
+  hasRequiredField(abstractControl: AbstractControl): boolean {
+    if (abstractControl.validator) {
+      const validator = abstractControl.validator({} as AbstractControl);
+      if (validator && validator.required) {
+        return true;
+      }
     }
+    if (abstractControl['controls']) {
+      for (const controlName in abstractControl['controls']) {
+        if (abstractControl['controls'][controlName]) {
+          if (
+            this.hasRequiredField(
+              abstractControl['controls'][controlName]
+            )
+          ) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 }
