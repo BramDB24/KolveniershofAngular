@@ -14,7 +14,7 @@ export class NavigationComponent implements OnInit {
   constructor(private router: Router, private accountService: AccountService) { }
 
   ngOnInit() {
-    //this.accountService.huidigeGebruiker.subscribe(t => this.aangemelde = t);
+    this.accountService.huidigeGebruiker.subscribe(t => this.aangemelde = t);
   }
 
   public isAdmin(): boolean {

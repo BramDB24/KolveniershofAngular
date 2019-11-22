@@ -25,20 +25,23 @@ export class AccountService {
                 parsedToken = null;
             }
         }
-        this.user = new BehaviorSubject<Gebruiker>(
-            JSON.parse(localStorage.getItem('currentUser'))
-        );
+        this.user = new BehaviorSubject<Gebruiker>(null);
         this.huidigeGebruiker = this.user.asObservable();
     }
 
     public login(email: string, password: string): Observable<boolean> {
         return this.http
-            .post(`${environment.apiUrl}/account`, { email, password })
+            .post(
+                `${environment.apiUrl}/account`,
+                { email, password },
+                { responseType: 'text' }
+            )
             .pipe(
                 map((token: any) => {
                     if (token) {
-                        localStorage.setItem(this._tokenKey, JSON.stringify(token));
-                        this.user.next(token);
+                        const local = JSON.parse(token);
+                        localStorage.setItem(this._tokenKey, local.token);
+                        this.user.next(local.user);
                         return true;
                     } else {
                         return false;
