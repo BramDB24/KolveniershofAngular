@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('dagplanning', function() {
+describe('navigation bar', function() {
   it('goes to pictoagenda', function() {
   cy.visit('http://localhost:4200');
   cy.get('#picto-agendas').click();
