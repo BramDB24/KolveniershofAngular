@@ -13,7 +13,7 @@ describe('dagplanning', function() {
     "donderdag", "vrijdag", "zaterdag", "zondag"
   ];
 
- /*it('browser gets loaded', function() {
+ it('browser gets loaded', function() {
     cy.visit('http://localhost:4200');
     cy.get('#btnDagplanningAanpassen').should('not.be.disabled');
     cy.get('#btnDagplanning').should('have.class', 'geselecteerd')
@@ -93,7 +93,7 @@ it('changes to Toon afwezigheden, ziektes, vervoer', function() {
   cy.get('#voormiddag').should('not.exist');
   cy.get('#namiddag').should('not.exist');
   cy.get('#specialeAteliers').should('exist');
-});*/
+});
 
 
 
