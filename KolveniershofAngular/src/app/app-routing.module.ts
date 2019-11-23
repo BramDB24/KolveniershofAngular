@@ -22,20 +22,23 @@ export const routes: Routes = [
     path: 'dag',
     component: DagComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
 
   },
   {
     path: 'register-gebruiker',
     component: RegisterGebruikerComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
   },
   {
     path: 'register-gebruiker/:id',
     component: RegisterGebruikerComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
   },
   {
     path: 'picto-agenda',
@@ -45,31 +48,35 @@ export const routes: Routes = [
     path: '',
     component: KalenderComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
   },
   {
     path: 'homepage-edit',
     component: HomepageEditComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
   },
   {
     path: 'vierweekse-planning',
     component: VierweeksePlanningComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
   },
   {
     path: 'ateliers',
     component: AteliersComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
+
   },
   {
     path: 'aanwezigheden',
     component: AanwezighedenComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Begeleider'] }
+    data: { roles: [2] }
   },
   {
     path: '**',

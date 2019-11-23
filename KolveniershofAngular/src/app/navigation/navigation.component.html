@@ -47,7 +47,7 @@
         class="nav-item dropdown"
         *ngIf="aangemelde; else nietaangemeld"
       >
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" >{{ user.voornaam }}</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" >{{ aangemelde.voornaam }}</a>
         <div class="dropdown-menu" aria-labelledby="dropdownmenu">
           <a class="dropdown-item" (click)="afmelden()">Afmelden</a>
         </div>

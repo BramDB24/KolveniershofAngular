@@ -14,11 +14,14 @@ export class NavigationComponent implements OnInit {
   constructor(private router: Router, private accountService: AccountService) { }
 
   ngOnInit() {
-    this.accountService.huidigeGebruiker.subscribe(t => this.aangemelde = t);
+    this.accountService.huidigeGebruiker.subscribe(t => {
+      console.log(t);
+      this.aangemelde = t;
+    });
   }
 
   public isAdmin(): boolean {
-    return this.aangemelde && this.aangemelde.type === 'Begeleider';
+    return this.aangemelde && this.aangemelde.type === '2';
   }
 
   public redirect(directory: string): void {

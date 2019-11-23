@@ -25,7 +25,13 @@ export class AccountService {
                 parsedToken = null;
             }
         }
-        this.user = new BehaviorSubject<Gebruiker>(null);
+        console.log(
+          JSON.parse(localStorage.getItem('loggedUser'))
+
+        )
+        this.user = new BehaviorSubject<Gebruiker>(
+            JSON.parse(localStorage.getItem('loggedUser'))
+        );
         this.huidigeGebruiker = this.user.asObservable();
     }
 
@@ -41,6 +47,7 @@ export class AccountService {
                     if (token) {
                         const local = JSON.parse(token);
                         localStorage.setItem(this._tokenKey, local.token);
+                        localStorage.setItem('loggedUser', JSON.stringify(local.user));
                         this.user.next(local.user);
                         return true;
                     } else {
@@ -52,7 +59,8 @@ export class AccountService {
 
     public logout(): void {
         if (this.user.getValue()) {
-            localStorage.removeItem('currentUser');
+            localStorage.removeItem(this._tokenKey);
+            localStorage.removeItem('loggedUser');
             this.user.next(null);
         }
     }
