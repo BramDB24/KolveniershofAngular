@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material'
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 import { PrintComponent } from './print/print.component';
+import { BeheerPersonenComponent } from './beheer-personen/beheer-personen.component';
 
 registerLocaleData(localeNl);
 
@@ -46,7 +47,8 @@ registerLocaleData(localeNl);
         PictoPageComponent,
         PictoDagComponent,
         AanwezighedenComponent,
-        PrintComponent
+        PrintComponent,
+        BeheerPersonenComponent
     ],
     imports: [
         BrowserModule,

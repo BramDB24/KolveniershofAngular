@@ -6,40 +6,40 @@ import { Gebruiker } from '../models/gebruiker.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
 export class GebruikerService {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    public getUsers(): Observable<Gebruiker[]> {
-        return this.http
-            .get<Gebruiker[]>(`${environment.apiUrl}/account`)
-            .pipe(
-                map(x => x.sort((a, b) => a.voornaam.localeCompare(b.voornaam)))
-            );
-    }
+  public getUsers(): Observable<Gebruiker[]> {
+    return this.http
+      .get<Gebruiker[]>(`${environment.apiUrl}/account`)
+      .pipe(map(x => x.sort((a, b) => a.voornaam.localeCompare(b.voornaam))));
+  }
 
-    public getGebruikerViaId(id: number): Observable<Gebruiker> {
-        return this.http.get<Gebruiker>(`localhost:4200/viaId/${id}`);
-    }
+  public getGebruikerViaId(gebruikerId: string): Observable<Gebruiker> {
+    console.log(gebruikerId);
+    return this.http
+      .get<Gebruiker>(`${environment.apiUrl}/account/viaid/${gebruikerId}`);
+  }
 
-    public getGebruikerTypes(): Observable<string[]> {
-        return of(['Admin', 'Begeleider', 'Cliënt']);
-    }
+  public getGebruikerTypes(): Observable<string[]> {
+    return of(['Admin', 'Begeleider', 'Cliënt']);
+  }
 
-    public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
-        if (!gebruikerJson.id) {
-            return null;
-        }
-        return this.http.post(
-            `localhost:4200/${gebruikerJson.id}`,
-            gebruikerJson
-        );
+  public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
+    if (!gebruikerJson.id) {
+      return null;
     }
+    return this.http.post(
+      `${environment.apiUrl}/${gebruikerJson.id}`,
+      gebruikerJson
+    );
+  }
 
-    public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
-        return null;
-        // WERKT NIET WERKT NIET ZIE API INFO
-        // return this.http.post(`localhost:4200/register`, gebruikerJson);
-    }
+  public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
+    return null;
+    // WERKT NIET WERKT NIET ZIE API INFO
+    return this.http.post(`${environment.apiUrl}/register`, gebruikerJson);
+  }
 }
