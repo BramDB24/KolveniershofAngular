@@ -20,65 +20,71 @@
     <div class="row col-12 margbot">
       <div class="col-6">
         <h3>Voormiddag</h3>
-        <table #table1 mat-table [dataSource]="voormiddag" matSort class="mat-elevation-z8">
-          <ng-container matColumnDef="#">
-            <th mat-header-cell *matHeaderCellDef> # </th>
-            <td mat-cell *matCellDef="let gebruiker; let i = index;"
-              [ngClass]="gebruiker.atelierType == 'Gewoon' ? 'groen' : 'rood'">{{i}} </td>
-          </ng-container>
+        <ng-container *ngIf="!loading; else loadingError">
+          <table #table1 mat-table [dataSource]="voormiddag" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="#">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let gebruiker; let i = index;"
+                [ngClass]="gebruiker.atelierType == 'Gewoon' ? 'groen' : 'rood'">{{i}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="voornaam">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> voornaam </th>
-            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.voornaam}} </td>
-          </ng-container>
+            <ng-container matColumnDef="voornaam">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> voornaam </th>
+              <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.voornaam}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="achternaam">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> achternaam </th>
-            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.achternaam}} </td>
-          </ng-container>
+            <ng-container matColumnDef="achternaam">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> achternaam </th>
+              <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.achternaam}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="reden">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
-            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.atelierType!='Gewoon'?gebruiker.atelierType:'/'}} </td>
-          </ng-container>
+            <ng-container matColumnDef="reden">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
+              <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.atelierType!='Gewoon'?gebruiker.atelierType:'/'}}
+              </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="kolomheaders"></tr>
-          <tr mat-row *matRowDef="let row; columns: kolomheaders;"></tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="kolomheaders"></tr>
+            <tr mat-row *matRowDef="let row; columns: kolomheaders;"></tr>
+          </table>
+        </ng-container>
       </div>
       <div class="col-6">
         <h3>Namiddag</h3>
-        <table #table2 mat-table [dataSource]="namiddag" matSort class="mat-elevation-z8">
+        <ng-container *ngIf="!loading; else loadingError">
+          <table #table2 mat-table [dataSource]="namiddag" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="#">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let gebruiker; let i = index;"
+                [ngClass]="gebruiker.atelierType == 'Gewoon' ? 'groen' : 'rood'">{{i}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="#">
-            <th mat-header-cell *matHeaderCellDef> # </th>
-            <td mat-cell *matCellDef="let gebruiker; let i = index;"
-              [ngClass]="gebruiker.atelierType == 'Gewoon' ? 'groen' : 'rood'">{{i}} </td>
-          </ng-container>
+            <ng-container matColumnDef="voornaam">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> voornaam </th>
+              <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.voornaam}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="voornaam">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> voornaam </th>
-            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.voornaam}} </td>
-          </ng-container>
+            <ng-container matColumnDef="achternaam">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> achternaam </th>
+              <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.achternaam}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="achternaam">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> achternaam </th>
-            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.achternaam}} </td>
-          </ng-container>
+            <ng-container matColumnDef="reden">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
+              <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.atelierType!='Gewoon'?gebruiker.atelierType:'/'}}
+              </td>
+            </ng-container>
 
-          <ng-container matColumnDef="reden">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
-            <td mat-cell *matCellDef="let gebruiker" > {{gebruiker.atelierType!='Gewoon'?gebruiker.atelierType:'/'}} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="kolomheaders"></tr>
-          <tr mat-row *matRowDef="let row; columns: kolomheaders;"></tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="kolomheaders"></tr>
+            <tr mat-row *matRowDef="let row; columns: kolomheaders;"></tr>
+          </table>
+        </ng-container>
       </div>
     </div>
     <div class="row col-12">
       <div class="col-12">
         <h3>Volledige dag</h3>
+        <ng-container *ngIf="!loading; else loadingError">
         <table #table3 mat-table [dataSource]="volledigeDag" matSort class="mat-elevation-z8">
 
           <ng-container matColumnDef="#">
@@ -99,12 +105,19 @@
 
           <ng-container matColumnDef="reden">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
-            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.atelierType!='Gewoon'?gebruiker.atelierType:'/'}} </td>
+            <td mat-cell *matCellDef="let gebruiker"> {{gebruiker.atelierType!='Gewoon'?gebruiker.atelierType:'/'}}
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="kolomheaders"></tr>
           <tr mat-row *matRowDef="let row; columns: kolomheaders;"></tr>
         </table>
+      </ng-container>
       </div>
     </div>
+    <ng-template #loadingError>
+        <div class="spinner-border spinner" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </ng-template>
   </div>

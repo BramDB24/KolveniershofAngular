@@ -3,6 +3,7 @@ import { Subject, Subscription} from 'rxjs';
 import { DagService } from '../services/dag.service';
 import { distinctUntilChanged} from 'rxjs/operators';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-aanwezigheden',
@@ -18,6 +19,8 @@ export class AanwezighedenComponent implements OnInit {
   public namiddag = new MatTableDataSource<any>();
   public volledigeDag = new MatTableDataSource<any>();
   public kolomheaders: string[] = ['#', 'voornaam', 'achternaam', 'reden'];
+  public loadingError: HttpErrorResponse;
+  public loading: boolean;
 
   @ViewChild('table1', {read: MatSort}) sort: MatSort;
   @ViewChild('table2', {read: MatSort}) sort2: MatSort;
@@ -50,6 +53,7 @@ export class AanwezighedenComponent implements OnInit {
 
   toonDag() : void {
     this.subscription = this._dagService.getAanwezigheidslijst(this.filterDatum).subscribe(x => {
+      this.loading = true;
       var data = x.reduce((arr, dagatelier) => {
         return arr.concat(dagatelier.gebruikers.map(g =>
           ({ dagmoment: dagatelier.dagMoment, atelierType: dagatelier.atelier.atelierType, voornaam: g.voornaam, achternaam: g.achternaam })
@@ -67,7 +71,10 @@ export class AanwezighedenComponent implements OnInit {
       this.voormiddag.sort = this.sort;
       this.namiddag.sort = this.sort2;
       this.volledigeDag.sort = this.sort3;
-      
+      this.loading = false;
+    },
+    error => {
+      this.loading = true;
     });
   }
 
