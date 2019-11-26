@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subject, Observable, Subscription} from 'rxjs';
+import { Subject, Subscription} from 'rxjs';
 import { DagService } from '../services/dag.service';
 import { distinctUntilChanged} from 'rxjs/operators';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { DagAtelier } from '../models/dag-atelier.model';
 
 @Component({
   selector: 'app-aanwezigheden',
@@ -12,13 +11,13 @@ import { DagAtelier } from '../models/dag-atelier.model';
 })
 export class AanwezighedenComponent implements OnInit {
 
-  private filterDate: Date = new Date();
+  private filterDatum: Date = new Date();
   private subscription: Subscription;
   public filter$ = new Subject<Date>();
   public voormiddag = new MatTableDataSource<any>();
   public namiddag = new MatTableDataSource<any>();
   public volledigeDag = new MatTableDataSource<any>();
-  public displayedColumns: string[] = ['#', 'voornaam', 'achternaam', 'reden'];
+  public kolomheaders: string[] = ['#', 'voornaam', 'achternaam', 'reden'];
 
   @ViewChild('table1', {read: MatSort}) sort: MatSort;
   @ViewChild('table2', {read: MatSort}) sort2: MatSort;
@@ -26,31 +25,31 @@ export class AanwezighedenComponent implements OnInit {
   
 
   constructor(private _dagService: DagService) {
-    this.filterDate = new Date();
+    this.filterDatum = new Date();
     this.filter$.pipe(
       distinctUntilChanged())
       .subscribe(
         val => {
-          this.filterDate = val;
-          this.showDay();
+          this.filterDatum = val;
+          this.toonDag();
         }
       );
   }
 
-  get date() {
-    return this.filterDate;
+  get datum() : Date{
+    return this.filterDatum;
   }
 
-  prevDate(){
-    this.filter$.next(new Date(new Date().setDate(this.filterDate.getDate()-1)));
+  geefVorigeDatum() : void{
+    this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate()-1)));
   }
 
-  nextDate(){
-    this.filter$.next(new Date(new Date().setDate(this.filterDate.getDate()+1)));
+  geefVolgendeDatum() : void{
+    this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate()+1)));
   }
 
-  showDay() {
-    this.subscription = this._dagService.getAanwezigheidslijst(this.filterDate).subscribe(x => {
+  toonDag() : void {
+    this.subscription = this._dagService.getAanwezigheidslijst(this.filterDatum).subscribe(x => {
       var data = x.reduce((arr, dagatelier) => {
         return arr.concat(dagatelier.gebruikers.map(g =>
           ({ dagmoment: dagatelier.dagMoment, atelierType: dagatelier.atelier.atelierType, voornaam: g.voornaam, achternaam: g.achternaam })
@@ -73,7 +72,7 @@ export class AanwezighedenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showDay();
+    this.toonDag();
   }
 
   ngOnDestroy() {

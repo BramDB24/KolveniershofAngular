@@ -81,7 +81,7 @@ export class DagService {
     return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
   }
   
-  public getAanwezigheidslijst(date:Date){
+  public getAanwezigheidslijst(date:Date) : Observable<DagAtelier[]>{
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
     return this.http.get<Array<DagAtelier>>(`${environment.apiUrl}/dagplanning/${convertedDate}/aanwezigen`);
   }
