@@ -80,10 +80,10 @@ export class DagService {
     console.log(dagAtelier);
     return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
   }
-
+  
   public getAanwezigheidslijst(date:Date){
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return this.http.get<Array<Gebruiker>>(`${environment.apiUrl}/dagplanning/${convertedDate}/aanwezigen`)
-    .pipe(map(x => x.sort((a,b)=>a.achternaam.localeCompare(b.achternaam))));
+    return this.http.get<Array<DagAtelier>>(`${environment.apiUrl}/dagplanning/${convertedDate}/aanwezigen`);
   }
+  
 }

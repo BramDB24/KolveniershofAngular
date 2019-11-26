@@ -1,29 +1,119 @@
 <div>
-  <div class="container">
-    <h1>Aanwezigheidslijst</h1>
-    <mat-form-field>
-      <input matInput [matDatepicker]="datePicker" [ngModel]="date"
-        (dateChange)='filter$.next($event.target.value)'>
-      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-      <mat-datepicker data-cy="datepicker" #datePicker></mat-datepicker>
-    </mat-form-field>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Voornaam</th>
-          <th scope="col">Achternaam</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of aanwezigheden$ | async; index as i">
-          <th scope="row">{{ i + 1 }}</th>
-          <td>
-            {{ user.voornaam }}
-          </td>
-          <td>{{ user.achternaam }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container-fluid">
+    <div class="row col-12">
+      <div class="col-12">
+        <h1>Aanwezigheidslijst</h1>
+        <button class="btn-primary rounded" (click)="prevDate()" type="button">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <mat-form-field class="datepickerform">
+          <input matInput [matDatepicker]="datePicker" [ngModel]="date"
+            (dateChange)='filter$.next($event.target.value)'>
+          <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+          <mat-datepicker data-cy="datepicker" #datePicker></mat-datepicker>
+        </mat-form-field>
+        <button class="btn-primary rounded" (click)="nextDate()" type="button">
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row col-12 margbot">
+      <div class="col-6">
+        <h3>Voormiddag</h3>
+        <table #table1 mat-table [dataSource]="voormiddag" matSort class="mat-elevation-z8">
+          <ng-container matColumnDef="#">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let user; let i = index;"
+              [ngClass]="user.atelierType == 'Gewoon' ? 'green' : 'red'">{{i}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="voornaam">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> voornaam </th>
+            <td mat-cell *matCellDef="let user"> {{user.voornaam}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="achternaam">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> achternaam </th>
+            <td mat-cell *matCellDef="let user"> {{user.achternaam}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="reden">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
+            <td mat-cell *matCellDef="let user"> {{user.atelierType!='Gewoon'?user.atelierType:'/'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <div class="col-6">
+        <h3>Namiddag</h3>
+        <table #table2 mat-table [dataSource]="namiddag" matSort class="mat-elevation-z8">
+
+          <ng-container matColumnDef="#">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let user; let i = index;"
+              [ngClass]="user.atelierType == 'Gewoon' ? 'green' : 'red'">{{i}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="voornaam">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> voornaam </th>
+            <td mat-cell *matCellDef="let user"> {{user.voornaam}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="achternaam">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> achternaam </th>
+            <td mat-cell *matCellDef="let user"> {{user.achternaam}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="reden">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
+            <td mat-cell *matCellDef="let user" > {{user.atelierType!='Gewoon'?user.atelierType:'/'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+    <div class="row col-12">
+      <div class="col-12">
+        <h3>Volledige dag</h3>
+        <table #table3 mat-table [dataSource]="volledigeDag" matSort class="mat-elevation-z8">
+
+          <ng-container matColumnDef="#">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let user; let i = index;"
+              [ngClass]="user.atelierType == 'Gewoon' ? 'green' : 'red'">{{i}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="voornaam">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Voornaam </th>
+            <td mat-cell *matCellDef="let user"> {{user.voornaam}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="achternaam">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Achternaam </th>
+            <td mat-cell *matCellDef="let user"> {{user.achternaam}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="reden">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> reden </th>
+            <td mat-cell *matCellDef="let user"> {{user.atelierType!='Gewoon'?user.atelierType:'/'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
