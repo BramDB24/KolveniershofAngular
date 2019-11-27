@@ -33,4 +33,8 @@ export class BeheerPersonenComponent implements OnInit {
     this.router.navigate([`/register-gebruiker/${gebruiker.gebruikerId}`]);
   }
 
+  public nieuweGebruiker(): void {
+    this.router.navigate([`/register-gebruiker/`]);
+  }
+
 }
