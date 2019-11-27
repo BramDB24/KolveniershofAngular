@@ -38,7 +38,6 @@ export class AanwezighedenComponent implements OnInit {
     return this.filterDate;
   }
 
- 
 
   showDay(){
     this._aanwezigheden$ = this._dagService.getAanwezigheidslijst(this.filterDate);

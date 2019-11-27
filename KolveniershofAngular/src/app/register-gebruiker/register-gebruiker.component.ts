@@ -13,14 +13,14 @@ import { BestandService } from '../services/bestand.service';
 import { Gebruiker } from '../models/gebruiker.model';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
-  const foto = control.value;
+  const foto = control.value.name;
   if (!foto) {
     return { required: true };
   }
-  if (foto.name.split('.').length !== 2) {
+  if (foto.split('.').length !== 2) {
     return { wrongFileType: true };
   }
-  const extentie = foto.name.split('.')[1];
+  const extentie = foto.split('.')[1];
   if (!['jpg', 'png'].includes(extentie.toLowerCase())) {
     return { wrongFileType: true };
   }
@@ -43,6 +43,7 @@ export class RegisterGebruikerComponent implements OnInit {
   public verbergOuderInfo = '';
   public submitted = false;
   public loaded = false;
+  public bestaand: boolean;
 
   constructor(
     private gebruikerService: GebruikerService,
@@ -73,6 +74,7 @@ export class RegisterGebruikerComponent implements OnInit {
             )
             .subscribe(
               user => {
+                console.log(user);
                 this.huidigeGebruiker = user;
               },
               err => {
@@ -120,6 +122,7 @@ export class RegisterGebruikerComponent implements OnInit {
       ]
     });
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
+    this.bestaand = this.huidigeGebruiker ? true : false;
   }
 
   onSubmit() {

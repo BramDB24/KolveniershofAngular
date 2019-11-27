@@ -17,10 +17,10 @@ export class GebruikerService {
       .pipe(map(x => x.sort((a, b) => a.voornaam.localeCompare(b.voornaam))));
   }
 
-  public getGebruikerViaId(gebruikerId: string): Observable<Gebruiker> {
-    console.log(gebruikerId);
+  public getGebruikerViaId(id: string): Observable<Gebruiker> {
+    console.log(id);
     return this.http
-      .get<Gebruiker>(`${environment.apiUrl}/account/viaid/${gebruikerId}`);
+      .get<Gebruiker>(`${environment.apiUrl}/account/${id}`);
   }
 
   public getGebruikerTypes(): Observable<string[]> {
