@@ -52,7 +52,7 @@
 
         <div class="col-md-5 m-1">
           <label for="foto">Foto*</label>
-          <app-file-upload formControlName="foto"
+          <app-file-upload formControlName="foto" [gebruiker]="huidigeGebruiker"
             [errorGevonden]="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors"></app-file-upload>
           <!-- [progress]="progress" -->
           <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors" class="text-danger">

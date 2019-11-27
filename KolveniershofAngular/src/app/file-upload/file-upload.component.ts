@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Gebruiker } from '../models/gebruiker.model';
 
 @Component({
   selector: 'app-file-upload',
@@ -16,6 +17,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class FileUploadComponent implements ControlValueAccessor {
   @Input() progress;
   @Input() errorGevonden;
+  @Input() gebruiker: Gebruiker;
   onChange: Function;
   public file: File | null = null;
 

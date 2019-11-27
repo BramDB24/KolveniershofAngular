@@ -19,8 +19,8 @@ export class GebruikerService {
             );
     }
 
-    public getGebruikerViaId(id: number): Observable<Gebruiker> {
-        return this.http.get<Gebruiker>(`localhost:4200/viaId/${id}`);
+    public getGebruikerViaId(id: string): Observable<Gebruiker> {
+        return this.http.get<Gebruiker>(`${environment.apiUrl}/account/${id}`);
     }
 
     public getGebruikerTypes(): Observable<string[]> {
@@ -40,6 +40,6 @@ export class GebruikerService {
     public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
         return null;
         // WERKT NIET WERKT NIET ZIE API INFO
-        // return this.http.post(`localhost:4200/register`, gebruikerJson);
+        // return this.http.post(`${environment.apiUrl}/register`, gebruikerJson);
     }
 }
