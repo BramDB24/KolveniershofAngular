@@ -4,6 +4,7 @@
 
 export const environment = {
   apiUrl: 'https://kolveniershofapi.azurewebsites.net/api',
+  //apiUrl: '/api',
   production: false
 };
 

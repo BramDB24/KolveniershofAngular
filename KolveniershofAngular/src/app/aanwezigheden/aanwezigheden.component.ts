@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { Atelier } from '../models/atelier.model';
-import { DagAtelier } from '../models/dag-atelier.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subject, Subscription} from 'rxjs';
 import { DagService } from '../services/dag.service';
-import { DagPlanning } from '../models/dag-planning.model';
-import { distinctUntilChanged, map } from 'rxjs/operators';
-import { Gebruiker } from '../models/gebruiker.model';
+import { distinctUntilChanged} from 'rxjs/operators';
+import { MatTableDataSource, MatSort } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-aanwezigheden',
@@ -14,38 +12,79 @@ import { Gebruiker } from '../models/gebruiker.model';
 })
 export class AanwezighedenComponent implements OnInit {
 
-  private _aanwezigheden$: Observable<Gebruiker[]>;
-  private filterDate: Date = new Date();
+  private filterDatum: Date = new Date();
+  private subscription: Subscription;
   public filter$ = new Subject<Date>();
+  public voormiddag = new MatTableDataSource<any>();
+  public namiddag = new MatTableDataSource<any>();
+  public volledigeDag = new MatTableDataSource<any>();
+  public kolomheaders: string[] = ['#', 'voornaam', 'achternaam', 'reden'];
+  public loadingError: HttpErrorResponse;
+  public loading: boolean;
+
+  @ViewChild('table1', {read: MatSort}) sort: MatSort;
+  @ViewChild('table2', {read: MatSort}) sort2: MatSort;
+  @ViewChild('table3', {read: MatSort}) sort3: MatSort;
   
 
-  constructor(private _dagService: DagService) { 
+  constructor(private _dagService: DagService) {
+    this.filterDatum = new Date();
     this.filter$.pipe(
       distinctUntilChanged())
       .subscribe(
-      val => {
-        this.filterDate = val
-        this.showDay();
-      }
-    )
+        val => {
+          this.filterDatum = val;
+          this.toonDag();
+        }
+      );
   }
 
-  get aanwezigheden$(){
-    return this._aanwezigheden$;
+  get datum() : Date{
+    return this.filterDatum;
   }
 
-  get date(){
-    return this.filterDate;
+  geefVorigeDatum() : void{
+    this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate()-1)));
   }
 
- 
+  geefVolgendeDatum() : void{
+    this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate()+1)));
+  }
 
-  showDay(){
-    this._aanwezigheden$ = this._dagService.getAanwezigheidslijst(this.filterDate);
+  toonDag() : void {
+    this.subscription = this._dagService.getAanwezigheidslijst(this.filterDatum).subscribe(x => {
+      this.loading = true;
+      var data = x.reduce((arr, dagatelier) => {
+        return arr.concat(dagatelier.gebruikers.map(g =>
+          ({ dagmoment: dagatelier.dagMoment, atelierType: dagatelier.atelier.atelierType, voornaam: g.voornaam, achternaam: g.achternaam })
+        ))
+      }, [])
+      this.voormiddag.data = data;
+      this.voormiddag.filterPredicate = (data, filter) => data.dagmoment == "Voormiddag";      
+      this.namiddag.data = data;
+      this.namiddag.filterPredicate = (data, filter) => data.dagmoment == "Namiddag";
+      this.volledigeDag.data = data;
+      this.volledigeDag.filterPredicate = (data, filter) => data.dagmoment == "VolledigeDag";
+      this.voormiddag.filter = "a";
+      this.namiddag.filter = "b";
+      this.volledigeDag.filter = "c";
+      this.voormiddag.sort = this.sort;
+      this.namiddag.sort = this.sort2;
+      this.volledigeDag.sort = this.sort3;
+      this.loading = false;
+    },
+    error => {
+      this.loading = true;
+    });
   }
 
   ngOnInit() {
-    this.showDay()
+    this.toonDag();
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }
