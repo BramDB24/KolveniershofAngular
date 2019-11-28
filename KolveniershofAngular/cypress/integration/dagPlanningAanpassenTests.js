@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 describe('dagplanning', function() {
-   /*it('gets loaded', function() {
+   it('gets loaded', function() {
       cy.visit('http://localhost:4200');
       cy.get('#btnDagplanningAanpassen').click();
     });
@@ -26,8 +26,7 @@ describe('dagplanning', function() {
         cy.get('#addAtelier').should("not.exist")
         cy.get('#atelierToevoegen').click();
         cy.get('#addAtelier').should("exist")
-      });*/
-
+      });
 
       it('throws an error when adding without atelier', function() {
         cy.visit('http://localhost:4200');
