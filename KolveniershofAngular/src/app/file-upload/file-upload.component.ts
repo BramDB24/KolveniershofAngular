@@ -26,6 +26,9 @@ export class FileUploadComponent implements ControlValueAccessor {
     const file = event && event.item(0);
     this.onChange(file);
     this.file = file;
+    if(this.gebruiker) {
+      this.gebruiker.foto = this.file.name;
+    }
   }
 
   constructor(private host: ElementRef<HTMLInputElement>) {

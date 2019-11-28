@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GebruikerService } from '../services/gebruiker.service';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -11,9 +11,10 @@ import {
 } from '@angular/forms';
 import { BestandService } from '../services/bestand.service';
 import { Gebruiker } from '../models/gebruiker.model';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
-  const foto = control.value.foto;
+  const foto = control.value.name;
   if (!foto) {
     return { required: true };
   }
@@ -42,6 +43,8 @@ export class RegisterGebruikerComponent implements OnInit {
   public verbergOuderInfo = '';
   public submitted = false;
   public loaded = false;
+  public fototijdelijk: string;
+  @ViewChild(FileUploadComponent) fileUploader;
 
   constructor(
     private gebruikerService: GebruikerService,
@@ -89,22 +92,40 @@ export class RegisterGebruikerComponent implements OnInit {
     this.initialiseerFormGroup();
   }
 
+
   private initialiseerFormGroup() {
     this.gebruikerFormGroup = this.fb.group({
       achternaam: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '', Validators.required],
       voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
       email: [this.huidigeGebruiker ? this.huidigeGebruiker.email : '', [Validators.required, Validators.email]],
-      wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : '', Validators.required],
+      wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : ''],
       gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type.toLowerCase : this.standaardTypeChecked, Validators.required],
-      foto: [this.huidigeGebruiker ? this.huidigeGebruiker.type : '', valideerBestandType]
+      foto: [this.huidigeGebruiker ? this.huidigeGebruiker.foto : '', valideerBestandType]
     });
-
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
   }
   onSubmit() {
     this.submitted = true;
+
+    if(this.huidigeGebruiker) {
+      this.gebruikerFormGroup.controls.wachtwoord.setValue("tijdelijk");
+      this.gebruikerFormGroup.controls.gebruikerType.setValue(this.huidigeGebruiker.type);
+      // if(!this.gebruikerFormGroup.controls.foto.value) {
+      //   this.gebruikerFormGroup.controls.foto.setValue(this.huidigeGebruiker.foto);
+      // }
+    }
     // stop het process hier als de form invalid is
     if (this.gebruikerFormGroup.invalid) {
+      console.log(this.huidigeGebruiker.achternaam);
+      console.log(this.huidigeGebruiker.voornaam);
+      console.log(this.huidigeGebruiker.email);
+      console.log(this.huidigeGebruiker.wachtwoord);
+      console.log(this.huidigeGebruiker.type);
+      if(this.fileUploader.gebruiker.foto !== null) {
+        this.fototijdelijk = this.fileUploader.gebruiker.foto;
+        console.log(this.fototijdelijk);
+      }
+      console.log(this.huidigeGebruiker.foto);
       return;
     }
 
@@ -118,8 +139,19 @@ export class RegisterGebruikerComponent implements OnInit {
     // this.gebruikerFormGroup.controls.foto.value.name = bestandNaam;
 
     // bewaar alle gebruiker gegevens in een object
-    const nieuweGebruiker = {
-      id: '',
+    var nieuweGebruiker;
+    if(this.huidigeGebruiker) {
+      nieuweGebruiker = {
+        gebruikerId: this.huidigeGebruiker.gebruikerId,
+        achternaam: this.gebruikerFormGroup.controls.achternaam.value,
+        voornaam: this.gebruikerFormGroup.controls.voornaam.value,
+        email: this.gebruikerFormGroup.controls.email.value,
+        foto: folderNaam + "/" + bestandNaam,
+        type: this.huidigeGebruiker.type
+      }
+    } else {
+    nieuweGebruiker = {
+      gebruikerId: '',
       achternaam: this.gebruikerFormGroup.controls.achternaam.value,
       voornaam: this.gebruikerFormGroup.controls.voornaam.value,
       email: this.gebruikerFormGroup.controls.email.value,
@@ -127,13 +159,16 @@ export class RegisterGebruikerComponent implements OnInit {
       foto: folderNaam + '/' + bestandNaam,
       type: this.gebruikerFormGroup.controls.gebruikerType.value
     };
-    if (this.huidigeGebruiker) {
-      nieuweGebruiker.id = this.huidigeGebruiker.gebruikerId;
     }
 
     // Uploaden van de foto
     this.bestandService.postFile(folderNaam, bestandNaam, this.gebruikerFormGroup.controls.foto.value)
-      .subscribe();
+      .subscribe(x =>
+        {
+          console.log(x);
+        }, (err) => {
+          console.log(err);
+        });
 
     // Stuur nieuweGebruiker naar de databank
     if (this.huidigeGebruiker) {

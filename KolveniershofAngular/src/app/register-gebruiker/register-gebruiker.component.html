@@ -6,11 +6,12 @@
     <form class="border border-light p-5" [formGroup]="gebruikerFormGroup" (ngSubmit)="onSubmit()">
       <div class="row">
         <p class="mr-3">Soort gebruiker: </p>
-        <div class="custom-control custom-radio mb-4 mr-2" *ngFor="let type of this._gebruikerTypes; let i = index">
-          <input type="radio" class="custom-control-input" id="{{'radio' + type}}" (change)="this.typeVeranderd(i)"
+        <div class="custom-control custom-radio mb-4 mr-2" *ngFor="let type of gebruikerTypes; let i = index">
+          <input type="radio" class="custom-control-input" id="{{'radio' + type}}" [checked]="huidigeGebruiker ? ((huidigeGebruiker.type == type) ? true : false) : false" 
             name="gebruikerType" [value]="type" formControlName="gebruikerType">
           <label class="custom-control-label" for="{{'radio' + type}}">{{type}}</label>
         </div>
+        
       </div>
       <div class="row justify-content-around">
         <div class="col-md-5 m-1">
