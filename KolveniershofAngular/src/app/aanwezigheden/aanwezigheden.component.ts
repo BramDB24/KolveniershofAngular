@@ -18,7 +18,7 @@ export class AanwezighedenComponent implements OnInit {
   public voormiddag = new MatTableDataSource<any>();
   public namiddag = new MatTableDataSource<any>();
   public volledigeDag = new MatTableDataSource<any>();
-  public kolomheaders: string[] = ['#', 'voornaam', 'achternaam', 'reden'];
+  public kolomheaders: string[] = ['number', 'voornaam', 'achternaam', 'reden'];
   public loadingError: HttpErrorResponse;
   public loading: boolean;
 
