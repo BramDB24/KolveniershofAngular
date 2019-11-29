@@ -1,7 +1,12 @@
 <div class="container" *ngIf="gebruikersLoaded">
-
-  <h1>Beheer personen</h1>
-  <button (click)="nieuweGebruiker()">Nieuwe gebruiker</button>
+  <div class="row">
+    <div class="col-xs-12 col-6">
+      <h1 class="titel">Beheer personen</h1>
+    </div>
+    <div class="col-xs-12 col-6">
+      <button class="btn nieuwe" (click)="nieuweGebruiker()">Nieuwe gebruiker</button>
+    </div>
+  </div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -9,18 +14,18 @@
         <th scope="col">Voornaam</th>
         <th scope="col">Achternaam</th>
         <th scope="col">Type gebruiker</th>
-        <th scope="col">#</th>
+        <th scope="col">Bewerken</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let gebruiker of gebruikers; let i = index" >
-          <th scope="row">{{ i + 1 }}</th>
+      <tr *ngFor="let gebruiker of gebruikers; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
         <td>{{ gebruiker.voornaam }}</td>
         <td>{{ gebruiker.achternaam }}</td>
         <td>{{ gebruiker.type }}</td>
         <td>
-          <button (click)="redirect(gebruiker)">Aanpassen</button>
-          <button>Verwijderen</button>
+          <button class="btn bewerken" (click)="redirect(gebruiker)">Aanpassen</button>
+          <button class="btn bewerken">Verwijderen</button>
         </td>
       </tr>
     </tbody>
