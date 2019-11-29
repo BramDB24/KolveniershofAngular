@@ -5,13 +5,15 @@
       <div class="border rounded-sm">
         <div class="row weken">
           <div *ngFor="let number of [1,2,3,4]">
-            <button (click)="SelecteerWeek(number)" type="button" class="btn">Week {{number}}</button>
+            <button *ngIf="number == geselecteerdeWeek" (click)="SelecteerWeek(number)" type="button" class="btn geselecteerd">Week {{number}}</button>
+            <button *ngIf="number != geselecteerdeWeek" (click)="SelecteerWeek(number)" type="button" class="btn">Week {{number}}</button>
           </div>
         </div>
         <hr>
         <div class="row weekdagen">
           <div *ngFor="let weekdag of weekdagen; let i = index">
-            <button (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn">{{weekdag}}</button>
+            <button *ngIf="i == geselecteerdeWeekdagIndex - 1" (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn geselecteerd">{{weekdag}}</button>
+            <button *ngIf="i != geselecteerdeWeekdagIndex - 1" (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn ">{{weekdag}}</button>
           </div>
         </div>
       </div>
