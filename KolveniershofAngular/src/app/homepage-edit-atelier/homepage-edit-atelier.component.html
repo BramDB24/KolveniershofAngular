@@ -1,5 +1,5 @@
 <ng-container *ngIf="initform">
-  <div class="card">
+  <div class="card" id="addAtelier"> 
     <div class="card-body">
       <form [formGroup]="dagAtelierFormGroup" (ngSubmit)="onSubmit()">
         <h5>Atelier</h5>
@@ -32,6 +32,7 @@
               class="text-danger"
             >
               <div
+                id="atelierOpslaanError"
                 class="d-block"
                 *ngFor="let error of atelierNaamFormErrors()"
               >
@@ -105,18 +106,18 @@
             </datalist>
           </div>
           <div class="col-2 customCol">
-            <button type="button" (click)="voegGebruikerToe()" class="btn">
+            <button type="button" id="addGebruiker" (click)="voegGebruikerToe()" class="btn">
               <i class="fas fa-user-plus"></i>
             </button>
           </div>
           <div class="col-6">
-            <button type="submit" class="btn rechts">
+            <button type="submit" id="atelierOpslaan" class="btn rechts">
               Opslaan
             </button>
           </div>
         </div>
 
-        <div *ngIf="gebruikerToevoegenLijstError" class="text-danger">
+        <div *ngIf="gebruikerToevoegenLijstError" id="addGebruikerError" class="text-danger">
           {{ gebruikerToevoegenLijstError }}
         </div>
       </form>

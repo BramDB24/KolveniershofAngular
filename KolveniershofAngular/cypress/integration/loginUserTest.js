@@ -14,3 +14,4 @@ describe('login', function() {
     cy.get('p.success').contains('Gelieve een wachtwoord en/of gebruikersnaam in te vullen') ;
   });
 });
+
