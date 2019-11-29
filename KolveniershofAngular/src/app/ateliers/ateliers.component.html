@@ -2,9 +2,14 @@
   <div class="card-body">
     <form [formGroup]="atelierFormGroup">
       <div class="row col-12 pb-3">
+          <div class="col-12 alert alert-danger" *ngIf="errorMessage != ''">
+            {{errorMessage}}
+          </div>
+          <div class="col-12 alert alert-success" *ngIf="successMessage != ''">
+              {{successMessage}}
+            </div>
         <div class="col-12 col-md-5 pl-0">
           <h2>Atelier toevoegen:</h2>
-
           <div id="atelierdiv">
             <p>Kies een naam voor het nieuwe atelier:</p>
             <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
