@@ -1,9 +1,9 @@
 .groen{
-    background-color: green;
+    background-color: rgb(76, 197, 76);
 }
 
 .rood{
-    background-color: red;
+    background-color: rgb(236, 40, 40);
 }
 
 table {
@@ -17,4 +17,12 @@ table {
 .datepickerform{
     padding-left: 6px;
     padding-right: 6px;
+}
+
+.mat-column-number {
+    width: 58px;
+}
+
+.mat-column-voornaam {
+    padding-left: 20px;
 }
