@@ -14,7 +14,7 @@ import { Gebruiker } from '../models/gebruiker.model';
     providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-    constructor(private router: Router, private authService: AccountService) {}
+    constructor(private router: Router, private authService: AccountService) { }
 
     canActivate(
         next: ActivatedRouteSnapshot,
@@ -27,10 +27,9 @@ export class AuthGuard implements CanActivate {
         const currentUser: Gebruiker = this.authService.user.value;
         if (currentUser) {
             if (next.data.roles && next.data.roles.indexOf(currentUser.type) === -1) {
-                this.router.navigate(['/']);
+                this.router.navigate(['/login']);
                 return false;
             }
-
             return true;
         }
         this.router.navigate(['/login']);
