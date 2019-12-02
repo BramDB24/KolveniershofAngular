@@ -1,69 +1,42 @@
-<div class="container" id="print" >
-    <div class="row" style="margin-top: 25px;">
-        <div class="col-8">
-            <h1>Picto van Johanna</h1>
-        </div>
-        <div class="col-4" id="nietPrinten" >
-            <mat-form-field  style="width: 100%;" id="matForm">
-                <input
-                    matInput
-                    [matDatepicker]="picker"
-                    placeholder="Kies een datum"
-                />
-                <button matSuffix class="arrowbutton" (click)="windBack()">
-                    &larr;
-                </button>
-                <button matSuffix class="arrowbutton" (click)="windForward()">
-                    &rarr;
-                </button>
-
-                <mat-datepicker-toggle
-                    matSuffix
-                    [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
-    </div> 
-    <div class="row" id="nietPrinten" >
-        <div class="offset-9 col-3 alignRight">
-            <app-print></app-print>
-        </div>
+<div class="container-fluid" id="print">
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-8">
+      <h1>Mijn Pictoagenda</h1>
     </div>
-    <div class="row" id="nietPrinten" >
-        <div class="col-3">
-            <label
-                ><input type="checkbox" (change)="switchWeekendState()" />Toon
-                het weekend</label
-            >
-        </div>
+    <div class="col-4" id="nietPrinten">
+      <button class="btn-primary rounded" (click)="geefVorigeDatum()" type="button">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <mat-form-field class="datepickerform">
+        <input matInput [matDatepicker]="datePicker" [ngModel]="datum" (dateChange)='filter$.next($event.target.value)'>
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker data-cy="datepicker" #datePicker></mat-datepicker>
+      </mat-form-field>
+      <button class="btn-primary rounded" (click)="geefVolgendeDatum()" type="button">
+        <i class="fas fa-arrow-right"></i>
+      </button>
     </div>
-
-    <div class="row">
-        <div
-            class="col-12 col-lg-4 col-md-6"
-            *ngFor="let dag of displayDagen()"
-            style="margin-bottom: 30px;"
-        >
-            <div class="card">
-                <div class="card-body">
-                    <ng-container *ngIf="!isWeekend; else week">
-                        <app-picto-dag [isWeekend]="isWeekend"></app-picto-dag>
-                    </ng-container>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="row" id="nietPrinten">
+    <div class="offset-9 col-3 alignRight">
+      <app-print></app-print>
     </div>
-    
-    <div class="row" id="nietPrinten"  style="margin-bottom:30px">
-        <div class="col-12">
-            <button style="float:right;" class="btn btn-primary">Opslaan</button>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-12"></div>
+    <div class="col-lg-4 col-md-6" *ngFor="let pictodag of $pictodagen | async" style="margin-bottom: 30px;">
+      <app-picto-dag [pictodag]="pictodag"></app-picto-dag>
     </div>
+  </div>
+  <div class="row" id="nietPrinten" style="margin-bottom:30px">
+    <div class="col-12">
+      <button style="float:right;" class="btn btn-primary">Opslaan</button>
+    </div>
+  </div>
 </div>
 
-<ng-template #week>
+<!-- <ng-template #week>
     <div class="col-12">
         <app-picto-dag [isWeekend]="isWeekend"></app-picto-dag>
     </div>
-</ng-template>
+</ng-template> -->

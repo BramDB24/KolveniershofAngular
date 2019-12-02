@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
+import { Observable, Subject } from 'rxjs';
+import { DagPlanning } from 'src/app/models/dag-planning.model';
+import { DagService } from 'src/app/services/dag.service';
+import { PictoDag } from 'src/app/models/pictodag.model';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'app-picto-page',
@@ -8,13 +13,31 @@ import { MatFormField } from '@angular/material/form-field';
     styleUrls: ['./picto-page.component.scss'],
 })
 export class PictoPageComponent implements OnInit {
-    public weekdagen = new Array<string>('Ma', 'Di', 'Woe', 'Do', 'Vr');
+    public weekdagen = new Array<string>('Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag');
     public weekendDagen = new Array<string>('Zat', 'Zon');
     public isWeekend = false;
+    public filterDatum: Date = new Date();
+    public filter$ = new Subject<Date>();
+    public $pictodagen: Observable<PictoDag[]>;
 
-    constructor() {}
+    constructor(private _dagService: DagService) {
+        this.filter$.pipe(
+            distinctUntilChanged())
+            .subscribe(
+                val => {
+                    this.filterDatum = val;
+                    this.toonWeek();
+                }
+            );
+    }
 
-    ngOnInit() {}
+    get datum(): Date {
+        return this.filterDatum;
+    }
+
+    ngOnInit() {
+        this.toonWeek();
+    }
 
     public switchWeekendState(): void {
         this.isWeekend = !this.isWeekend;
@@ -24,15 +47,17 @@ export class PictoPageComponent implements OnInit {
         return this.isWeekend ? this.weekendDagen : this.weekdagen;
     }
 
-    public windBack(): void {
-        setTimeout(() => {
-            document.getElementById('matForm').classList.remove('mat-focused');
-        }, 0);
+    geefVorigeDatum(): void {
+        this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate() - 1)));
     }
 
-    public windForward(): void {
-        setTimeout(() => {
-            document.getElementById('matForm').classList.remove('mat-focused');
-        }, 0);
+    geefVolgendeDatum(): void {
+        this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate() + 1)));
     }
+
+    toonWeek(){
+        this.$pictodagen = this._dagService.getPictoAgendas(this.filterDatum);
+    }
+
+
 }

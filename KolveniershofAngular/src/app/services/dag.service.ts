@@ -8,6 +8,7 @@ import { Atelier } from '../models/atelier.model';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { DagPlanning } from '../models/dag-planning.model';
 import { Gebruiker } from '../models/gebruiker.model';
+import { PictoDag } from '../models/pictodag.model';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,12 @@ export class DagService {
   public getAanwezigheidslijst(date:Date) : Observable<DagAtelier[]>{
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
     return this.http.get<Array<DagAtelier>>(`${environment.apiUrl}/dagplanning/${convertedDate}/aanwezigen`);
+  }
+
+  //authorizatie: clients only
+  public getPictoAgendas(date: Date) : Observable<PictoDag[]>{
+    const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
+    return this.http.get<Array<PictoDag>>(`${environment.apiUrl}/dagplanning/${convertedDate}/pictoagenda`);
   }
   
 }
