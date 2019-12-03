@@ -23,6 +23,7 @@ import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule} from '@angular/material'
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
+import { httpInterceptorProviders } from './http-interceptors';
 
 registerLocaleData(localeNl);
 
@@ -58,7 +59,7 @@ registerLocaleData(localeNl);
         MatFormFieldModule,
         MatInputModule
     ],
-    providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
+    providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe, httpInterceptorProviders],
 
     bootstrap: [AppComponent],
 })
