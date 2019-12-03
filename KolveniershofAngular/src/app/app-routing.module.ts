@@ -22,22 +22,20 @@ export const routes: Routes = [
     path: 'dag',
     component: DagComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
-
-
+    data: { roles: ['Admin', 'begeleider'] }
   },
   {
     path: 'register-gebruiker',
     component: RegisterGebruikerComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin'] }
 
   },
   {
     path: 'register-gebruiker/:id',
     component: RegisterGebruikerComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin'] }
 
   },
   {
@@ -48,35 +46,35 @@ export const routes: Routes = [
     path: '',
     component: KalenderComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin', 'Begeleider'] }
 
   },
   {
     path: 'homepage-edit',
     component: HomepageEditComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin', 'Begeleider'] }
 
   },
   {
     path: 'vierweekse-planning',
     component: VierweeksePlanningComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin', 'Begeleider'] }
 
   },
   {
     path: 'ateliers',
     component: AteliersComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin', 'Begeleider'] }
 
   },
   {
     path: 'aanwezigheden',
     component: AanwezighedenComponent,
     canActivate: [AuthGuard],
-    data: { roles: [2] }
+    data: { roles: ['Admin', 'Begeleider'] }
   },
   {
     path: '**',
