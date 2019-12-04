@@ -35,7 +35,9 @@ export class BeheerPersonenComponent implements OnInit {
       .subscribe(entry => {
         this.gebruikers = entry;
         this.gebruikerLijst.data = this.gebruikers;
-        this.gebruikerLijst.sort = this.sort;
+        setTimeout(() => {
+          this.gebruikerLijst.sort = this.sort;
+        });
       });
   }
 
