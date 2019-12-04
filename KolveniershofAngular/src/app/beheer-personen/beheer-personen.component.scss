@@ -16,22 +16,24 @@
     }
     &.nieuwe {
         float: right;
-        margin-top: 10px;
+        margin-top: 16px;
     }
     &.bewerken {
         margin: 0px;
         margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
-
   }
 
   .titel {
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin-top: 16px;
+      margin-bottom: 16px;
   }
 
   table {
     width: 100%;
+    margin-bottom: 40px;
   }
   
   th.mat-sort-header-sorted {

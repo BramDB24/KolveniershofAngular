@@ -3,8 +3,7 @@ import { Gebruiker } from '../models/gebruiker.model';
 import { GebruikerService } from '../services/gebruiker.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-beheer-personen',
@@ -18,7 +17,7 @@ export class BeheerPersonenComponent implements OnInit {
   public gebruikerLijst = new MatTableDataSource<Gebruiker>();
   public kolommen: string[] = ['nummer', 'voornaam', 'achternaam', 'type', 'bewerken'];
 
-  @ViewChild('table', {read: MatSort}) sort: MatSort;
+  @ViewChild('gebruikertabel', {read: MatSort}) sort: MatSort;
 
   constructor(
     private router: Router,
@@ -35,14 +34,11 @@ export class BeheerPersonenComponent implements OnInit {
       )
       .subscribe(entry => {
         this.gebruikers = entry;
-        this.gebruikerLijst = new MatTableDataSource<Gebruiker>(this.gebruikers);
+        this.gebruikerLijst.data = this.gebruikers;
+        this.gebruikerLijst.sort = this.sort;
       });
-    this.sorteer();
   }
 
-  public sorteer() {
-    this.gebruikerLijst.sort = this.sort;
-  }
 
   public redirect(gebruiker: Gebruiker): void {
     this.router.navigate([`/register-gebruiker/${gebruiker.gebruikerId}`]);
