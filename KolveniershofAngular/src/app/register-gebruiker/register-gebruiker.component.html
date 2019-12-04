@@ -51,6 +51,15 @@
           </div>
         </div>
 
+        <div class="col-md-5 m-1" *ngIf="!huidigeGebruiker">
+            <label for="bevestigWachtwoord">Bevestig wachtwoord*</label>
+            <input type="text" id="bevestigWachtwoord" class="form-control" formControlName="bevestigWachtwoord"
+              [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.bevestigWachtwoord.errors }">
+            <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.bevestigWachtwoord.errors" class="text-danger">
+              <div *ngIf="gebruikerFormGroup.controls.bevestigWachtwoord.errors.required">Bevestiging wachtwoord is verplicht</div>
+            </div>
+          </div>
+
         <div class="col-md-5 m-1">
           <label for="foto">Foto*</label>
           <app-file-upload formControlName="foto" [gebruiker]="huidigeGebruiker"

@@ -37,8 +37,10 @@ export class GebruikerService {
     }
 
     public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
-        //return null;
-        // WERKT NIET WERKT NIET ZIE API INFO
         return this.http.post(`${environment.apiUrl}/account/register`, gebruikerJson);
+    }
+
+    public verwijderGebruiker(gebruikerJson: Gebruiker): Observable<{}> {
+        return this.http.delete(`${environment.apiUrl}/account/${gebruikerJson.gebruikerId}`);
     }
 }

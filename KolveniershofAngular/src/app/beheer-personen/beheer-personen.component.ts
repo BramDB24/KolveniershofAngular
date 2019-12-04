@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Gebruiker } from '../models/gebruiker.model';
 import { GebruikerService } from '../services/gebruiker.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-beheer-personen',
@@ -13,8 +15,15 @@ export class BeheerPersonenComponent implements OnInit {
 
   public gebruikers = new Array<Gebruiker>();
   public gebruikersLoaded = false;
+  public gebruikerLijst = new MatTableDataSource<Gebruiker>();
+  public kolommen: string[] = ['nummer', 'voornaam', 'achternaam', 'type', 'bewerken'];
 
-  constructor(private router: Router, private gebruikerService: GebruikerService) { }
+  @ViewChild('table', {read: MatSort}) sort: MatSort;
+
+  constructor(
+    private router: Router,
+    private gebruikerService: GebruikerService
+    ) { }
 
   ngOnInit() {
     this.gebruikerService
@@ -26,7 +35,13 @@ export class BeheerPersonenComponent implements OnInit {
       )
       .subscribe(entry => {
         this.gebruikers = entry;
+        this.gebruikerLijst = new MatTableDataSource<Gebruiker>(this.gebruikers);
       });
+    this.sorteer();
+  }
+
+  public sorteer() {
+    this.gebruikerLijst.sort = this.sort;
   }
 
   public redirect(gebruiker: Gebruiker): void {
@@ -35,6 +50,17 @@ export class BeheerPersonenComponent implements OnInit {
 
   public nieuweGebruiker(): void {
     this.router.navigate([`/register-gebruiker/`]);
+  }
+
+  public verwijderGebruiker(gebruiker: Gebruiker) {
+    if(confirm("Bent u zeker dat u "+ gebruiker.voornaam + " " + gebruiker.achternaam + " wilt verwijderen?")) {
+      this.gebruikerService
+      .verwijderGebruiker(gebruiker)
+      .subscribe(response => {
+        alert('Gebruiker ' + gebruiker.voornaam + ' ' + gebruiker.achternaam + ' werd verwijderd.');
+      });
+      window.location.reload();
+    }
   }
 
 }

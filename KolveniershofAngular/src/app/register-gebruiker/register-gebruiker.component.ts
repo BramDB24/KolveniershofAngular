@@ -98,10 +98,15 @@ export class RegisterGebruikerComponent implements OnInit {
       achternaam: [this.huidigeGebruiker ? this.huidigeGebruiker.achternaam : '', Validators.required],
       voornaam: [this.huidigeGebruiker ? this.huidigeGebruiker.voornaam : '', Validators.required],
       email: [this.huidigeGebruiker ? this.huidigeGebruiker.email : '', [Validators.required, Validators.email]],
-      wachtwoord: [this.huidigeGebruiker ? this.huidigeGebruiker.wachtwoord : ''],
+      wachtwoord: ['', [Validators.required]],
+      bevestigWachtwoord: ['', [Validators.required]],
       gebruikerType: [this.huidigeGebruiker ? this.huidigeGebruiker.type.toLowerCase : this.standaardTypeChecked, Validators.required],
       foto: [this.huidigeGebruiker ? this.huidigeGebruiker.foto : '', valideerBestandType]
-    });
+    },
+    {
+      validator: this.MustMatch('wachtwoord', 'bevestigWachtwoord')
+    }
+    );
     this.submitButtonText = this.huidigeGebruiker ? 'Aanpassen' : 'Creëren';
   }
   onSubmit() {
@@ -109,23 +114,24 @@ export class RegisterGebruikerComponent implements OnInit {
 
     if(this.huidigeGebruiker) {
       this.gebruikerFormGroup.controls.wachtwoord.setValue("tijdelijk");
+      this.gebruikerFormGroup.controls.bevestigWachtwoord.setValue("tijdelijk");
       this.gebruikerFormGroup.controls.gebruikerType.setValue(this.huidigeGebruiker.type);
-      // if(!this.gebruikerFormGroup.controls.foto.value) {
-      //   this.gebruikerFormGroup.controls.foto.setValue(this.huidigeGebruiker.foto);
-      // }
+      if(!this.gebruikerFormGroup.controls.foto.value && this.huidigeGebruiker) {
+         this.gebruikerFormGroup.controls.foto.setValue(this.huidigeGebruiker.foto);
+      }
     }
     // stop het process hier als de form invalid is
     if (this.gebruikerFormGroup.invalid) {
-      console.log(this.huidigeGebruiker.achternaam);
-      console.log(this.huidigeGebruiker.voornaam);
-      console.log(this.huidigeGebruiker.email);
-      console.log(this.huidigeGebruiker.wachtwoord);
-      console.log(this.huidigeGebruiker.type);
-      if(this.fileUploader.gebruiker.foto !== null) {
-        this.fototijdelijk = this.fileUploader.gebruiker.foto;
-        console.log(this.fototijdelijk);
-      }
-      console.log(this.huidigeGebruiker.foto);
+      // console.log(this.huidigeGebruiker.achternaam);
+      // console.log(this.huidigeGebruiker.voornaam);
+      // console.log(this.huidigeGebruiker.email);
+      // console.log(this.huidigeGebruiker.wachtwoord);
+      // console.log(this.huidigeGebruiker.type);
+      // if(this.fileUploader.gebruiker.foto !== null) {
+      //   this.fototijdelijk = this.fileUploader.gebruiker.foto;
+      //   console.log(this.fototijdelijk);
+      // }
+      // console.log(this.huidigeGebruiker.foto);
       return;
     }
 
@@ -155,7 +161,8 @@ export class RegisterGebruikerComponent implements OnInit {
       achternaam: this.gebruikerFormGroup.controls.achternaam.value,
       voornaam: this.gebruikerFormGroup.controls.voornaam.value,
       email: this.gebruikerFormGroup.controls.email.value,
-      wachtwoord: this.gebruikerFormGroup.controls.wachtwoord.value,
+      password: this.gebruikerFormGroup.controls.wachtwoord.value,
+      passwordConfirmation: this.gebruikerFormGroup.controls.bevestigWachtwoord.value,
       foto: folderNaam + '/' + bestandNaam,
       type: this.gebruikerFormGroup.controls.gebruikerType.value
     };
@@ -207,5 +214,24 @@ export class RegisterGebruikerComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  private MustMatch(controlString: string, confirmString: string): void | any {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlString];
+      const matchingControl = formGroup.controls[confirmString];
+
+      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 }
