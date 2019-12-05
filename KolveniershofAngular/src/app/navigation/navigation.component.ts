@@ -21,7 +21,8 @@ export class NavigationComponent implements OnInit {
   }
 
   public isAdmin(): boolean {
-    return this.aangemelde && this.aangemelde.type === '2';
+    return true; //voorlopig nog zonder authenticatie.
+    return this.aangemelde && this.aangemelde.type === 'Admin';
   }
 
   public redirect(directory: string): void {
