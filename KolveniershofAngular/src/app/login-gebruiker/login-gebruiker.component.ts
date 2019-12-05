@@ -34,7 +34,7 @@ export class LoginGebruikerComponent implements OnInit {
             this.router.navigateByUrl(this.accountService.redirectUrl);
             this.accountService.redirectUrl = undefined;
           } else {
-           this.router.navigate(['dag']);
+           this.router.navigate(['']);
           }
         } else {
           this.errorMessage = 'Could not login';
