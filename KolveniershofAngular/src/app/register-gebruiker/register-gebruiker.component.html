@@ -1,7 +1,7 @@
 <ng-container *ngIf="loaded">
 
   <div class="container">
-    <h2 class="m-2"><b>Account {{submitButtonText}}</b></h2>
+    <h2 class="titel">Account {{submitButtonText}}</h2>
 
     <form class="border border-light p-5" [formGroup]="gebruikerFormGroup" (ngSubmit)="onSubmit()">
       <div class="row">
@@ -73,10 +73,12 @@
         </div>
       </div>
       <small>* = Verplicht</small>
-      <div class="row justify-content-center">
-        <button type="submit" class="btn btn-primary btn-block my-4 col-md-3 align-self-center">
+      <div class="row">
+        <div class="col-12">
+        <button type="submit" class="btn">
           {{submitButtonText}}
         </button>
+      </div>
       </div>
     </form>
   </div>

@@ -25,6 +25,7 @@ import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputM
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 import { PrintComponent } from './print/print.component';
 import { BeheerPersonenComponent } from './beheer-personen/beheer-personen.component';
+import { BeheerAteliersComponent } from './beheer-ateliers/beheer-ateliers.component';
 
 registerLocaleData(localeNl);
 
@@ -48,7 +49,8 @@ registerLocaleData(localeNl);
         PictoDagComponent,
         AanwezighedenComponent,
         PrintComponent,
-        BeheerPersonenComponent
+        BeheerPersonenComponent,
+        BeheerAteliersComponent
     ],
     imports: [
         BrowserModule,

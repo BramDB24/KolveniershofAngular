@@ -9,6 +9,7 @@ import { AteliersComponent } from './ateliers/ateliers.component';
 import { PictoPageComponent } from './picto-agenda/picto-page/picto-page.component';
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 import { BeheerPersonenComponent } from './beheer-personen/beheer-personen.component';
+import { BeheerAteliersComponent } from './beheer-ateliers/beheer-ateliers.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,18 @@ export const routes: Routes = [
   {
     path: 'beheer-personen',
     component: BeheerPersonenComponent
+  },
+  {
+    path: 'beheer-ateliers',
+    component: BeheerAteliersComponent
+  },
+  {
+    path: 'ateliers',
+    component: AteliersComponent
+  },
+  {
+    path: 'ateliers/:id',
+    component: AteliersComponent
   },
   {
     path: 'register-gebruiker',

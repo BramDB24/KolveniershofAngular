@@ -1,12 +1,12 @@
-<div class="card">
-  <div class="card-body">
+<div class="container">
+  <div class="row">
+      <div class="col-12">
     <form [formGroup]="atelierFormGroup">
-      <div class="row col-12 pb-3">
-        <div class="col-12 col-md-5 pl-0">
-          <h2>Atelier toevoegen:</h2>
+        
+          <h2 class="titel">Atelier {{titelTekst}}</h2>
 
           <div id="atelierdiv">
-            <p>Kies een naam voor het nieuwe atelier:</p>
+            <p>Kies de naam van het atelier:</p>
             <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
               [ngClass]="{ 'is-invalid': submittedSave &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
               <div class="invalid-feedback" *ngIf="submittedSave && atelierFormGroup.controls.atelierNaam.errors">
@@ -15,7 +15,7 @@
           </div>
 
           <div id="atelierdiv">
-            <p>Kies een picto:</p>
+            <p>Selecteer een picto voor het atelier (.jpg, .jpeg of .png):</p>
             <app-file-upload formControlName="picto" [progress]="progress"></app-file-upload>
           </div>
 
@@ -26,15 +26,15 @@
           </div>
 
 
-        </div>
-      </div>
+        
     </form>
+  </div>
   </div>
 </div>
 
 
 
-<div class="card">
+<!-- <div class="card">
   <div class="card-body">
     <form [formGroup]="atelierVerwijderenFormGroup">
       <div class="row col-12 pb-3">
@@ -64,4 +64,4 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->

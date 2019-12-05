@@ -24,6 +24,10 @@ export class AtelierService {
     return this.http.get<Array<Atelier>>(`${environment.apiUrl}/atelier`);
   }
 
+  public getAtelierViaId(atelierId: Number): Observable<Atelier> {
+    return this.http.get<Atelier>(`${environment.apiUrl}/atelier/${atelierId}`);
+}
+
   public deleteAtelier(atelierId: Number) {
     return this.http.delete(`${environment.apiUrl}/atelier/${atelierId}`);
   }
