@@ -13,6 +13,24 @@ import { Atelier } from "../models/atelier.model";
 import { AtelierService } from "../services/atelier.service";
 import { ActivatedRoute } from "@angular/router";
 
+function valideerBestandType(control: FormControl): { [key: string]: any } {
+    if(!control.value.picto) {
+        return;
+    }
+    const foto = control.value.picto;
+    if (!foto) {
+      return { required: true };
+    }
+    if (foto.split('.').length !== 2) {
+      return { wrongFileType: true };
+    }
+    const extentie = foto.split('.')[1];
+    if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
+      return { wrongFileType: true };
+    }
+    return null;
+  }
+
 @Component({
   selector: "app-ateliers",
   templateUrl: "./ateliers.component.html",
@@ -81,13 +99,10 @@ export class AteliersComponent implements OnInit {
   private initialiseerFormGroup() {
     this.atelierFormGroup = this.fb.group({
       atelierNaam: [
-        this.huidigAtelier ? this.huidigAtelier.naam : "",
+        this.huidigAtelier ? this.huidigAtelier.naam : '',
         Validators.required
       ],
-      picto: new FormControl(null, [
-        Validators.required,
-        // requiredFileType("jpg")
-      ])
+      picto: new FormControl('', [Validators.required, valideerBestandType])
     });
 
     this.titelTekst = this.huidigAtelier ? "aanpassen" : "toevoegen";
@@ -101,6 +116,7 @@ export class AteliersComponent implements OnInit {
     this.submittedSave = true;
     if (this.atelierFormGroup.invalid) {
       console.log(this.atelierFormGroup.value.atelierNaam);
+      console.log(this.atelierFormGroup.value.picto.name);
       return;
     }
 
@@ -108,7 +124,7 @@ export class AteliersComponent implements OnInit {
       .postAtelier({
         naam: this.atelierFormGroup.value.atelierNaam,
         atelierType: "Gewoon",
-        pictoURL: this.atelierFormGroup.value.picto // de juiste: this.atelierFormGroup.value.picto
+        pictoURL: this.atelierFormGroup.value.picto.name // de juiste: this.atelierFormGroup.value.picto
       })
       .pipe(
         uploadProgress(progress => (this.progress = progress)),
@@ -116,10 +132,7 @@ export class AteliersComponent implements OnInit {
       )
       .subscribe(
         () => {
-          alert("De aanpassingen zijn opgeslagen");
-          this.progress = 0;
-          this.atelierFormGroup.reset();
-          this.submittedSave = false;
+                    
         },
         err => {
           console.log(err);
@@ -127,7 +140,11 @@ export class AteliersComponent implements OnInit {
             "Er was een probleem bij het opslaan van de aanpassing.\n" +
               "Een techische beschrijving over te fout werd in de console geschreven."
           );
-        }
+        },
+        () => {
+            alert("De aanpassingen zijn opgeslagen");
+            this.progress = 0;
+          }
       );
   }
 
@@ -200,3 +217,4 @@ export function toResponseBody<T>() {
     map((res: HttpResponse<T>) => res.body)
   );
 }
+

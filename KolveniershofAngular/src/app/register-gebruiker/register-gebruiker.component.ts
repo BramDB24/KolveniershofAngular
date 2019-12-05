@@ -22,7 +22,7 @@ function valideerBestandType(control: FormControl): { [key: string]: any } {
     return { wrongFileType: true };
   }
   const extentie = foto.split('.')[1];
-  if (!['jpg', 'png'].includes(extentie.toLowerCase())) {
+  if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
     return { wrongFileType: true };
   }
   return null;
@@ -44,7 +44,6 @@ export class RegisterGebruikerComponent implements OnInit {
   public submitted = false;
   public loaded = false;
   public fototijdelijk: string;
-  @ViewChild(FileUploadComponent) fileUploader;
 
   constructor(
     private gebruikerService: GebruikerService,
