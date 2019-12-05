@@ -88,12 +88,21 @@ export class HomepageEditComponent implements OnInit, OnChanges {
         this.ngOnChanges();
     }
 
+
     public setAtelier(atelier: DagAtelier) {
         this.atelier = atelier;
         this.isEdit = true;
         this.state = State.Edit;
     }
 
+  // public nieuwAtelier() {
+   // var atelier = Object.assign(new DagAtelier());
+   // atelier.dagMoment = 'VolledigeDag';
+   // this.atelier = atelier;
+   // this.isEdit = false;
+   // this.state = State.Edit;
+  //} 
+  //welke vd 2?
     public nieuwAtelier() {
         this.atelier = Object.assign(new DagAtelier());
         this.isEdit = false;

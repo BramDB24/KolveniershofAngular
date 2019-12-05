@@ -1,225 +1,103 @@
 <ng-container *ngIf="loadingError !== undefined && loading; else loadingError">
-    <div    
-        class="container"
-        id="printVolledigeDag"
-    >
-        <div class="row">
-            <div class="col-12">
-                <h2>Dagplanning</h2>
-            </div>
-            <div class="col-6" id="nietPrinten">
-                <label
-                style="margin-top: 11px;"
-                    ><input
-                        type="checkbox"
-                        (change)="toonSpecialeAteliers()"
-                    />Toon afwezigheden, ziektes, vervoer</label
-                >
-            </div>
-            <div class="col-6" id="nietPrinten">
-                <button
-                    class="btn btn-primary"
-                    type="button"
-                    (click)="downloadPDF()"
-                >
-                    PDF afdrukken
-                </button>
-            </div>
-        </div>
-
-        <ng-container *ngIf="!bool; else specialeAteliers">
-            <div
-                class="row"
-                style="margin-bottom: 30px;"
-            >
-                <div class="col-12 col-sm-12 col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Volledige dag</h3>
-                            <div
-                                *ngFor="
-                                    let dagAtelier of dagplanning.getVolledigedagAteliers()
-                                "
-                            >
-                                <h2 class="atelier">
-                                    {{ dagAtelier.atelier.naam }}
-                                </h2>
-                                <h5>Begeleider(s)</h5>
-                                <div
-                                    class="naastelkaar"
-                                    *ngFor="
-                                        let gebruiker of dagAtelier.getBegeleiders()
-                                    "
-                                >
-                                    <!-- <img
-                                        id="{{ gebruiker.voornaam }}"
-                                        class="client"
-                                        src="{{ gebruiker.foto }}"
-                                    /> -->
-                                    <p class="tekst begeleidertekst">
-                                        {{ gebruiker.voornaam }}
-                                    </p>
-                                </div>
-                                <h5>Cliënten</h5>
-                                <div
-                                    class="naastelkaar"
-                                    *ngFor="
-                                        let gebruiker of dagAtelier.getClienten()
-                                    "
-                                >
-                                    <!-- <img
-                                        id="{{ gebruiker.voornaam }}"
-                                        class="client"
-                                        src="{{ gebruiker.foto }}"
-                                    /> -->
-                                    <p class="tekst">
-                                        {{ gebruiker.voornaam }}
-                                    </p>
-                                </div>
-                                <hr />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="printVoormiddag" class="row">
-                <div class="col-12 col-sm-12 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Voormiddag</h3>
-                            <div
-                                *ngFor="
-                                    let dagAtelier of dagplanning.getVoormiddagAteliers()
-                                "
-                            >
-                                <h3 class="atelier">
-                                    {{ dagAtelier.atelier.naam }}
-                                </h3>
-                                <h5>Begeleider(s)</h5>
-                                <div
-                                    class="naastelkaar"
-                                    *ngFor="
-                                        let gebruiker of dagAtelier.getBegeleiders()
-                                    "
-                                >
-                                    <!-- <img
-                                        id="{{ gebruiker.voornaam }}"
-                                        class="client"
-                                        src="{{ gebruiker.foto }}"
-                                    /> -->
-                                    <p class="tekst begeleidertekst">
-                                        {{ gebruiker.voornaam }}
-                                    </p>
-                                </div>
-                                <h5>Cliënten</h5>
-                                <div
-                                    class="naastelkaar"
-                                    *ngFor="
-                                        let gebruiker of dagAtelier.getClienten()
-                                    "
-                                >
-                                    <!-- <img
-                                        id="{{ gebruiker.voornaam }}"
-                                        class="client"
-                                        src="{{ gebruiker.foto }}"
-                                    /> -->
-                                    <p class="tekst">
-                                        {{ gebruiker.voornaam }}
-                                    </p>
-                                </div>
-                                <hr />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Namiddag</h4>
-                            <div
-                                *ngFor="
-                                    let dagAtelier of dagplanning.getNamiddagAteliers()
-                                "
-                            >
-                                <h3 class="atelier">
-                                    {{ dagAtelier.atelier.naam }}
-                                </h3>
-                                <h5>Begeleider(s)</h5>
-                                <div
-                                    class="naastelkaar"
-                                    *ngFor="
-                                        let gebruiker of dagAtelier.getBegeleiders()
-                                    "
-                                >
-                                    <!-- <img
-                                        id="{{ gebruiker.voornaam }}"
-                                        class="client"
-                                        src="{{ gebruiker.foto }}"
-                                    /> -->
-                                    <p class="tekst begeleidertekst">
-                                        {{ gebruiker.voornaam }}
-                                    </p>
-                                </div>
-                                <h5>Cliënten</h5>
-                                <div
-                                    class="naastelkaar"
-                                    *ngFor="
-                                        let gebruiker of dagAtelier.getClienten()
-                                    "
-                                >
-                                    <!-- <img
-                                        id="{{ gebruiker.voornaam }}"
-                                        class="client"
-                                        src="{{ gebruiker.foto }}"
-                                    /> -->
-                                    <p class="tekst">
-                                        {{ gebruiker.voornaam }}
-                                    </p>
-                                </div>
-                                <hr />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+  <div class="container" id="print">
+    <div class="row">
+      <div class="col-12">
+        <h2>Dagplanning</h2>
+      </div>
+      <div class="col-6" id="nietPrinten">
+        <input type="checkbox" (change)="toonSpecialeAteliers()" id="afwezigheden" />
+        <label style="margin-top: 11px; margin-left:8px;">Toon afwezigheden, ziektes, vervoer</label>
+      </div>
+      <div class="col-6 aliginRight" id="nietPrinten">
+        <app-print></app-print>
+      </div>
     </div>
+
+    <div *ngIf="bool" class="row">
+      <div class="col-12 col-sm-12 col-md-6" *ngFor="let dagAtelier of dagplanning.getSpecialeAteliers()"
+        style="margin-bottom:30px;" id="specialeAteliers">
+        <div class="card">
+          <div class="card-body">
+            <ng-container>
+              <h3 class="card-title atelier">
+                {{ dagAtelier.atelier.naam }}
+              </h3>
+              <p class="tekst">{{ toDeelnemerString(dagAtelier.gebruikers) }}</p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 30px;">
+      <div class="col-12 col-sm-12 col-md-12" id="volledigeDag">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Volledige dag</h3>
+            <div *ngFor="let dagAtelier of dagplanning.getVolledigedagAteliers()">
+              <h2 class="atelier">{{ dagAtelier.atelier.naam }}</h2>
+              <h5>Begeleider(s): </h5>
+              <p class="tekst begeleidertekst">
+                {{ toDeelnemerString( dagAtelier.getBegeleiders())  }}
+              </p>
+              <h5>Cliënten</h5>
+              <p class="tekst">
+                {{ toDeelnemerString( dagAtelier.getClienten())  }}
+              </p>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-6" id="voormiddag">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Voormiddag</h3>
+            <div *ngFor="let dagAtelier of dagplanning.getVoormiddagAteliers()">
+              <h3 class="atelier">
+                {{ dagAtelier.atelier.naam }}
+              </h3>
+              <h5>Begeleider(s)</h5>
+              <p class="tekst begeleidertekst">
+                {{ toDeelnemerString( dagAtelier.getBegeleiders())}}
+              </p>
+              <h5>Cliënten</h5>
+              <p class="tekst">
+                {{ toDeelnemerString(dagAtelier.getClienten()) }}
+              </p>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6" id="namiddag">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Namiddag</h4>
+            <div *ngFor="let dagAtelier of dagplanning.getNamiddagAteliers()">
+              <h3 class="atelier">
+                {{ dagAtelier.atelier.naam }}
+              </h3>
+              <h5>Begeleider(s)</h5>
+              <p class="tekst begeleidertekst">
+                {{ toDeelnemerString( dagAtelier.getBegeleiders())}}
+              </p>
+              <h5>Cliënten</h5>
+              <p class="tekst">
+                {{ toDeelnemerString(dagAtelier.getClienten()) }}
+              </p>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
-<ng-template #loadingError>
-    <div class="spinner-border spinner" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</ng-template>
-
-<ng-template #specialeAteliers>
-    <div class="row">
-        <div
-            class="col-12 col-sm-12 col-md-6"
-            *ngFor="let dagAtelier of dagplanning.getSpecialeAteliers()"
-            style="margin-bottom:30px;"
-        >
-            <div class="card">
-                <div class="card-body">
-                    <ng-container>
-                        <h3 class="card-title atelier">
-                            {{ dagAtelier.atelier.naam }}
-                        </h3>
-                        <div
-                            class="naastelkaar"
-                            *ngFor="let gebruiker of dagAtelier.gebruikers"
-                        >
-                            <!-- <img
-                                id="{{ gebruiker.voornaam }}"
-                                class="client"
-                                src="{{ gebruiker.foto }}"
-                            /> -->
-                            <p class="tekst">{{ gebruiker.voornaam }}</p>
-                        </div>
-                    </ng-container>
-                </div>
-            </div>
-        </div>
-    </div>
+<ng-template #loadingError>   
+  <div class="spinner-border spinner" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
 </ng-template>

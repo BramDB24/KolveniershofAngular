@@ -46,22 +46,13 @@
               style="color:#E92626;font-size:20px;font-weight:normal"
               Class="success"
               align="left"
-            >
-              {{ errorMessage }}
-            </p>
+            >{{ errorMessage }}</p>
           </div>
           <div class="row">
             <div class="col-4">
-              <button type="submit" class="btn btn-primary px-4">Login</button>
+              <button type="submit" id="login" class="btn btn-primary px-4">Login</button>
             </div>
             <div class="col-8 text-right">
-              <button
-                type="button"
-                (click)="router.navigate(['/register'])"
-                class="btn btn-link"
-              >
-                Nieuwe gebruiker?
-              </button>
             </div>
           </div>
         </form>

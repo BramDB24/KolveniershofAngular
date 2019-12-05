@@ -25,6 +25,8 @@ export class AteliersComponent implements OnInit {
     public fileInputTypes: Array<string> = ['png', 'jpg', 'jpeg'];
     public submittedSave = false;
     public submittedDelete = false;
+    public errorMessage = "";
+    public successMessage = "";
 
     @ViewChild(FileUploadComponent) child: FileUploadComponent;
 
@@ -36,8 +38,7 @@ export class AteliersComponent implements OnInit {
     ngOnInit() {
         this.initialiseerFormGroup();
         this.atelierService.getAteliers().subscribe(entry => {
-            this.ateliers = entry;
-            //entry.forEach(e => this.ateliers.push(Object.assign(new Atelier(), e)));
+            this.ateliers = entry.sort((a, b) => a.naam.localeCompare(b.naam))
         });
     }
 
@@ -57,6 +58,8 @@ export class AteliersComponent implements OnInit {
 
 
     saveAtelier() {
+        this.successMessage == ""
+        this.errorMessage == ""
         this.submittedSave = true;
         if (this.atelierFormGroup.invalid) {
             return;
@@ -73,16 +76,18 @@ export class AteliersComponent implements OnInit {
                 toResponseBody()
             )
             .subscribe(
-                () => {},
+                () => {
+                    
+                },
                 err => {
                     console.log(err);
-                    alert(
+                    this.errorMessage = 
                         'Er was een probleem bij het opslaan van de aanpassing.\n' +
                             'Een techische beschrijving over te fout werd in de console geschreven.'
-                    );
+                    ;
                 },
                 () => {
-                    alert('De aanpassingen zijn opgeslagen');
+                    this.successMessage = 'De aanpassingen zijn opgeslagen';
                     this.progress = 0;
                     this.atelierFormGroup.reset();
                     this.submittedSave = false;
