@@ -20,9 +20,8 @@ export const routes: Routes = [
   },
   {
     path: 'dag',
-    component: DagComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin', 'begeleider'] }
+    redirectTo: '',
+    pathMatch: 'full'
   },
   {
     path: 'register-gebruiker',
