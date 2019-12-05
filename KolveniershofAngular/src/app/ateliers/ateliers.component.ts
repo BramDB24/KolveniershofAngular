@@ -14,22 +14,22 @@ import { AtelierService } from "../services/atelier.service";
 import { ActivatedRoute } from "@angular/router";
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
-    if(!control.value.picto) {
-        return;
-    }
-    const foto = control.value.picto;
-    if (!foto) {
-      return { required: true };
-    }
-    if (foto.split('.').length !== 2) {
-      return { wrongFileType: true };
-    }
-    const extentie = foto.split('.')[1];
-    if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
-      return { wrongFileType: true };
-    }
-    return null;
+  if (!control.value.picto) {
+    return;
   }
+  const foto = control.value.picto;
+  if (!foto) {
+    return { required: true };
+  }
+  if (foto.split(".").length !== 2) {
+    return { wrongFileType: true };
+  }
+  const extentie = foto.split(".")[1];
+  if (!["jpg", "png", "jpeg"].includes(extentie.toLowerCase())) {
+    return { wrongFileType: true };
+  }
+  return null;
+}
 
 @Component({
   selector: "app-ateliers",
@@ -99,17 +99,13 @@ export class AteliersComponent implements OnInit {
   private initialiseerFormGroup() {
     this.atelierFormGroup = this.fb.group({
       atelierNaam: [
-        this.huidigAtelier ? this.huidigAtelier.naam : '',
+        this.huidigAtelier ? this.huidigAtelier.naam : "",
         Validators.required
       ],
-      picto: new FormControl('', [Validators.required, valideerBestandType])
+      picto: new FormControl("", [Validators.required, valideerBestandType])
     });
 
     this.titelTekst = this.huidigAtelier ? "aanpassen" : "toevoegen";
-
-    // this.atelierVerwijderenFormGroup = this.fb.group({
-    //     teVerwijderenAtelier: ['', Validators.required],
-    // });
   }
 
   saveAtelier() {
@@ -118,30 +114,54 @@ export class AteliersComponent implements OnInit {
       return;
     }
 
-    this.atelierService
-      .postAtelier({
+    if (this.huidigAtelier) {
+      this.atelierService
+      .updateAtelier({
+        atelierId: this.huidigAtelier.atelierId,
         naam: this.atelierFormGroup.value.atelierNaam,
-        atelierType: "Gewoon",
-        pictoURL: this.atelierFormGroup.value.picto.name // de juiste: this.atelierFormGroup.value.picto
+        atelierType: this.huidigAtelier.atelierType,
+        pictoURL: this.atelierFormGroup.value.picto.name
       })
-      .pipe(
-        uploadProgress(progress => (this.progress = progress)),
-        toResponseBody()
-      )
       .subscribe(
         () => {},
         err => {
           console.log(err);
           alert(
-            "Er was een probleem bij het opslaan van de aanpassing.\n" +
-              "Een techische beschrijving over te fout werd in de console geschreven."
+            "Er was een probleem bij het aanmaken van het atelier.\n" +
+              "Een technische beschrijving over te fout werd in de console geschreven."
           );
         },
         () => {
-            alert("De aanpassingen zijn opgeslagen");
+          alert("Het atelier werd aangepast");
+          this.progress = 0;
+        }
+      );
+    } else {
+      this.atelierService
+        .postAtelier({
+          naam: this.atelierFormGroup.value.atelierNaam,
+          atelierType: "Gewoon",
+          pictoURL: this.atelierFormGroup.value.picto.name // de juiste: this.atelierFormGroup.value.picto
+        })
+        .pipe(
+          uploadProgress(progress => (this.progress = progress)),
+          toResponseBody()
+        )
+        .subscribe(
+          () => {},
+          err => {
+            console.log(err);
+            alert(
+              "Er was een probleem bij het opslaan van het atelier.\n" +
+                "Een technische beschrijving over te fout werd in de console geschreven."
+            );
+          },
+          () => {
+            alert("Het atelier werd opgeslagen.");
             this.progress = 0;
           }
-      );
+        );
+    }
   }
 }
 
@@ -175,4 +195,3 @@ export function toResponseBody<T>() {
     map((res: HttpResponse<T>) => res.body)
   );
 }
-
