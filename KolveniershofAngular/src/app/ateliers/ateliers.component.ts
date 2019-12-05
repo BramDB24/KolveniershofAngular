@@ -86,13 +86,11 @@ export class AteliersComponent implements OnInit {
       ],
       picto: new FormControl(null, [
         Validators.required,
-        requiredFileType("jpg")
+        // requiredFileType("jpg")
       ])
     });
 
-    this.huidigAtelier
-      ? (this.titelTekst = "aanpassen")
-      : (this.titelTekst = "toevoegen");
+    this.titelTekst = this.huidigAtelier ? "aanpassen" : "toevoegen";
 
     // this.atelierVerwijderenFormGroup = this.fb.group({
     //     teVerwijderenAtelier: ['', Validators.required],

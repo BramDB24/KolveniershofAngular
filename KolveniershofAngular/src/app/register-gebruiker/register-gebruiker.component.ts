@@ -122,16 +122,6 @@ export class RegisterGebruikerComponent implements OnInit {
     }
     // stop het process hier als de form invalid is
     if (this.gebruikerFormGroup.invalid) {
-      // console.log(this.huidigeGebruiker.achternaam);
-      // console.log(this.huidigeGebruiker.voornaam);
-      // console.log(this.huidigeGebruiker.email);
-      // console.log(this.huidigeGebruiker.wachtwoord);
-      // console.log(this.huidigeGebruiker.type);
-      // if(this.fileUploader.gebruiker.foto !== null) {
-      //   this.fototijdelijk = this.fileUploader.gebruiker.foto;
-      //   console.log(this.fototijdelijk);
-      // }
-      // console.log(this.huidigeGebruiker.foto);
       return;
     }
 
@@ -141,8 +131,6 @@ export class RegisterGebruikerComponent implements OnInit {
       + this.gebruikerFormGroup.controls.foto.value.name.split('.')[1];
     // folder naam voor bestand
     const folderNaam = 'gebruiker-foto';
-
-    // this.gebruikerFormGroup.controls.foto.value.name = bestandNaam;
 
     // bewaar alle gebruiker gegevens in een object
     var nieuweGebruiker;
