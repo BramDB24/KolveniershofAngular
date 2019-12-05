@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from '../services/account.service';
+import { Gebruiker } from '../models/gebruiker.model';
 
 export enum State {
     Dag = 'dag',
@@ -14,12 +16,11 @@ export enum State {
 })
 export class KalenderComponent implements OnInit {
     public datum: Date = new Date();
-
     public state = State.Dag;
     // StateType gelijk stellen aan enum State, anders kan html hier niet aan
     StateType = State;
 
-    constructor(private _router: Router) {
+    constructor(private router: Router, private auth: AccountService) {
         this.state = State.Dag;
     }
 
@@ -48,7 +49,7 @@ export class KalenderComponent implements OnInit {
     }
 
     public redirect(route: string) {
-        this._router.navigate([`${route}`]);
+        this.router.navigate([`${route}`]);
     }
 
     ngOnInit() {}

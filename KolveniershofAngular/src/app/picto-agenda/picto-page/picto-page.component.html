@@ -34,36 +34,34 @@
         <div class="col-3">
             <label
                 ><input type="checkbox" (change)="switchWeekendState()" />Toon
-                het weekend</label
-            >
+                het weekend</label>
         </div>
     </div>
-
     <div class="row">
         <div
             class="col-12 col-lg-4 col-md-6"
-            *ngFor="let dag of displayDagen()"
+            *ngFor="let dag of weekdagen"
             style="margin-bottom: 30px;"
         >
             <div class="card">
                 <div class="card-body">
-                    <ng-container *ngIf="!isWeekend; else week">
-                        <app-picto-dag [isWeekend]="isWeekend"></app-picto-dag>
-                    </ng-container>
+                    <app-picto-dag [isWeekendDag]="false"></app-picto-dag>
                 </div>
             </div>
         </div>
-    </div>
-    
+        <div class="col-12 col-lg-4 col-md-6" style="margin-bottom: 30px;">
+            <div class="card">
+                <div class="card-body">
+                    <app-picto-dag [isWeekendDag]="true"></app-picto-dag>
+                </div>
+            </div>
+        </div>
+    </div>    
     <div class="row" id="nietPrinten"  style="margin-bottom:30px">
         <div class="col-12">
-            <button style="float:right;" class="btn btn-primary">Opslaan</button>
+            <button style="float:right;" class="btn btn-primary">
+                Opslaan
+            </button>
         </div>
     </div>
 </div>
-
-<ng-template #week>
-    <div class="col-12">
-        <app-picto-dag [isWeekend]="isWeekend"></app-picto-dag>
-    </div>
-</ng-template>

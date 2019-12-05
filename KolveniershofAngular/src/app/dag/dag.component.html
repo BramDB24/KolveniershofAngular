@@ -28,8 +28,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="row" style="margin-bottom: 30px;">
       <div class="col-12 col-sm-12 col-md-12" id="volledigeDag">
         <div class="card">
@@ -56,9 +54,7 @@
         <div class="card">
           <div class="card-body">
             <h3 class="card-title">Voormiddag</h3>
-            <div *ngFor="
-                                    let dagAtelier of dagplanning.getVoormiddagAteliers()
-                                ">
+            <div *ngFor="let dagAtelier of dagplanning.getVoormiddagAteliers()">
               <h3 class="atelier">
                 {{ dagAtelier.atelier.naam }}
               </h3>
@@ -75,14 +71,11 @@
           </div>
         </div>
       </div>
-
       <div class="col-12 col-sm-12 col-md-6" id="namiddag">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Namiddag</h4>
-            <div *ngFor="
-                                    let dagAtelier of dagplanning.getNamiddagAteliers()
-                                ">
+            <div *ngFor="let dagAtelier of dagplanning.getNamiddagAteliers()">
               <h3 class="atelier">
                 {{ dagAtelier.atelier.naam }}
               </h3>
@@ -99,12 +92,11 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </ng-container>
 
-<ng-template #loadingError>
+<ng-template #loadingError>   
   <div class="spinner-border spinner" role="status">
     <span class="sr-only">Loading...</span>
   </div>

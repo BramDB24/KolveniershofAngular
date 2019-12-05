@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isWeekend; else weekend">
+<ng-container *ngIf="!isWeekendDag; else weekend">
     <div class="row">
         <div class="col-12">
             <div>
@@ -97,7 +97,17 @@
 <ng-template #weekend>
     <div class="row">
         <div class="col-12">
-            <p>Geef commentaar op voor het weekend</p>
+            <p>Geef commentaar op voor het zaterdag</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <textarea style="width: 100%; resize: none;"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>Geef commentaar op voor het zondag</p>
         </div>
     </div>
     <div class="row">

@@ -7,8 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PictoDagComponent implements OnInit {
 
-  @Input() public isWeekend;
-
+  @Input() isWeekendDag: boolean;
   constructor() { }
 
   ngOnInit() {
