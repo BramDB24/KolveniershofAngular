@@ -48,11 +48,15 @@ export class PictoPageComponent implements OnInit {
     }
 
     geefVorigeDatum(): void {
-        this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate() - 1)));
+        console.log('start');
+        console.log(this.filterDatum);
+        this.filter$.next(new Date(this.filterDatum.getTime()-1000*60*60*24));
+        console.log(this.filterDatum);
+        console.log('eind')
     }
 
     geefVolgendeDatum(): void {
-        this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate() + 1)));
+        this.filter$.next(new Date(this.filterDatum.getTime()+1000*60*60*24));
     }
 
     toonWeek(){
