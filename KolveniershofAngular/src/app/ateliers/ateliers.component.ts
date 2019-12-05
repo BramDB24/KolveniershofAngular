@@ -115,8 +115,6 @@ export class AteliersComponent implements OnInit {
   saveAtelier() {
     this.submittedSave = true;
     if (this.atelierFormGroup.invalid) {
-      console.log(this.atelierFormGroup.value.atelierNaam);
-      console.log(this.atelierFormGroup.value.picto.name);
       return;
     }
 
@@ -131,9 +129,7 @@ export class AteliersComponent implements OnInit {
         toResponseBody()
       )
       .subscribe(
-        () => {
-                    
-        },
+        () => {},
         err => {
           console.log(err);
           alert(
@@ -147,44 +143,6 @@ export class AteliersComponent implements OnInit {
           }
       );
   }
-
-  // deleteAtelier() {
-  //     this.submittedDelete = true;
-  //     if (this.atelierVerwijderenFormGroup.invalid) {
-  //         return;
-  //     }
-
-  //     const naam = this.atelierVerwijderenFormGroup.controls
-  //         .teVerwijderenAtelier.value;
-  //     const atelierTeVerwijderen = this.ateliers.find(a => a.naam === naam);
-
-  //     if (
-  //         confirm(
-  //             'Bent u zeker dat u dit atelier permanent wilt verwijderen?'
-  //         )
-  //     ) {
-  //         this.atelierService
-  //             .deleteAtelier(atelierTeVerwijderen.atelierId)
-  //             .subscribe(
-  //                 () => {},
-  //                 err => {
-  //                     console.log(err);
-  //                     alert(
-  //                         'Er was een probleem bij het opslaan van de aanpassing.\n' +
-  //                             'Een techische beschrijving over te fout werd in de console geschreven.'
-  //                     );
-  //                 },
-  //                 () => {
-  //                     alert('De aanpassingen zijn opgeslagen');
-  //                     this.submittedDelete = false;
-  //                 }
-  //             );
-  //         const index = this.ateliers.indexOf(atelierTeVerwijderen);
-  //         if (index > -1) {
-  //             this.ateliers.splice(index, 1);
-  //         }
-  //     }
-  // }
 }
 
 export function requiredFileType(type: string) {
