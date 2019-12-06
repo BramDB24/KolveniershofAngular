@@ -81,16 +81,18 @@ export class DagService {
     console.log(dagAtelier);
     return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
   }
-  
-  public getAanwezigheidslijst(date:Date) : Observable<DagAtelier[]>{
+
+  public getAanwezigheidslijst(date: Date): Observable<DagAtelier[]> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
     return this.http.get<Array<DagAtelier>>(`${environment.apiUrl}/dagplanning/${convertedDate}/aanwezigen`);
   }
 
   //authorizatie: clients only
-  public getPictoAgendas(date: Date) : Observable<PictoDag[]>{
+  public getPictoAgendas(date: Date, gebruikerId: string = null): Observable<PictoDag[]> {
     const convertedDate: string = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (gebruikerId != null)
+      return this.http.get<Array<PictoDag>>(`${environment.apiUrl}/dagplanning/${convertedDate}/pictoagenda/client/${gebruikerId}`);
     return this.http.get<Array<PictoDag>>(`${environment.apiUrl}/dagplanning/${convertedDate}/pictoagenda`);
   }
-  
+
 }

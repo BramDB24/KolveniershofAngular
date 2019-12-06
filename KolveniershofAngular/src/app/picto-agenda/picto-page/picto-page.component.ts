@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
 import { Observable, Subject } from 'rxjs';
@@ -6,6 +6,7 @@ import { DagPlanning } from 'src/app/models/dag-planning.model';
 import { DagService } from 'src/app/services/dag.service';
 import { PictoDag } from 'src/app/models/pictodag.model';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { Gebruiker } from 'src/app/models/gebruiker.model';
 
 @Component({
     selector: 'app-picto-page',
@@ -13,9 +14,8 @@ import { distinctUntilChanged } from 'rxjs/operators';
     styleUrls: ['./picto-page.component.scss'],
 })
 export class PictoPageComponent implements OnInit {
+    private _gebruiker: Gebruiker;
     public weekdagen = new Array<string>('Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag');
-    public weekendDagen = new Array<string>('Zat', 'Zon');
-    public isWeekend = false;
     public filterDatum: Date = new Date();
     public filter$ = new Subject<Date>();
     public $pictodagen: Observable<PictoDag[]>;
@@ -31,6 +31,17 @@ export class PictoPageComponent implements OnInit {
             );
     }
 
+    @Input() set gebruiker(gebruiker: Gebruiker) {
+        this._gebruiker = gebruiker;
+        this.toonWeek();
+    }
+
+    get titel(): string {
+        if (this._gebruiker)
+            return `Pictoagenda van ${this._gebruiker.voornaam} ${this._gebruiker.achternaam}`;
+        return "MIJN PICTOAGENDA";
+    }
+
     get datum(): Date {
         return this.filterDatum;
     }
@@ -39,27 +50,15 @@ export class PictoPageComponent implements OnInit {
         this.toonWeek();
     }
 
-    public switchWeekendState(): void {
-        this.isWeekend = !this.isWeekend;
-    }
-
-    public displayDagen(): Array<string> {
-        return this.isWeekend ? this.weekendDagen : this.weekdagen;
-    }
-
     geefVorigeDatum(): void {
-        console.log('start');
-        console.log(this.filterDatum);
-        this.filter$.next(new Date(this.filterDatum.getTime()-1000*60*60*24));
-        console.log(this.filterDatum);
-        console.log('eind')
+        this.filter$.next(new Date(this.filterDatum.getTime() - 1000 * 60 * 60 * 24));
     }
 
     geefVolgendeDatum(): void {
-        this.filter$.next(new Date(this.filterDatum.getTime()+1000*60*60*24));
+        this.filter$.next(new Date(this.filterDatum.getTime() + 1000 * 60 * 60 * 24));
     }
 
-    toonWeek(){
+    toonWeek() {
         this.$pictodagen = this._dagService.getPictoAgendas(this.filterDatum);
     }
 

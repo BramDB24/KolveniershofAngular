@@ -9,7 +9,6 @@ import { PictoAtelier } from 'src/app/models/pictoatelier.model';
 })
 export class PictoDagComponent implements OnInit {
 
-  //@Input() public isWeekend;
   @Input() public pictodag: PictoDag;
   public isWeekend: boolean = false;
 
@@ -29,7 +28,7 @@ export class PictoDagComponent implements OnInit {
     return this.pictodag.ateliers.filter(a => a.dagMoment == "Voormiddag" || a.dagMoment == "VolledigeDag");
   }
 
-  get namiddag() {
+  get namiddag(): PictoAtelier[] {
     return this.pictodag.ateliers.filter(a => a.dagMoment == "Namiddag" || a.dagMoment == "VolledigeDag");
   }
 }

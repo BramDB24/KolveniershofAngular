@@ -12,6 +12,7 @@ import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AuthGuard } from './guards/auth.guard';
 import { DagAtelier } from './models/dag-atelier.model';
 import { DagComponent } from './dag/dag.component';
+import { PictoClientenlijstComponent } from './picto-agenda/picto-clientenlijst/picto-clientenlijst.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,13 @@ export const routes: Routes = [
   {
     path: 'register-gebruiker',
     component: RegisterGebruikerComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] }
+
+  },
+  {
+    path: 'picto-clientenlijst',
+    component: PictoClientenlijstComponent,
     canActivate: [AuthGuard],
     data: { roles: ['Admin'] }
 
