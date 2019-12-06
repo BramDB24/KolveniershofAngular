@@ -102,7 +102,7 @@ export class AteliersComponent implements OnInit {
         this.huidigAtelier ? this.huidigAtelier.naam : "",
         Validators.required
       ],
-      picto: new FormControl("", [Validators.required, valideerBestandType])
+      picto: new FormControl(this.huidigAtelier ? this.huidigAtelier.pictoURL : '', [Validators.required, valideerBestandType])
     });
 
     this.titelTekst = this.huidigAtelier ? "aanpassen" : "toevoegen";
