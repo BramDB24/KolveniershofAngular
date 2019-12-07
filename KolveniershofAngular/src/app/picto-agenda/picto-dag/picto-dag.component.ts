@@ -10,18 +10,15 @@ import { PictoAtelier } from 'src/app/models/pictoatelier.model';
 export class PictoDagComponent implements OnInit {
 
   @Input() public pictodag: PictoDag;
-  public isWeekend: boolean = false;
+  @Input() public dagImg: string;
+  @Input() public isWeekend: boolean;
+  @Input() public selected: boolean;
 
   constructor() {
 
   }
 
   ngOnInit() {
-      let day = new Date(this.pictodag.datum).getDay();
-      if (day == 0 || day == 6) {
-        this.isWeekend = true;
-      }
-    
   }
 
   get voormiddag(): PictoAtelier[] {
@@ -30,5 +27,6 @@ export class PictoDagComponent implements OnInit {
 
   get namiddag(): PictoAtelier[] {
     return this.pictodag.ateliers.filter(a => a.dagMoment == "Namiddag" || a.dagMoment == "VolledigeDag");
+
   }
 }

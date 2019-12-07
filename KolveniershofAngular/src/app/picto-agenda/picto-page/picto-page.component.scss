@@ -1,19 +1,36 @@
-.arrowbutton{
-    all: unset;
-    &:hover{
-        cursor: pointer;
-    }
+.arrowbutton {
+  all: unset;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.alignRight{
-    text-align: right;
+.alignRight {
+  text-align: right;
 }
 
-.halfling{
-    height: auto;
+.smallcard {
+  height: 50%;
 }
 
-.weekend{
-    display: inline;
+.weekend {
+  display: inline;
 }
 
+.normalcard {
+  margin-bottom: 30px;
+}
+.smallcard{
+    height: 50%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.fullheight{
+    height: 100%;
+}
+
+.green{
+    background-color: green;
+}
