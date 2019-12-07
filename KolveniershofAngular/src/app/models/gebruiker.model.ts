@@ -6,4 +6,5 @@ export class Gebruiker {
     wachtwoord?: string;
     foto: string;
     type: string;
+    sfeergroep?: string;
 }
