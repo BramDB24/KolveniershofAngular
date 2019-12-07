@@ -12,6 +12,7 @@ import { FileUploadComponent } from "../file-upload/file-upload.component";
 import { Atelier } from "../models/atelier.model";
 import { AtelierService } from "../services/atelier.service";
 import { ActivatedRoute } from "@angular/router";
+import { BestandService } from '../services/bestand.service';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
   if (!control.value.picto) {
@@ -52,6 +53,7 @@ export class AteliersComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private bestandService: BestandService,
     private atelierService: AtelierService,
     private fb: FormBuilder
   ) {}
@@ -102,7 +104,10 @@ export class AteliersComponent implements OnInit {
         this.huidigAtelier ? this.huidigAtelier.naam : "",
         Validators.required
       ],
-      picto: new FormControl(this.huidigAtelier ? this.huidigAtelier.pictoURL : '', [Validators.required, valideerBestandType])
+      picto: new FormControl(
+        this.huidigAtelier ? this.huidigAtelier.pictoURL : "",
+        [Validators.required, valideerBestandType]
+      )
     });
 
     this.titelTekst = this.huidigAtelier ? "aanpassen" : "toevoegen";
@@ -114,28 +119,39 @@ export class AteliersComponent implements OnInit {
       return;
     }
 
+    // folder naam voor bestand
+    const folderNaam = "atelierpictos";
+
+    // Uploaden van de foto
+    this.bestandService
+      .postFile(
+        folderNaam,
+        this.atelierFormGroup.value.picto.name,
+        this.atelierFormGroup.value.picto
+      );
+
     if (this.huidigAtelier) {
       this.atelierService
-      .updateAtelier({
-        atelierId: this.huidigAtelier.atelierId,
-        naam: this.atelierFormGroup.value.atelierNaam,
-        atelierType: this.huidigAtelier.atelierType,
-        pictoURL: this.atelierFormGroup.value.picto.name
-      })
-      .subscribe(
-        () => {},
-        err => {
-          console.log(err);
-          alert(
-            "Er was een probleem bij het aanmaken van het atelier.\n" +
-              "Een technische beschrijving over te fout werd in de console geschreven."
-          );
-        },
-        () => {
-          alert("Het atelier werd aangepast");
-          this.progress = 0;
-        }
-      );
+        .updateAtelier({
+          atelierId: this.huidigAtelier.atelierId,
+          naam: this.atelierFormGroup.value.atelierNaam,
+          atelierType: this.huidigAtelier.atelierType,
+          pictoURL: this.atelierFormGroup.value.picto.name
+        })
+        .subscribe(
+          () => {},
+          err => {
+            console.log(err);
+            alert(
+              "Er was een probleem bij het aanmaken van het atelier.\n" +
+                "Een technische beschrijving over te fout werd in de console geschreven."
+            );
+          },
+          () => {
+            alert("Het atelier werd aangepast");
+            this.progress = 0;
+          }
+        );
     } else {
       this.atelierService
         .postAtelier({

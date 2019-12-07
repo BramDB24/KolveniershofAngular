@@ -156,13 +156,7 @@ export class RegisterGebruikerComponent implements OnInit {
     }
 
     // Uploaden van de foto
-    this.bestandService.postFile(folderNaam, bestandNaam, this.gebruikerFormGroup.controls.foto.value)
-      .subscribe(x =>
-        {
-          console.log(x);
-        }, (err) => {
-          console.log(err);
-        });
+    this.bestandService.postFile(folderNaam, bestandNaam, this.gebruikerFormGroup.controls.foto.value);
 
     // Stuur nieuweGebruiker naar de databank
     if (this.huidigeGebruiker) {
