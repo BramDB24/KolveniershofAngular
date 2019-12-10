@@ -1,11 +1,6 @@
 import { HttpEvent, HttpEventType, HttpResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { pipe } from "rxjs";
 import { filter, map, tap, finalize } from "rxjs/operators";
 import { FileUploadComponent } from "../file-upload/file-upload.component";

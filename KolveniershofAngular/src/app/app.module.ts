@@ -52,7 +52,7 @@ registerLocaleData(localeNl);
         AanwezighedenComponent,
         PrintComponent,
         BeheerPersonenComponent,
-        BeheerAteliersComponent
+        BeheerAteliersComponent,
         PictoClientenlijstComponent
     ],
     imports: [
