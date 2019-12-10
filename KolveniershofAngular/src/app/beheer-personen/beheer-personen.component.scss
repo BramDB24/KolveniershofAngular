@@ -1,0 +1,45 @@
+.btn {
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 12pt;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    &.geselecteerd {
+      background-color: rgb(96, 55, 194);
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: rgb(66, 102, 138);
+    }
+    &.nieuwe {
+        float: right;
+        margin-top: 16px;
+    }
+    &.bewerken {
+        margin: 0px;
+        margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+  }
+
+  .titel {
+      margin-top: 16px;
+      margin-bottom: 16px;
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+
+  .mat-column-bewerken {
+    width: 280px;
+}

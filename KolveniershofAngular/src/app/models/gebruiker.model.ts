@@ -3,7 +3,8 @@ export class Gebruiker {
     voornaam: string;
     achternaam: string;
     email: string;
-    wachtwoord: string;
+    wachtwoord?: string;
     foto: string;
     type: string;
+    sfeergroep?: string;
 }

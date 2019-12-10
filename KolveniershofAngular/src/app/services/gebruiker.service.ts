@@ -19,27 +19,28 @@ export class GebruikerService {
             );
     }
 
-    public getGebruikerViaId(id: number): Observable<Gebruiker> {
-        return this.http.get<Gebruiker>(`localhost:4200/viaId/${id}`);
+    public getGebruikerViaId(id: string): Observable<Gebruiker> {
+        return this.http.get<Gebruiker>(`${environment.apiUrl}/account/${id}`);
     }
 
     public getGebruikerTypes(): Observable<string[]> {
         return of(['Admin', 'Begeleider', 'Cliënt']);
     }
 
-    public postUpdateGebruiker(gebruikerJson: any): Observable<{}> {
-        if (!gebruikerJson.id) {
+    public postUpdateGebruiker(gebruikerJson: Gebruiker): Observable<{}> {
+        if (!gebruikerJson.gebruikerId) {
             return null;
         }
-        return this.http.post(
-            `localhost:4200/${gebruikerJson.id}`,
-            gebruikerJson
+        return this.http.put(
+            `${environment.apiUrl}/account/${gebruikerJson.gebruikerId}`, gebruikerJson
         );
     }
 
     public postNieuweGebruiker(gebruikerJson: any): Observable<{}> {
-        return null;
-        // WERKT NIET WERKT NIET ZIE API INFO
-        // return this.http.post(`localhost:4200/register`, gebruikerJson);
+        return this.http.post(`${environment.apiUrl}/account/register`, gebruikerJson);
+    }
+
+    public verwijderGebruiker(gebruikerJson: Gebruiker): Observable<{}> {
+        return this.http.delete(`${environment.apiUrl}/account/${gebruikerJson.gebruikerId}`);
     }
 }

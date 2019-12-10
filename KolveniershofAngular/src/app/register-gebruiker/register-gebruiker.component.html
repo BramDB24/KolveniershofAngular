@@ -1,16 +1,30 @@
-<ng-container *ngIf="loaded">
-
+<ng-container>
   <div class="container">
-    <h2 class="m-2"><b>Account {{submitButtonText}}</b></h2>
-
+    <h2 class="titel">Account {{submitButtonText}}</h2>
     <form class="border border-light p-5" [formGroup]="gebruikerFormGroup" (ngSubmit)="onSubmit()">
+
       <div class="row">
+        <div class="col-6">
+          <div class="row">
         <p class="mr-3">Soort gebruiker: </p>
-        <div class="custom-control custom-radio mb-4 mr-2" *ngFor="let type of this._gebruikerTypes; let i = index">
-          <input type="radio" class="custom-control-input" id="{{'radio' + type}}" (change)="this.typeVeranderd(i)"
+        <div class="custom-control custom-radio mb-4 mr-4" *ngFor="let type of gebruikerTypes; let i = index">
+          <input type="radio" class="custom-control-input" id="{{'radio' + type}}" (change)="checkClient(type)" [checked]="huidigeGebruiker ? ((huidigeGebruiker.type == type) ? true : false) : false" 
             name="gebruikerType" [value]="type" formControlName="gebruikerType">
           <label class="custom-control-label" for="{{'radio' + type}}">{{type}}</label>
         </div>
+      </div>
+      </div>
+
+      <div class="col-6" *ngIf="isClient">
+        <div class="row">
+          <p class="mr-3">Sfeergroep: </p>
+          <div class="custom-control custom-radio mb-4 mr-4" *ngFor="let sfeergr of sfeergroepen; let i = index">
+            <input type="radio" class="custom-control-input" id="{{'radio' + sfeergr}}" [checked]="huidigeGebruiker ? ((huidigeGebruiker.sfeergroep == sfeergr) ? true : false) : false" 
+              name="sfeergroep" [value]="sfeergr" formControlName="sfeergroep">
+            <label class="custom-control-label" for="{{'radio' + sfeergr}}">{{sfeergr}}</label>
+          </div>
+        </div> 
+      </div>
       </div>
       <div class="row justify-content-around">
         <div class="col-md-5 m-1">
@@ -50,9 +64,18 @@
           </div>
         </div>
 
+        <div class="col-md-5 m-1" *ngIf="!huidigeGebruiker">
+            <label for="bevestigWachtwoord">Bevestig wachtwoord*</label>
+            <input type="text" id="bevestigWachtwoord" class="form-control" formControlName="bevestigWachtwoord"
+              [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.bevestigWachtwoord.errors }">
+            <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.bevestigWachtwoord.errors" class="text-danger">
+              <div *ngIf="gebruikerFormGroup.controls.bevestigWachtwoord.errors.required">Bevestiging wachtwoord is verplicht</div>
+            </div>
+          </div>
+
         <div class="col-md-5 m-1">
           <label for="foto">Foto*</label>
-          <app-file-upload formControlName="foto"
+          <app-file-upload formControlName="foto" [gebruiker]="huidigeGebruiker"
             [errorGevonden]="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors"></app-file-upload>
           <!-- [progress]="progress" -->
           <div *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors" class="text-danger">
@@ -63,10 +86,12 @@
         </div>
       </div>
       <small>* = Verplicht</small>
-      <div class="row justify-content-center">
-        <button type="submit" class="btn btn-primary btn-block my-4 col-md-3 align-self-center">
+      <div class="row">
+        <div class="col-12">
+        <button type="submit" class="btn">
           {{submitButtonText}}
         </button>
+      </div>
       </div>
     </form>
   </div>

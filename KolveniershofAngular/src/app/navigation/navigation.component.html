@@ -18,7 +18,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" id="picto-agendas" (click)="redirect('picto-agenda')"
-          >picto-agenda's</a
+          >Picto-agenda's</a
         >
       </li>
       <li class="nav-item">
@@ -30,17 +30,17 @@
         <a class="nav-link" (click)="redirect('kalender')">kalender</a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" id="beheer-personen" *ngIf="isAdmin()" (click)="redirect('register-gebruiker')">beheer personen</a>
+        <a class="nav-link" id="beheer-personen" *ngIf="isAdmin()" (click)="redirect('beheer-personen')">Beheer personen</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="4-weekse-planning" *ngIf="isAdmin()" (click)="redirect('vierweekse-planning')">4-weekse planning</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="beheer-ateliers" *ngIf="isAdmin()" (click)="redirect('ateliers')">beheer ateliers</a>
+        <a class="nav-link" id="beheer-ateliers" *ngIf="isAdmin()" (click)="redirect('beheer-ateliers')">Beheer ateliers</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="aanwezigheden" *ngIf="isAdmin()" (click)="redirect('aanwezigheden')">aanwezigheden</a>
-      </li>      
+        <a class="nav-link" id="aanwezigheden" *ngIf="isAdmin()" (click)="redirect('aanwezigheden')">Aanwezigheden</a>
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown" *ngIf="aangemelde; else nietaangemeld">

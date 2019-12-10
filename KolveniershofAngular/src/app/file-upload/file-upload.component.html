@@ -1,11 +1,11 @@
 <div class="custom-file">
   <input class="custom-file-input" type="file" id="fileInput" lang="nl" [ngClass]="{ 'is-invalid': errorGevonden }">
-  <label class="custom-file-label" for="fileInput" data-browse="Bestand kiezen">{{file ? file.name : ''}}</label>
+  <label class="custom-file-label" style="overflow: hidden;" for="fileInput" data-browse="Bestand kiezen">{{file ? file.name :  gebruiker ? gebruiker.foto : atelier ? atelier.pictoURL : '' }}</label>
 </div>
 
 <app-progress [progress]="progress"></app-progress>
 
 <div class="file-drop-area">
   <span class="fake-btn"></span>
-  <span class="file-msg">{{file ? file.name : ''}}</span>
+  <span class="file-msg">{{file ? file.name :  gebruiker ? gebruiker.foto : atelier ? atelier.pictoURL : '' }}</span>
 </div>

@@ -25,6 +25,8 @@ import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputM
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import { PrintComponent } from './print/print.component';
+import { BeheerPersonenComponent } from './beheer-personen/beheer-personen.component';
+import { BeheerAteliersComponent } from './beheer-ateliers/beheer-ateliers.component';
 import { PictoClientenlijstComponent } from './picto-agenda/picto-clientenlijst/picto-clientenlijst.component';
 
 registerLocaleData(localeNl);
@@ -49,6 +51,8 @@ registerLocaleData(localeNl);
         PictoDagComponent,
         AanwezighedenComponent,
         PrintComponent,
+        BeheerPersonenComponent,
+        BeheerAteliersComponent
         PictoClientenlijstComponent
     ],
     imports: [
