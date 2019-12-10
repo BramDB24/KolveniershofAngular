@@ -26,6 +26,8 @@ export class FileUploadComponent implements ControlValueAccessor {
 
   @HostListener('change', ['$event.target.files']) emitFiles(event: FileList) {
     const file = event && event.item(0);
+    console.log(file)
+    //if (file.type)
     this.onChange(file);
     this.file = file;
   }
@@ -34,7 +36,6 @@ export class FileUploadComponent implements ControlValueAccessor {
   }
 
   writeValue(value: null) {
-    // clear file input
     this.host.nativeElement.value = '';
     this.file = null;
   }

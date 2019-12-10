@@ -3,6 +3,7 @@ import { Component, Input, OnChanges } from "@angular/core";
 import { DagAtelier } from "../models/dag-atelier.model";
 import { DagPlanning } from "../models/dag-planning.model";
 import { DagService } from "../services/dag.service";
+import { Gebruiker } from '../models/gebruiker.model';
 
 @Component({
   selector: "app-dag",
@@ -20,7 +21,7 @@ export class DagComponent implements OnChanges {
   public dagplanning: DagPlanning;
   public specialeAteliers = new Array<DagAtelier>();
 
-  constructor(private dagService: DagService) {}
+  constructor(private dagService: DagService) { }
 
   ngOnChanges() {
     if (this.datum == null) {
@@ -82,5 +83,16 @@ export class DagComponent implements OnChanges {
 
   public toonSpecialeAteliers(): void {
     this.bool = !this.bool;
+  }
+
+  public toDeelnemerString(gebruikers: Gebruiker[]): String {
+    var uitvoer = ""
+    gebruikers.forEach(function (gebruiker, index) {
+      uitvoer += gebruiker.voornaam.toUpperCase() + " ";
+      if (index != (gebruikers.length - 1)) {
+        uitvoer += "/ ";
+      }
+    });
+    return uitvoer;
   }
 }

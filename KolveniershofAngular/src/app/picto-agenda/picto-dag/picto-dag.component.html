@@ -1,108 +1,84 @@
-<ng-container *ngIf="!isWeekend; else weekend">
-    <div class="row">
-        <div class="col-12">
+<div class="card maxheight" [ngClass]="selected ? 'yellow':'normal'">
+  <div class="card-body">
+    <div *ngIf="!isWeekend; else weekend">
+      <div>
+        <div class="row">
+          <div class="col-12">
             <div>
-                <img
-                    style="width: 60px; height: 60px; float: left; margin-right: 16px;"
-                    src="https://www.sclera.be/resources/pictos/datum.png"
-                    alt=""
-                />
-                <h3 style="margin-bottom: unset;">Dag</h3>
-                <p>DD MAAND YYYY</p>
+              <img style="width: 60px; height: 60px; float: left; margin-right: 16px;"
+                src="https://kolveniershofapi.azurewebsites.net/pictos/{{dagImg}}" alt="" />
+              <h4>{{pictodag.datum | date: 'EEEE dd MMMM yyyy'}}</h4>
             </div>
+          </div>
         </div>
+        <h4>Voormiddag</h4>
+        <div class="row">
+          <div class="col-12">
+            <div *ngFor="let atelier of voormiddag" class="image-container">
+              <img src="https://kolveniershofapi.azurewebsites.net/pictos/{{atelier.atelierImg}}" />
+            </div>
+          </div>
+        </div>
+        <h4>Menu</h4>
+        <div class="row">
+          <div class="col-12">
+            <div class="image-container">
+              <img src="https://kolveniershofapi.azurewebsites.net/pictos/cafetaria_rozenberg.jpg">
+              <p>{{pictodag.menu}}</p>
+            </div>
+          </div>
+        </div>
+        <h4>Namiddag</h4>
+        <div class="row">
+          <div class="col-12">
+            <div>
+              <div *ngFor="let atelier of namiddag" class="image-container">
+                <img src="https://kolveniershofapi.azurewebsites.net/pictos/{{atelier.atelierImg}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-12">
+            <p>Geef commentaar op voor de dag</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row">
+    <ng-template #weekend>
+      <div class="row weekend">
         <div class="col-12">
-            <div class="image-container">
-                <img
-                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
-                />
-            </div>
-            <div class="image-container">
-                <img
-                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
-                />
-            </div>
-            <div class="image-container">
-                <img src="https://www.sclera.be/resources/pictos/koffie.png" />
-            </div>
+          <p>Geef commentaar op voor het weekend</p>
         </div>
-    </div>
-    <hr />
-    <div class="row">
+      </div>
+      <div class="row">
         <div class="col-12">
-            <div class="image-container">
-                <img src="https://www.sclera.be/resources/pictos/bakken.png" />
-            </div>
-            <div class="image-container">
-                <img src="https://www.sclera.be/resources/pictos/disco.png" />
-            </div>
+          <textarea style="width: 100%; resize: none;"></textarea>
         </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-12">
-            <div class="image-container">
-                <img
-                    src="https://www.sclera.be/resources/pictos/vork naar bord.png"
-                />
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-12">
-            <div class="image-container">
-                <img
-                    src="https://www.sclera.be/resources/pictos/petanque.png"
-                />
-            </div>
-            <div class="image-container">
-                <img src="https://www.sclera.be/resources/pictos/zwemmen.png" />
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-12">
-            <div class="image-container">
-                <img src="https://www.sclera.be/resources/pictos/koffie.png" />
-            </div>
-            <div class="image-container">
-                <img
-                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
-                />
-            </div>
-            <div class="image-container">
-                <img
-                    src="https://www.sclera.be/resources/pictos/bibliobus.png"
-                />
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-            <div class="col-12">
-                <p>Geef commentaar op voor de dag</p>
-            </div>
-        </div>
-    <div class="row">
-        <div class="col-12">
-            <textarea style="width: 100%; resize: none;"></textarea>
-        </div>
-    </div>
-</ng-container>
+      </div>
+    </ng-template>
+  </div>
+</div>
 
 <ng-template #weekend>
-    <div class="row">
-        <div class="col-12">
-            <p>Geef commentaar op voor het weekend</p>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <!-- <img style="width: 60px; height: 60px; float: left; margin-right: 16px;"
+          src="https://kolveniershofapi.azurewebsites.net/pictos/{{dagImg}}" alt="" /> nog geen images in backend -->
+        <h4>{{pictodag.datum | date: 'EEEE dd MMMM yyyy'}}</h4>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <textarea style="width: 100%; resize: none;"></textarea>
-        </div>
+  </div>
+  <div class="row weekend">
+    <div class="col-12">
+      <p>Geef commentaar op voor het weekend</p>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <textarea style="width: 100%; resize: none;"></textarea>
+    </div>
+  </div>
 </ng-template>

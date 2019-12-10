@@ -27,12 +27,18 @@
         <!-- <button type="button" (click)="veranderState(StateType.Dag)" class="btn rechts"
           [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.DagEdit"><i
             class="fas fa-arrow-circle-left"></i> Terug</button> -->
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-
 <app-dag *ngIf="state == StateType.Dag" [datum]="datum"></app-dag>
-<app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="datum"></app-homepage-edit>
-<app-opmerkingen-blad *ngIf="state == StateType.Opmerkingen" [datum]="datum"></app-opmerkingen-blad>
+
+<app-homepage-edit
+    *ngIf="state == StateType.DagEdit"
+    [datum]="datum"
+></app-homepage-edit>
+<app-opmerkingen-blad
+    *ngIf="state == StateType.Opmerkingen"
+    [datum]="datum"
+></app-opmerkingen-blad>

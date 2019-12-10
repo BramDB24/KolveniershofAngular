@@ -23,9 +23,11 @@ import { PictoDagComponent } from './picto-agenda/picto-dag/picto-dag.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule, MatTableModule, MatSortModule} from '@angular/material';
 import { AanwezighedenComponent } from './aanwezigheden/aanwezigheden.component';
+import { httpInterceptorProviders } from './http-interceptors';
 import { PrintComponent } from './print/print.component';
 import { BeheerPersonenComponent } from './beheer-personen/beheer-personen.component';
 import { BeheerAteliersComponent } from './beheer-ateliers/beheer-ateliers.component';
+import { PictoClientenlijstComponent } from './picto-agenda/picto-clientenlijst/picto-clientenlijst.component';
 
 registerLocaleData(localeNl);
 
@@ -51,6 +53,7 @@ registerLocaleData(localeNl);
         PrintComponent,
         BeheerPersonenComponent,
         BeheerAteliersComponent
+        PictoClientenlijstComponent
     ],
     imports: [
         BrowserModule,
@@ -66,7 +69,7 @@ registerLocaleData(localeNl);
         MatTableModule,
         MatSortModule
     ],
-    providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe],
+    providers: [{ provide: LOCALE_ID, useValue: 'nl-BE' }, DatePipe, httpInterceptorProviders],
 
     bootstrap: [AppComponent],
 })

@@ -44,11 +44,11 @@ export class AanwezighedenComponent implements OnInit {
   }
 
   geefVorigeDatum() : void{
-    this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate()-1)));
+    this.filter$.next(new Date(this.filterDatum.getTime()-1000*60*60*24));
   }
 
   geefVolgendeDatum() : void{
-    this.filter$.next(new Date(new Date().setDate(this.filterDatum.getDate()+1)));
+    this.filter$.next(new Date(this.filterDatum.getTime()+1000*60*60*24));
   }
 
   toonDag() : void {

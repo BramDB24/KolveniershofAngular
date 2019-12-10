@@ -48,8 +48,9 @@ export class AteliersComponent implements OnInit {
   public loader = false;
   public huidigAtelier: Atelier;
   public titelTekst: string;
+  public errorMessage = "";
+  public successMessage = "";
 
-  @ViewChild(FileUploadComponent) child: FileUploadComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,11 +59,11 @@ export class AteliersComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
+
   ngOnInit() {
     this.atelierService.getAteliers().subscribe(entry => {
-      this.ateliers = entry;
+      this.ateliers = entry.sort((a, b) => a.naam.localeCompare(b.naam));
       this.initialiseerFormGroup();
-      //entry.forEach(e => this.ateliers.push(Object.assign(new Atelier(), e)));
     });
     this.route.params.subscribe(
       params => {
@@ -114,6 +115,8 @@ export class AteliersComponent implements OnInit {
   }
 
   saveAtelier() {
+    this.successMessage == ""
+    this.errorMessage == ""
     this.submittedSave = true;
     if (this.atelierFormGroup.invalid) {
       return;
@@ -142,13 +145,12 @@ export class AteliersComponent implements OnInit {
           () => {},
           err => {
             console.log(err);
-            alert(
+            this.errorMessage = 
               "Er was een probleem bij het aanmaken van het atelier.\n" +
-                "Een technische beschrijving over te fout werd in de console geschreven."
-            );
+                "Een technische beschrijving over te fout werd in de console geschreven.";
           },
           () => {
-            alert("Het atelier werd aangepast");
+            this.successMessage = "Het atelier werd aangepast";
             this.progress = 0;
           }
         );
@@ -167,14 +169,15 @@ export class AteliersComponent implements OnInit {
           () => {},
           err => {
             console.log(err);
-            alert(
+            this.errorMessage = 
               "Er was een probleem bij het opslaan van het atelier.\n" +
-                "Een technische beschrijving over te fout werd in de console geschreven."
-            );
+                "Een technische beschrijving over te fout werd in de console geschreven.";
           },
           () => {
-            alert("Het atelier werd opgeslagen.");
+            this.successMessage = "Het atelier werd opgeslagen.";
             this.progress = 0;
+            this.atelierFormGroup.reset();
+            this.submittedSave = false;
           }
         );
     }
