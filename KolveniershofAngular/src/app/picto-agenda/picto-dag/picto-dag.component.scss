@@ -9,10 +9,6 @@
     }
 }
 
-.weekend{
-    height: 50%;
-}
-
 .maxheight{
     height: 100%;
 }
@@ -24,3 +20,22 @@
 .normal{
     background-color: aliceblue;
 }
+
+.btn {
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 10px;
+    font-size: 12pt;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    float:right;
+    &.geselecteerd {
+      background-color: rgb(96, 55, 194);
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: rgb(66, 102, 138);
+    }
+    
+  }

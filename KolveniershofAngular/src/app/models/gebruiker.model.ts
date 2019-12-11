@@ -1,3 +1,5 @@
+import { Commentaar } from './commentaar.model';
+
 export class Gebruiker {
     gebruikerId?: string;
     voornaam: string;
@@ -7,4 +9,5 @@ export class Gebruiker {
     foto: string;
     type: string;
     sfeergroep?: string;
+    commentaren?: Commentaar[];
 }

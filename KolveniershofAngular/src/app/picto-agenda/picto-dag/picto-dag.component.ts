@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { PictoDag } from 'src/app/models/pictodag.model';
 import { PictoAtelier } from 'src/app/models/pictoatelier.model';
+import { Gebruiker } from 'src/app/models/gebruiker.model';
+import { Commentaar } from 'src/app/models/commentaar.model';
 
 @Component({
   selector: 'app-picto-dag',
@@ -13,6 +15,10 @@ export class PictoDagComponent implements OnInit {
   @Input() public dagImg: string;
   @Input() public isWeekend: boolean;
   @Input() public selected: boolean;
+  public zaterdagCommentaar: Commentaar;
+  public zondagCommentaar: Commentaar;
+
+  @ViewChild('tekst') tekstcommentaar: any;
 
   constructor() {
 
@@ -28,5 +34,15 @@ export class PictoDagComponent implements OnInit {
   get namiddag(): PictoAtelier[] {
     return this.pictodag.ateliers.filter(a => a.dagMoment == "Namiddag" || a.dagMoment == "VolledigeDag");
 
+  }
+
+  public opslaanCommentaar(datum: PictoDag) {
+    let dag = new Date(datum.datum).getDay();
+    console.log(dag);
+    if (dag === 6) {
+      //zaterdag
+    } else {
+      //zondag
+    }
   }
 }
