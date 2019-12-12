@@ -22,7 +22,6 @@
                 <i class="fas fa-trash-alt"></i>
               </a>
             </div>
-
             <h4>Namiddag</h4>
             <div class="dagmoment" *ngFor="let ateliers of dagPlanning.getNamiddagAteliers()">
               <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
@@ -32,6 +31,12 @@
                 <i class="fas fa-trash-alt"></i>
               </a>
             </div>
+          <hr>
+          <h4>Maaltijd</h4>
+              <button type="button" class="btn btn-link" (click)="setMaaltijd()">
+                middagmaal
+              </button>
+
             <div class="buttonClass">
               <button (click)="nieuwAtelier()" id="atelierToevoegen" type="button" class="btn atelierbtn nieuw">
                 Atelier toevoegen
@@ -45,6 +50,9 @@
         <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit" [dagAtelier]="atelier"
           [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()">
         </app-homepage-edit-atelier>
+        <app-homepage-edit-maaltijd *ngIf="state == StateType.Maaltijd" [isEdit]="isEdit" [dagAtelier]="atelier"
+          [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()">
+        </app-homepage-edit-maaltijd>
       </div>
     </div>
   </div>

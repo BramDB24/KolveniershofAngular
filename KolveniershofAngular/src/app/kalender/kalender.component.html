@@ -21,8 +21,7 @@
           [disabled]="state == StateType.Opmerkingen">Opmerkingen</button>
         <button type="button" id="btnDagplanningAanpassen" (click)="veranderState(StateType.DagEdit)" class="btn rechts"
           [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [disabled]="state != StateType.Dag"><i
-            class="far fa-edit"></i> Dagplanning
-          aanpassen</button>
+            class="far fa-edit"></i> Dagplanning aanpassen</button>
         <!-- Terug knop voor dagplanning aanpassen -->
         <!-- <button type="button" (click)="veranderState(StateType.Dag)" class="btn rechts"
           [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [hidden]="state != StateType.DagEdit"><i

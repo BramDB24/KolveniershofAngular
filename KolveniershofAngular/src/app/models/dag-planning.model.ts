@@ -26,6 +26,10 @@ export class DagPlanning {
     return this.dagAteliers.filter(d => d.dagMoment === 'VolledigeDag');
   }
 
+  public getEten(): String {
+    return this.eten;
+  }
+
   public getSpecialeAteliers(): Array<DagAtelier> {
     return this.dagAteliers.filter(
       d =>
