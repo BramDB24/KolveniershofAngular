@@ -89,9 +89,9 @@ describe('dagplanning', function () {
   it('changes to Toon afwezigheden, ziektes, vervoer', function () {
     cy.visit('http://localhost:4200');
     cy.get('#afwezigheden').click();
-    cy.get('#volledigeDag').should('not.exist');
-    cy.get('#voormiddag').should('not.exist');
-    cy.get('#namiddag').should('not.exist');
+    cy.get('#volledigeDag').should('exist');
+    cy.get('#voormiddag').should('exist');
+    cy.get('#namiddag').should('exist');
     cy.get('#specialeAteliers').should('exist');
   });
 
