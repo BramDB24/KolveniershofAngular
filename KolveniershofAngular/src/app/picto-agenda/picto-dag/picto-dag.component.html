@@ -49,7 +49,10 @@
   </div>
 </div>
 
+
 <ng-template #weekend>
+  <ng-container *ngIf="!loader">
+
   <div class="row">
     <div class="col-12">
       <div>
@@ -59,15 +62,13 @@
       </div>
     </div>
   </div>
-  <div class="row weekend">
-    <div class="col-12">
-      <p>Geef commentaar op voor het weekend</p>
-    </div>
-  </div>
   <div class="row">
     <div class="col-12">
-      <textarea #tekst  style="width: 100%; resize: none; height: 60px;">{{getCommentaar(pictodag.datum)}}</textarea>
+      <textarea placeholder="Geef commentaar voor het weekend" [(ngModel)]="tekstvak"
+        style="width: 100%; resize: none; height: 100px;"></textarea>
       <button class="btn btn-primary" (click)="opslaanCommentaar(pictodag)">Opslaan</button>
     </div>
   </div>
+</ng-container>
+
 </ng-template>

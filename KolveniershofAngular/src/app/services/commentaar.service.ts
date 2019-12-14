@@ -14,15 +14,15 @@ export class CommentaarService {
 
   public getCommentaarVanSpefiekeDagEnGebruiker(datum: Date): Observable<Commentaar[]> {
     const convertedDate: string = this.datePipe.transform(datum, 'yyyy-MM-dd');
-    return this.http.get<Commentaar[]>(`${environment.apiUrl}/Commentaar/huidigeGebruiker/${convertedDate}`);
+    return this.http.get<Commentaar[]>(`${environment.apiUrl}/commentaar/huidigeGebruiker/${convertedDate}`);
   }
 
   public postCommentaar(commentaar: Commentaar) {
-    return this.http.post(`${environment.apiUrl}/Commentaar`, commentaar);
+    return this.http.post(`${environment.apiUrl}/commentaar`, commentaar);
   }
 
   public putCommentaar(commentaar: Commentaar) {
-    return this.http.put(`${environment.apiUrl}/Commentaar/${commentaar.commentaarId}`, commentaar);
+    return this.http.put(`${environment.apiUrl}/commentaar/${commentaar.commentaarId}/${commentaar.tekst}`, "");
   }
 
 }

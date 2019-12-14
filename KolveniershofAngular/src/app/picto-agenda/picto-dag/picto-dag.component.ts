@@ -4,6 +4,7 @@ import { PictoAtelier } from 'src/app/models/pictoatelier.model';
 import { Gebruiker } from 'src/app/models/gebruiker.model';
 import { Commentaar } from 'src/app/models/commentaar.model';
 import { CommentaarService } from 'src/app/services/commentaar.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-picto-dag',
@@ -11,7 +12,6 @@ import { CommentaarService } from 'src/app/services/commentaar.service';
   styleUrls: ['./picto-dag.component.scss']
 })
 export class PictoDagComponent implements OnInit {
-
   @Input() public pictodag: PictoDag;
   @Input() public dagImg: string;
   @Input() public isWeekend: boolean;
@@ -20,121 +20,149 @@ export class PictoDagComponent implements OnInit {
   public zondagCommentaar = new Commentaar();
   public zaterdag = new Date();
   public zondag = new Date();
+  public tekstvak: string;
+  public loader = true;
 
-  @ViewChild('tekst') tekstcommentaar: any;
-
-  constructor(private commentaarService: CommentaarService) {
-  }
+  constructor(private commentaarService: CommentaarService) {}
 
   ngOnInit() {
     this.getWeekendData();
   }
 
   get voormiddag(): PictoAtelier[] {
-    return this.pictodag.ateliers.filter(a => a.dagMoment === "Voormiddag" || a.dagMoment === "VolledigeDag");
+    return this.pictodag.ateliers.filter(
+      a => a.dagMoment === 'Voormiddag' || a.dagMoment === 'VolledigeDag'
+    );
   }
 
   get namiddag(): PictoAtelier[] {
-    return this.pictodag.ateliers.filter(a => a.dagMoment === "Namiddag" || a.dagMoment === "VolledigeDag");
-
+    return this.pictodag.ateliers.filter(
+      a => a.dagMoment === 'Namiddag' || a.dagMoment === 'VolledigeDag'
+    );
   }
 
   public vulCommentaarOpZaterdag() {
     this.commentaarService
-    .getCommentaarVanSpefiekeDagEnGebruiker(this.zaterdag)
-    .subscribe( commentaren => {
-      let commentaar = commentaren.find(p => p.commentaartype === "ZaterdagCommentaar");
-      this.zaterdagCommentaar = commentaar;
-    });
+      .getCommentaarVanSpefiekeDagEnGebruiker(this.zaterdag)
+      .pipe(
+        finalize(() => {
+          this.loader = false;
+        })
+      )
+      .subscribe(commentaren => {
+        console.log(commentaren)
+        const commentaar = commentaren[0];
+        if (commentaar != null) {
+          this.zaterdagCommentaar = commentaar;
+          this.getCommentaar(this.zaterdag);
+        }
+      });
   }
 
   public vulCommentaarOpZondag() {
     this.commentaarService
-    .getCommentaarVanSpefiekeDagEnGebruiker(this.zondag)
-    .subscribe( commentaren => {
-      let commentaar = commentaren.find(p => p.commentaartype === "ZondagCommentaar");
-      this.zondagCommentaar = commentaar;
-    });
+      .getCommentaarVanSpefiekeDagEnGebruiker(this.zondag)
+      .pipe(
+        finalize(() => {
+          this.loader = false;
+        })
+      )
+      .subscribe(commentaren => {
+        const commentaar = commentaren.find(
+          p => p.commentaartype === 'ZondagCommentaar'
+        );
+        if (commentaar != null) {
+          this.zondagCommentaar = commentaar;
+          this.getCommentaar(this.zondag);
+        }
+      });
   }
 
-  public getCommentaar(datum: Date): string {
-    let dag = new Date(datum).getDay();
+  public getCommentaar(datum: Date) {
+    const dag = new Date(datum).getDay();
     if (dag === 6) {
-      //zaterdag
-      if(!this.zaterdagCommentaar.tekst) {
-        return this.zaterdagCommentaar.tekst;
+      // zaterdag
+      if (this.zaterdagCommentaar.tekst) {
+        //const test = this.zaterdagCommentaar.tekst;
+        console.log(this.zaterdagCommentaar);
+        this.tekstvak = this.zaterdagCommentaar.tekst
       }
-    } else {
-      //zondag
-      if(!this.zondagCommentaar.tekst) {
-      return this.zondagCommentaar.tekst;
+    } else if (dag === 0) {
+      // zondag
+      if (!this.zondagCommentaar.tekst) {
+        this.tekstvak = this.zondagCommentaar.tekst
       }
     }
   }
 
-  public opslaanCommentaar(datum: PictoDag) {
-    let dag = new Date(datum.datum).getDay();
+  public opslaanCommentaar(pictodag: PictoDag) {
+    const dag = new Date(pictodag.datum).getDay();
+    let nieuwecommentaar;
     if (dag === 6) {
-      //zaterdag
+      // zaterdag
+      console.log(this.tekstvak);
+      if (this.zaterdagCommentaar.commentaarId) {
+        nieuwecommentaar = {
+          commentaarId: this.zaterdagCommentaar.commentaarId,
+          datum: this.pictodag.datum,
+          commentaartype: 'ZaterdagCommentaar',
+          tekst: this.tekstvak
+        };
+        this.commentaarService
+          .putCommentaar(nieuwecommentaar)
+          .subscribe(response => {
+            alert('Commentaar werd aangepast');
+          });
+      } else {
+        nieuwecommentaar = {
+          datum: this.pictodag.datum,
+          commentaartype: 'ZaterdagCommentaar',
+          tekst: this.tekstvak
+        };
+        this.commentaarService
+          .postCommentaar(nieuwecommentaar)
+          .subscribe(response => {
+            alert('Commentaar werd toegevoegd');
+          });
+      }
     } else {
-      //zondag
+      // zondag
+      console.log(this.tekstvak);
+      if (this.zondagCommentaar.commentaarId) {
+        nieuwecommentaar = {
+          commentaarId: this.zondagCommentaar.commentaarId,
+          datum: this.pictodag.datum,
+          commentaartype: 'ZondagCommentaar',
+          tekst: this.tekstvak
+        };
+        this.commentaarService
+          .putCommentaar(nieuwecommentaar)
+          .subscribe(response => {
+            alert('Commentaar werd aangepast');
+          });
+      } else {
+        nieuwecommentaar = {
+          datum: this.pictodag.datum,
+          commentaartype: 'ZondagCommentaar',
+          tekst: this.tekstvak
+        };
+        this.commentaarService
+          .postCommentaar(nieuwecommentaar)
+          .subscribe(response => {
+            alert('Commentaar werd toegevoegd');
+          });
+      }
     }
   }
 
   public getWeekendData() {
-    let datum = new Date(this.pictodag.datum);
-    if(datum.getDay() === 6) {
+    const datum = new Date(this.pictodag.datum);
+    if (datum.getDay() === 6) {
       this.zaterdag.setDate(datum.getDate());
       this.vulCommentaarOpZaterdag();
-    } else {
-      if(datum.getDay() === 0) {
-        this.zondag.setDate(datum.getDate());
-        this.vulCommentaarOpZondag();
-      }
+    } else if (datum.getDay() === 0) {
+      this.zondag.setDate(datum.getDate());
+      this.vulCommentaarOpZondag();
     }
   }
-
-  // public getWeekendData() {
-  //   let datum = new Date(this.pictodag.datum);
-  //   switch(datum.getDay()) {
-  //     case 1: {
-  //       this.zaterdag.setDate(datum.getDate() + 5);
-  //       this.zondag.setDate(datum.getDate() + 6);
-  //       break;
-  //     }
-  //     case 2: {
-  //       this.zaterdag.setDate(datum.getDate() + 4);
-  //       this.zondag.setDate(datum.getDate() + 5);
-  //       break;
-  //     }
-  //     case 3: {
-  //       this.zaterdag.setDate(datum.getDate() + 3);
-  //       this.zondag.setDate(datum.getDate() + 4);
-  //       break;
-  //     }
-  //     case 4: {
-  //       this.zaterdag.setDate(datum.getDate() + 2);
-  //       this.zondag.setDate(datum.getDate() + 3);
-  //       break;
-  //     }
-  //     case 5: {
-  //       this.zaterdag.setDate(datum.getDate() + 1);
-  //       this.zondag.setDate(datum.getDate() + 2);
-  //       break;
-  //     }
-  //     case 6: {
-  //       this.zaterdag.setDate(datum.getDate());
-  //       this.zondag.setDate(datum.getDate() + 1);
-  //       break;
-  //     }
-  //     case 0: {
-  //       this.zaterdag.setDate(datum.getDate() - 1);
-  //       this.zondag.setDate(datum.getDate());
-  //       break;
-  //     }
-  //     default: {
-  //       break;
-  //     }
-  //   }
-  // }
 }
