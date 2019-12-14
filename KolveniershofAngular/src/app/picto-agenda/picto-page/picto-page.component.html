@@ -32,7 +32,7 @@
       <div class="col-lg-4 col-md-6 normalcard">
         <div class="row fullheight">
           <div class="col-12 smallcard" *ngFor="let pictodag of weekenddagen; index as i">
-            <app-picto-dag [pictodag]="pictodag" [dagImg]="dagpictos[i+5]" [isWeekend]="true" [selected]="isSelected(pictodag)"></app-picto-dag>
+            <app-picto-dag (opgeslaan)="test($event)" [pictodag]="pictodag" [dagImg]="dagpictos[i+5]"  [isWeekend]="true" [selected]="isSelected(pictodag)"></app-picto-dag>
           </div>
         </div>
       </div>
@@ -43,6 +43,7 @@
       </div>
     </div> -->
   </div>
+
 </ng-container>
 <ng-template #loadingError>
   <div class="spinner-border spinner" role="status">

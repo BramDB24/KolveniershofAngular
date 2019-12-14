@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  OnChanges,
+  OnDestroy
+} from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -8,13 +15,15 @@ import { PictoDag } from 'src/app/models/pictodag.model';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Gebruiker } from 'src/app/models/gebruiker.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CommentaarService } from 'src/app/services/commentaar.service';
+import { Commentaar } from 'src/app/models/commentaar.model';
 
 @Component({
   selector: 'app-picto-page',
   templateUrl: './picto-page.component.html',
   styleUrls: ['./picto-page.component.scss']
 })
-export class PictoPageComponent implements OnInit {
+export class PictoPageComponent implements OnInit, OnDestroy {
   private _gebruiker: Gebruiker;
   private _subscription: Subscription;
   public dagpictos = new Array<string>(
@@ -32,8 +41,9 @@ export class PictoPageComponent implements OnInit {
   public weekenddagen: PictoDag[];
   public loadingError: HttpErrorResponse;
   public loading: boolean;
-
-  constructor(private _dagService: DagService) {
+  public commentaren: Array<Commentaar> = new Array<Commentaar>();
+  public opgeslaan: string
+  constructor(private _dagService: DagService, private _commentaarService: CommentaarService) {
     this.filter$.pipe(distinctUntilChanged()).subscribe(val => {
       this.filterDatum = val;
       if (!this.isZelfdeWeek(val)) {
@@ -110,8 +120,14 @@ export class PictoPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this._commentaarService.getCommentaarVanSpefiekeDagEnGebruiker(this.getWeekendData()).subscribe(t => this.commentaren = t);
     this.toonWeek();
   }
+
+  ///@output catch
+test(e:any){
+  console.log(e.date)
+}
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
@@ -119,7 +135,22 @@ export class PictoPageComponent implements OnInit {
 
   isSelected(dag: PictoDag) {
     return (
-      new Date(dag.datum).toDateString() == this.filterDatum.toDateString()
+      new Date(dag.datum).toDateString() === this.filterDatum.toDateString()
     );
+  }
+
+  getWeekendData(): Array<Date> {
+    const zaterdagOffset = 6 - this.filterDatum.getDay();
+    let vandaag = new Date();
+    let dates: Date[] = [];
+    if (zaterdagOffset !== 0) {
+      // return [new Date(vandaag.setDate(zaterdagOffset)), new Date(vandaag.setDate(zaterdagOffset + 1))];
+    }
+    dates.push(vandaag);
+    let zondag = new Date();
+    zondag.setDate(vandaag.getDate() + 1);
+    dates.push(zondag)
+    console.log(dates)
+    return dates
   }
 }

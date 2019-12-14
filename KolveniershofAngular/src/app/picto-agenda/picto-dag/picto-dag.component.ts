@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { PictoDag } from 'src/app/models/pictodag.model';
 import { PictoAtelier } from 'src/app/models/pictoatelier.model';
 import { Gebruiker } from 'src/app/models/gebruiker.model';
 import { Commentaar } from 'src/app/models/commentaar.model';
 import { CommentaarService } from 'src/app/services/commentaar.service';
 import { finalize } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-picto-dag',
@@ -16,6 +17,9 @@ export class PictoDagComponent implements OnInit {
   @Input() public dagImg: string;
   @Input() public isWeekend: boolean;
   @Input() public selected: boolean;
+  @Input() public commentaar: string;
+  @Output() public opgeslaan = new EventEmitter<any>();
+
   public zaterdagCommentaar = new Commentaar();
   public zondagCommentaar = new Commentaar();
   public zaterdag = new Date();
@@ -26,7 +30,7 @@ export class PictoDagComponent implements OnInit {
   constructor(private commentaarService: CommentaarService) {}
 
   ngOnInit() {
-    this.getWeekendData();
+   // this.getWeekendData();
   }
 
   get voormiddag(): PictoAtelier[] {
@@ -42,40 +46,40 @@ export class PictoDagComponent implements OnInit {
   }
 
   public vulCommentaarOpZaterdag() {
-    this.commentaarService
-      .getCommentaarVanSpefiekeDagEnGebruiker(this.zaterdag)
-      .pipe(
-        finalize(() => {
-          this.loader = false;
-        })
-      )
-      .subscribe(commentaren => {
-        console.log(commentaren)
-        const commentaar = commentaren[0];
-        if (commentaar != null) {
-          this.zaterdagCommentaar = commentaar;
-          this.getCommentaar(this.zaterdag);
-        }
-      });
+    // this.commentaarService
+    //   .getCommentaarVanSpefiekeDagEnGebruiker(this.zaterdag)
+    //   .pipe(
+    //     finalize(() => {
+    //       this.loader = false;
+    //     })
+    //   )
+    //   .subscribe(commentaren => {
+    //     console.log(commentaren)
+    //     const commentaar = commentaren[0];
+    //     if (commentaar != null) {
+    //       this.zaterdagCommentaar = commentaar;
+    //       this.getCommentaar(this.zaterdag);
+    //     }
+    //   });
   }
 
   public vulCommentaarOpZondag() {
-    this.commentaarService
-      .getCommentaarVanSpefiekeDagEnGebruiker(this.zondag)
-      .pipe(
-        finalize(() => {
-          this.loader = false;
-        })
-      )
-      .subscribe(commentaren => {
-        const commentaar = commentaren.find(
-          p => p.commentaartype === 'ZondagCommentaar'
-        );
-        if (commentaar != null) {
-          this.zondagCommentaar = commentaar;
-          this.getCommentaar(this.zondag);
-        }
-      });
+    // this.commentaarService
+    //   .getCommentaarVanSpefiekeDagEnGebruiker(this.zondag)
+    //   .pipe(
+    //     finalize(() => {
+    //       this.loader = false;
+    //     })
+    //   )
+    //   .subscribe(commentaren => {
+    //     const commentaar = commentaren.find(
+    //       p => p.commentaartype === 'ZondagCommentaar'
+    //     );
+    //     if (commentaar != null) {
+    //       this.zondagCommentaar = commentaar;
+    //       this.getCommentaar(this.zondag);
+    //     }
+    //   });
   }
 
   public getCommentaar(datum: Date) {
@@ -84,7 +88,6 @@ export class PictoDagComponent implements OnInit {
       // zaterdag
       if (this.zaterdagCommentaar.tekst) {
         //const test = this.zaterdagCommentaar.tekst;
-        console.log(this.zaterdagCommentaar);
         this.tekstvak = this.zaterdagCommentaar.tekst
       }
     } else if (dag === 0) {
@@ -100,7 +103,6 @@ export class PictoDagComponent implements OnInit {
     let nieuwecommentaar;
     if (dag === 6) {
       // zaterdag
-      console.log(this.tekstvak);
       if (this.zaterdagCommentaar.commentaarId) {
         nieuwecommentaar = {
           commentaarId: this.zaterdagCommentaar.commentaarId,
@@ -119,6 +121,7 @@ export class PictoDagComponent implements OnInit {
           commentaartype: 'ZaterdagCommentaar',
           tekst: this.tekstvak
         };
+        this.opgeslaan.emit({date: this.pictodag.datum, commentaar: this.tekstvak.toString()});
         this.commentaarService
           .postCommentaar(nieuwecommentaar)
           .subscribe(response => {
@@ -127,7 +130,6 @@ export class PictoDagComponent implements OnInit {
       }
     } else {
       // zondag
-      console.log(this.tekstvak);
       if (this.zondagCommentaar.commentaarId) {
         nieuwecommentaar = {
           commentaarId: this.zondagCommentaar.commentaarId,
@@ -146,6 +148,8 @@ export class PictoDagComponent implements OnInit {
           commentaartype: 'ZondagCommentaar',
           tekst: this.tekstvak
         };
+        this.opgeslaan.emit("zondag:" +this.tekstvak);
+
         this.commentaarService
           .postCommentaar(nieuwecommentaar)
           .subscribe(response => {
@@ -155,14 +159,14 @@ export class PictoDagComponent implements OnInit {
     }
   }
 
-  public getWeekendData() {
-    const datum = new Date(this.pictodag.datum);
-    if (datum.getDay() === 6) {
-      this.zaterdag.setDate(datum.getDate());
-      this.vulCommentaarOpZaterdag();
-    } else if (datum.getDay() === 0) {
-      this.zondag.setDate(datum.getDate());
-      this.vulCommentaarOpZondag();
-    }
-  }
+  // public getWeekendData() {
+  //   const datum = new Date(this.pictodag.datum);
+  //   if (datum.getDay() === 6) {
+  //     this.zaterdag.setDate(datum.getDate());
+  //     this.vulCommentaarOpZaterdag();
+  //   } else if (datum.getDay() === 0) {
+  //     this.zondag.setDate(datum.getDate());
+  //     this.vulCommentaarOpZondag();
+  //   }
+  // }
 }
