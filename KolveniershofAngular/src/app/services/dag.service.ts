@@ -44,6 +44,12 @@ export class DagService {
     );
   }
 
+  public postEten(dagplannigid: number, eten: String) {
+    return this.http.post(
+      `${environment.apiUrl}/dagplanning/${dagplannigid}/eten?eten=${eten}`, null
+    ) 
+  }
+
   public getDagTemplate(weeknr: number, weekdag: number) {
     return this.http
       .get<DagPlanning>(

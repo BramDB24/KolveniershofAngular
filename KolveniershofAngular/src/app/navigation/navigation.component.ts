@@ -15,7 +15,6 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.accountService.huidigeGebruiker.subscribe(t => {
-      console.log(t);
       this.aangemelde = t;
     });
   }
