@@ -25,10 +25,7 @@ export class AccountService {
                 parsedToken = null;
             }
         }
-        console.log(
-          JSON.parse(localStorage.getItem('loggedUser'))
-
-        )
+        
         this.user = new BehaviorSubject<Gebruiker>(
             JSON.parse(localStorage.getItem('loggedUser'))
         );

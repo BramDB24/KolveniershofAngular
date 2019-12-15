@@ -46,22 +46,13 @@
         </div>
       </div>
     </div>
-    <ng-template #weekend>
-      <div class="row weekend">
-        <div class="col-12">
-          <p>Geef commentaar op voor het weekend</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <textarea style="width: 100%; resize: none;"></textarea>
-        </div>
-      </div>
-    </ng-template>
   </div>
 </div>
 
+
 <ng-template #weekend>
+  <ng-container>
+
   <div class="row">
     <div class="col-12">
       <div>
@@ -71,14 +62,13 @@
       </div>
     </div>
   </div>
-  <div class="row weekend">
-    <div class="col-12">
-      <p>Geef commentaar op voor het weekend</p>
-    </div>
-  </div>
   <div class="row">
     <div class="col-12">
-      <textarea style="width: 100%; resize: none;"></textarea>
+      <textarea placeholder="Geef commentaar voor het weekend" [(ngModel)]="commentaar"
+        style="width: 100%; resize: none; height: 100px;"></textarea>
+      <button class="btn btn-primary" (click)="opslaanCommentaar(pictodag)">Opslaan</button>
     </div>
   </div>
+</ng-container>
+
 </ng-template>
