@@ -10,7 +10,7 @@ describe('navigation bar', function() {
 it('goes to beheer personen', function() {
   cy.visit('http://localhost:4200');
   cy.get('#beheer-personen').click();
-  cy.url().should('eq', 'http://localhost:4200/register-gebruiker');
+  cy.url().should('eq', 'http://localhost:4200/beheer-personen');
 });
 
 it('goes to 4-weekse planning', function() {
@@ -22,7 +22,7 @@ it('goes to 4-weekse planning', function() {
 it('goes to beheer ateliers', function() {
   cy.visit('http://localhost:4200');
   cy.get('#beheer-ateliers').click();
-  cy.url().should('eq', 'http://localhost:4200/ateliers');
+  cy.url().should('eq', 'http://localhost:4200/beheer-ateliers');
 });
 
 it('goes to aanwezigheden', function() {

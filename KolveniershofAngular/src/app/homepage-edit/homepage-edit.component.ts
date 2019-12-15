@@ -3,6 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { DagAtelier } from '../models/dag-atelier.model';
 import { DagPlanning } from '../models/dag-planning.model';
 import { DagService } from '../services/dag.service';
+import { Atelier } from '../models/atelier.model';
 
 // States worden gebruikt om te bepalen of een subcomponent getoond moet worden of niet
 export enum State {
@@ -10,6 +11,7 @@ export enum State {
     Edit = 'edit',
     Dag = 'Dag',
     DagEdit = 'DagEdit',
+    Maaltijd = 'Maaltijd'
 }
 
 @Component({
@@ -93,6 +95,12 @@ export class HomepageEditComponent implements OnInit, OnChanges {
         this.atelier = atelier;
         this.isEdit = true;
         this.state = State.Edit;
+    }
+
+    public setMaaltijd() {
+        this.atelier = Object.assign(new DagAtelier());
+        this.isEdit = true;
+        this.state = State.Maaltijd;
     }
 
   // public nieuwAtelier() {

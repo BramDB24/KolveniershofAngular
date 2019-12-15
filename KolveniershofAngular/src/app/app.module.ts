@@ -28,6 +28,7 @@ import { PrintComponent } from './print/print.component';
 import { BeheerPersonenComponent } from './beheer-personen/beheer-personen.component';
 import { BeheerAteliersComponent } from './beheer-ateliers/beheer-ateliers.component';
 import { PictoClientenlijstComponent } from './picto-agenda/picto-clientenlijst/picto-clientenlijst.component';
+import { HomepageEditMaaltijdComponent } from './homepage-edit-maaltijd/homepage-edit-maaltijd.component';
 
 registerLocaleData(localeNl);
 
@@ -53,7 +54,8 @@ registerLocaleData(localeNl);
         PrintComponent,
         BeheerPersonenComponent,
         BeheerAteliersComponent,
-        PictoClientenlijstComponent
+        PictoClientenlijstComponent,
+        HomepageEditMaaltijdComponent
     ],
     imports: [
         BrowserModule,

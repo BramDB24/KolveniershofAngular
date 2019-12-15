@@ -36,7 +36,6 @@ export class VierweeksePlanningComponent implements OnInit {
   //
   public SelecteerWeek(number) {
     this.geselecteerdeWeek = number;
-    console.log(this.geselecteerdeWeek);
   }
 
   /**

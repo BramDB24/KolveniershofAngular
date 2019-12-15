@@ -4,7 +4,7 @@
       <h1 class="titel">Beheer personen</h1>
     </div>
     <div class="col-xs-12 col-6">
-      <button class="btn nieuwe" (click)="nieuweGebruiker()">Nieuwe gebruiker</button>
+      <button class="btn nieuwe" id="nieuweGebruiker" (click)="nieuweGebruiker()">Nieuwe gebruiker</button>
     </div>
   </div>
   <ng-container class="col-12" *ngIf="gebruikersLoaded; else loadingError">

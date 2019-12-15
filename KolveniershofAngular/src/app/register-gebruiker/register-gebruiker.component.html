@@ -2,19 +2,17 @@
   <div class="container">
     <h2 class="titel">Account {{submitButtonText}}</h2>
     <form class="border border-light p-5" [formGroup]="gebruikerFormGroup" (ngSubmit)="onSubmit()">
-
       <div class="row">
         <div class="col-6">
           <div class="row">
         <p class="mr-3">Soort gebruiker: </p>
         <div class="custom-control custom-radio mb-4 mr-4" *ngFor="let type of gebruikerTypes; let i = index">
-          <input type="radio" class="custom-control-input" id="{{'radio' + type}}" (change)="checkClient(type)" [checked]="huidigeGebruiker ? ((huidigeGebruiker.type == type) ? true : false) : false" 
+          <input id="radioButtonType" type="radio" class="custom-control-input" id="{{'radio' + type}}" (change)="checkClient(type)" [checked]="huidigeGebruiker ? ((huidigeGebruiker.type == type) ? true : false) : false" 
             name="gebruikerType" [value]="type" formControlName="gebruikerType">
           <label class="custom-control-label" for="{{'radio' + type}}">{{type}}</label>
         </div>
       </div>
       </div>
-
       <div class="col-6" *ngIf="isClient">
         <div class="row">
           <p class="mr-3">Sfeergroep: </p>
@@ -35,7 +33,6 @@
             <div *ngIf="gebruikerFormGroup.controls.achternaam.errors.required">Achternaam is verplicht</div>
           </div>
         </div>
-
         <div class="col-md-5 m-1">
           <label for="voornaam">Voornaam*</label>
           <input type="text" id="voornaam" class="form-control" formControlName="voornaam"
@@ -44,7 +41,6 @@
             <div *ngIf="gebruikerFormGroup.controls.voornaam.errors.required">Voornaam is verplicht</div>
           </div>
         </div>
-
         <div class="col-md-5 m-1">
           <label for="email">Email*</label>
           <input type="email" id="email" class="form-control" formControlName="email"
@@ -54,7 +50,6 @@
             <div *ngIf="gebruikerFormGroup.controls.email.errors.email">Vul een geldig email address in</div>
           </div>
         </div>
-
         <div class="col-md-5 m-1" *ngIf="!huidigeGebruiker">
           <label for="wachtwoord">Wachtwoord*</label>
           <input type="text" id="wachtwoord" class="form-control" formControlName="wachtwoord"
@@ -63,7 +58,6 @@
             <div *ngIf="gebruikerFormGroup.controls.wachtwoord.errors.required">Wachtwoord is verplicht</div>
           </div>
         </div>
-
         <div class="col-md-5 m-1" *ngIf="!huidigeGebruiker">
             <label for="bevestigWachtwoord">Bevestig wachtwoord*</label>
             <input type="text" id="bevestigWachtwoord" class="form-control" formControlName="bevestigWachtwoord"
@@ -72,7 +66,6 @@
               <div *ngIf="gebruikerFormGroup.controls.bevestigWachtwoord.errors.required">Bevestiging wachtwoord is verplicht</div>
             </div>
           </div>
-
         <div class="col-md-5 m-1">
           <label for="foto">Foto*</label>
           <app-file-upload formControlName="foto" [gebruiker]="huidigeGebruiker"
