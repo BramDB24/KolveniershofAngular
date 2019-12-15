@@ -20,10 +20,10 @@ export class PictoDagComponent implements OnInit {
   @Input() public commentaar: string;
   @Output() public opgeslaan = new EventEmitter<any>();
 
-  public zaterdagCommentaar = new Commentaar();
-  public zondagCommentaar = new Commentaar();
-  public zaterdag = new Date();
-  public zondag = new Date();
+  // public zaterdagCommentaar = new Commentaar();
+  // public zondagCommentaar = new Commentaar();
+  // public zaterdag = new Date();
+  // public zondag = new Date();
   public tekstvak: string;
   public loader = true;
 
@@ -82,81 +82,82 @@ export class PictoDagComponent implements OnInit {
     //   });
   }
 
-  public getCommentaar(datum: Date) {
-    const dag = new Date(datum).getDay();
-    if (dag === 6) {
-      // zaterdag
-      if (this.zaterdagCommentaar.tekst) {
-        //const test = this.zaterdagCommentaar.tekst;
-        this.tekstvak = this.zaterdagCommentaar.tekst
-      }
-    } else if (dag === 0) {
-      // zondag
-      if (!this.zondagCommentaar.tekst) {
-        this.tekstvak = this.zondagCommentaar.tekst
-      }
-    }
-  }
+  // public getCommentaar(datum: Date) {
+  //   const dag = new Date(datum).getDay();
+  //   if (dag === 6) {
+  //     // zaterdag
+  //     if (this.zaterdagCommentaar.tekst) {
+  //       //const test = this.zaterdagCommentaar.tekst;
+  //       this.tekstvak = this.zaterdagCommentaar.tekst
+  //     }
+  //   } else if (dag === 0) {
+  //     // zondag
+  //     if (!this.zondagCommentaar.tekst) {
+  //       this.tekstvak = this.zondagCommentaar.tekst
+  //     }
+  //   }
+  // }
 
   public opslaanCommentaar(pictodag: PictoDag) {
-    const dag = new Date(pictodag.datum).getDay();
-    let nieuwecommentaar;
-    if (dag === 6) {
-      // zaterdag
-      if (this.zaterdagCommentaar.commentaarId) {
-        nieuwecommentaar = {
-          commentaarId: this.zaterdagCommentaar.commentaarId,
-          datum: this.pictodag.datum,
-          commentaartype: 'ZaterdagCommentaar',
-          tekst: this.tekstvak
-        };
-        this.commentaarService
-          .putCommentaar(nieuwecommentaar)
-          .subscribe(response => {
-            alert('Commentaar werd aangepast');
-          });
-      } else {
-        nieuwecommentaar = {
-          datum: this.pictodag.datum,
-          commentaartype: 'ZaterdagCommentaar',
-          tekst: this.tekstvak
-        };
-        this.opgeslaan.emit({date: this.pictodag.datum, commentaar: this.tekstvak.toString()});
-        this.commentaarService
-          .postCommentaar(nieuwecommentaar)
-          .subscribe(response => {
-            alert('Commentaar werd toegevoegd');
-          });
-      }
-    } else {
-      // zondag
-      if (this.zondagCommentaar.commentaarId) {
-        nieuwecommentaar = {
-          commentaarId: this.zondagCommentaar.commentaarId,
-          datum: this.pictodag.datum,
-          commentaartype: 'ZondagCommentaar',
-          tekst: this.tekstvak
-        };
-        this.commentaarService
-          .putCommentaar(nieuwecommentaar)
-          .subscribe(response => {
-            alert('Commentaar werd aangepast');
-          });
-      } else {
-        nieuwecommentaar = {
-          datum: this.pictodag.datum,
-          commentaartype: 'ZondagCommentaar',
-          tekst: this.tekstvak
-        };
-        this.opgeslaan.emit("zondag:" +this.tekstvak);
+    this.opgeslaan.emit({date: this.pictodag.datum, commentaar: this.commentaar.toString()});
+    // const dag = new Date(pictodag.datum).getDay();
+    // let nieuwecommentaar;
+    // if (dag === 6) {
+    //   // zaterdag
+    //   if (this.zaterdagCommentaar.commentaarId) {
+    //     nieuwecommentaar = {
+    //       commentaarId: this.zaterdagCommentaar.commentaarId,
+    //       datum: this.pictodag.datum,
+    //       commentaartype: 'ZaterdagCommentaar',
+    //       tekst: this.tekstvak
+    //     };
+    //     this.commentaarService
+    //       .putCommentaar(nieuwecommentaar)
+    //       .subscribe(response => {
+    //         alert('Commentaar werd aangepast');
+    //       });
+    //   } else {
+    //     nieuwecommentaar = {
+    //       datum: this.pictodag.datum,
+    //       commentaartype: 'ZaterdagCommentaar',
+    //       tekst: this.tekstvak
+    //     };
+    //     this.opgeslaan.emit({date: this.pictodag.datum, commentaar: this.tekstvak.toString()});
+    //     this.commentaarService
+    //       .postCommentaar(nieuwecommentaar)
+    //       .subscribe(response => {
+    //         alert('Commentaar werd toegevoegd');
+    //       });
+    //   }
+    // } else {
+    //   // zondag
+    //   if (this.zondagCommentaar.commentaarId) {
+    //     nieuwecommentaar = {
+    //       commentaarId: this.zondagCommentaar.commentaarId,
+    //       datum: this.pictodag.datum,
+    //       commentaartype: 'ZondagCommentaar',
+    //       tekst: this.tekstvak
+    //     };
+    //     this.commentaarService
+    //       .putCommentaar(nieuwecommentaar)
+    //       .subscribe(response => {
+    //         alert('Commentaar werd aangepast');
+    //       });
+    //   } else {
+    //     nieuwecommentaar = {
+    //       datum: this.pictodag.datum,
+    //       commentaartype: 'ZondagCommentaar',
+    //       tekst: this.tekstvak
+    //     };
+    //     this.opgeslaan.emit("zondag:" +this.tekstvak);
 
-        this.commentaarService
-          .postCommentaar(nieuwecommentaar)
-          .subscribe(response => {
-            alert('Commentaar werd toegevoegd');
-          });
-      }
-    }
+    //     this.commentaarService
+    //       .postCommentaar(nieuwecommentaar)
+    //       .subscribe(response => {
+    //         alert('Commentaar werd toegevoegd');
+    //       });
+    //   }
+    // }
   }
 
   // public getWeekendData() {

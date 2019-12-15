@@ -42,11 +42,15 @@ export class PictoPageComponent implements OnInit, OnDestroy {
   public loadingError: HttpErrorResponse;
   public loading: boolean;
   public commentaren: Array<Commentaar> = new Array<Commentaar>();
-  public opgeslaan: string
-  constructor(private _dagService: DagService, private _commentaarService: CommentaarService) {
+  public opgeslaan: string;
+  constructor(
+    private _dagService: DagService,
+    private _commentaarService: CommentaarService
+  ) {
     this.filter$.pipe(distinctUntilChanged()).subscribe(val => {
       this.filterDatum = val;
       if (!this.isZelfdeWeek(val)) {
+        this.ophalenCommentaar();
         this.toonWeek();
       }
     });
@@ -95,7 +99,7 @@ export class PictoPageComponent implements OnInit, OnDestroy {
       .subscribe(
         val => {
           this.loading = true;
-          if (val && val.length == 7) {
+          if (val && val.length === 7) {
             this.weekdagen = val.slice(0, 5);
             this.weekenddagen = val.slice(5, 7);
           }
@@ -111,23 +115,75 @@ export class PictoPageComponent implements OnInit, OnDestroy {
     const weekdaynr = datum.getDay();
     switch (weekdaynr) {
       case 0:
-        return this.weekenddagen[0].datum == datum;
+        let zondag = new Date(this.weekenddagen[1].datum);
+        return zondag.getDate() === datum.getDate();
       case 6:
-        return this.weekenddagen[1].datum == datum;
+        let zaterdag = new Date(this.weekenddagen[0].datum);
+        return zaterdag.getDate() === datum.getDate();
       default:
-        return this.weekdagen[weekdaynr - 1].datum == datum;
+        let weekdag = new Date(this.weekdagen[weekdaynr - 1].datum);
+        return weekdag.getDate() === datum.getDate();
     }
   }
 
   ngOnInit() {
-    //this._commentaarService.getCommentaarVanSpefiekeDagEnGebruiker(this.getWeekendData()).subscribe(t => this.commentaren = t);
+    this.ophalenCommentaar();
     this.toonWeek();
   }
 
-  ///@output catch
-test(e:any){
-  console.log(e.date)
-}
+  ophalenCommentaar() {
+    this._commentaarService
+      .getCommentaarVanSpefiekeDagEnGebruiker(this.getWeekendData())
+      .subscribe(t => {
+        this.commentaren = t;
+        if (!this.commentaren[0]) {
+          this.commentaren[0] = new Commentaar();
+          this.commentaren[0].datum = new Date(2014, 1, 1);
+        }
+        if (!this.commentaren[1]) {
+          this.commentaren[1] = new Commentaar();
+          this.commentaren[1].datum = new Date(2014, 1, 1);
+        }
+      });
+  }
+
+  getCommentaar(index: number) {
+    return this.commentaren[index] !== null
+      ? this.commentaren[index].tekst
+      : '';
+  }
+
+  // @output catch
+  opslaanCommentaar(e: any) {
+    let date = new Date(e.date);
+    let nieuwecommentaar;
+    if (this.commentaren[0].datum === e.date || this.commentaren[1].datum === e.date) {
+      // put
+      nieuwecommentaar = {
+        commentaarId: date.getDay() === 6 ? this.commentaren[0].commentaarId : this.commentaren[1].commentaarId,
+        datum: e.date,
+        commentaartype: date.getDay() === 6 ? 'ZaterdagCommentaar' : 'ZondagCommentaar',
+        tekst: e.commentaar
+      };
+      this._commentaarService
+        .putCommentaar(nieuwecommentaar)
+        .subscribe(response => {
+          alert('Commentaar werd aangepast');
+        });
+    } else {
+      // post
+      nieuwecommentaar = {
+        datum: e.date,
+        commentaartype: date.getDay() === 6 ? 'ZaterdagCommentaar' : 'ZondagCommentaar',
+        tekst: e.commentaar
+      };
+      this._commentaarService
+        .postCommentaar(nieuwecommentaar)
+        .subscribe(response => {
+          alert('Commentaar werd toegevoegd');
+        });
+    }
+  }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
@@ -141,16 +197,22 @@ test(e:any){
 
   getWeekendData(): Array<Date> {
     const zaterdagOffset = 6 - this.filterDatum.getDay();
-    let vandaag = new Date();
-    let dates: Date[] = [];
-    if (zaterdagOffset !== 0) {
-      // return [new Date(vandaag.setDate(zaterdagOffset)), new Date(vandaag.setDate(zaterdagOffset + 1))];
-    }
-    dates.push(vandaag);
+    let vandaag = new Date(this.filterDatum);
     let zondag = new Date();
+    let dates: Date[] = [];
+    if (zaterdagOffset === 6) {
+      vandaag.setDate(vandaag.getDate() - 1);
+      zondag.setDate(vandaag.getDate() + 1);
+      dates.push(vandaag, zondag);
+      return dates;
+    } else if (zaterdagOffset !== 0) {
+      vandaag.setDate(vandaag.getDate() + zaterdagOffset);
+      zondag.setDate(vandaag.getDate() + 1);
+      dates.push(vandaag, zondag);
+      return dates;
+    }
     zondag.setDate(vandaag.getDate() + 1);
-    dates.push(zondag)
-    console.log(dates)
-    return dates
+    dates.push(vandaag, zondag);
+    return dates;
   }
 }

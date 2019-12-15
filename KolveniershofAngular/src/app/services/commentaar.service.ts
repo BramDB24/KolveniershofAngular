@@ -30,8 +30,7 @@ export class CommentaarService {
 
   public putCommentaar(commentaar: Commentaar) {
     return this.http.put(
-      `${environment.apiUrl}/commentaar/${commentaar.commentaarId}/${commentaar.tekst}`,
-      ""
+      `${environment.apiUrl}/commentaar/${commentaar.commentaarId}/${commentaar.tekst}`, ''
     );
   }
 }
