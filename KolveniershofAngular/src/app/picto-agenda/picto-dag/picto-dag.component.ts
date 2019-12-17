@@ -5,6 +5,7 @@ import { Gebruiker } from 'src/app/models/gebruiker.model';
 import { Commentaar } from 'src/app/models/commentaar.model';
 import { CommentaarService } from 'src/app/services/commentaar.service';
 import { finalize } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -39,5 +40,13 @@ export class PictoDagComponent implements OnInit {
 
   public opslaanCommentaar(pictodag: PictoDag) {
     this.opgeslaan.emit({date: this.pictodag.datum, commentaar: this.commentaar.toString()});
+  }
+
+  public getUrl(): string {
+    return `${environment.imageUrl}`;
+  }
+
+  public getGebruikerUrl(): string {
+    return `${environment.gebruikerUrl}`;
   }
 }
