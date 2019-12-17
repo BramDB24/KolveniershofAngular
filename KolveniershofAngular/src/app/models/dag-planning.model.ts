@@ -7,6 +7,7 @@ export class DagPlanning {
   weekdag: number;
   dagplanningId: number;
   dagAteliers: DagAtelier[];
+  commentaar: string;
 
   public getDagAteliersOpDagMoment(dagMoment: string): DagAtelier[] {
     return this.dagAteliers.filter(
