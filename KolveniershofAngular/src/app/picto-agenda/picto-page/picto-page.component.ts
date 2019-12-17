@@ -17,6 +17,7 @@ import { Gebruiker } from 'src/app/models/gebruiker.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommentaarService } from 'src/app/services/commentaar.service';
 import { Commentaar } from 'src/app/models/commentaar.model';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-picto-page',
@@ -45,7 +46,8 @@ export class PictoPageComponent implements OnInit, OnDestroy {
   public opgeslaan: string;
   constructor(
     private _dagService: DagService,
-    private _commentaarService: CommentaarService
+    private _commentaarService: CommentaarService,
+    private _accountService: AccountService
   ) {
     this.filter$.pipe(distinctUntilChanged()).subscribe(val => {
       this.filterDatum = val;
@@ -63,6 +65,7 @@ export class PictoPageComponent implements OnInit, OnDestroy {
    */
   @Input() set gebruiker(gebruiker: Gebruiker) {
     this._gebruiker = gebruiker;
+    this.ophalenCommentaar();
     this.toonWeek();
   }
 
@@ -92,7 +95,7 @@ export class PictoPageComponent implements OnInit, OnDestroy {
   toonWeek() {
     let id = null;
     if (this._gebruiker) {
-      id = this._gebruiker.gebruikerId;
+      id = this._gebruiker.id;
     }
     this._subscription = this._dagService
       .getPictoAgendas(this.filterDatum, id)
@@ -127,13 +130,18 @@ export class PictoPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if(!this._gebruiker) {
+      this._accountService.huidigeGebruiker.subscribe( g => {
+        this._gebruiker = g;
+      });
+    }
     this.ophalenCommentaar();
     this.toonWeek();
   }
 
   ophalenCommentaar() {
     this._commentaarService
-      .getCommentaarVanSpefiekeDagEnGebruiker(this.getWeekendData())
+      .getCommentaarVanSpefiekeDagEnGebruiker(this.getWeekendData(), this._gebruiker.id)
       .subscribe(t => {
         this.commentaren = t;
         if (!this.commentaren[0]) {
@@ -148,7 +156,7 @@ export class PictoPageComponent implements OnInit, OnDestroy {
   }
 
   getCommentaar(index: number) {
-    return this.commentaren[index] !== null
+    return this.commentaren[index] != null
       ? this.commentaren[index].tekst
       : '';
   }

@@ -12,7 +12,7 @@ export class CommentaarService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
   public getCommentaarVanSpefiekeDagEnGebruiker(
-    datum: Array<Date>
+    datum: Array<Date>, gebruikerId: string
   ): Observable<Commentaar[]> {
     const convertedDates: string[] = [];
 
@@ -20,7 +20,7 @@ export class CommentaarService {
       convertedDates.push(this.datePipe.transform(t, "yyyy-MM-dd"));
     });
     return this.http.get<Commentaar[]>(
-      `${environment.apiUrl}/commentaar/huidigeGebruiker/zaterdag/${convertedDates[0]}/zondag/${convertedDates[1]}`
+      `${environment.apiUrl}/commentaar/huidigeGebruiker/zaterdag/${convertedDates[0]}/zondag/${convertedDates[1]}/${gebruikerId}`
     );
   }
 
