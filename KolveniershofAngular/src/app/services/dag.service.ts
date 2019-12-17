@@ -137,7 +137,7 @@ export class DagService {
 
     public updateDagCommentaar(dagplanningId: number, commentaar: string) {
         return this.http.put(
-            `${environment.apiUrl}/dagplanning/updatecommentar/${dagplanningId}/commentaar/${commentaar}`,
+            `${environment.apiUrl}/dagplanning/updatecommentaar/${dagplanningId}/commentaar/${commentaar}`,
             ''
         );
     }

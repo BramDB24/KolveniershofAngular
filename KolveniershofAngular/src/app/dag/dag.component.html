@@ -10,9 +10,7 @@
                     (change)="toonSpecialeAteliers()"
                     id="afwezigheden"
                 />
-                <label style="margin-top: 11px; margin-left:8px;"
-                    >Toon afwezigheden, ziektes, vervoer</label
-                >
+                <label style="margin-top: 11px; margin-left:8px;">Toon afwezigheden, ziektes, vervoer</label>
             </div>
             <div class="col-6 aliginRight" id="nietPrinten">
                 <app-print></app-print>
@@ -45,11 +43,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Volledige dag</h3>
-                        <div
-                            *ngFor="
-                                let dagAtelier of dagplanning.getVolledigedagAteliers()
-                            "
-                        >
+                        <div *ngFor="let dagAtelier of dagplanning.getVolledigedagAteliers()">
                             <h2 class="atelier">
                                 {{ dagAtelier.atelier.naam }}
                             </h2>
@@ -118,7 +112,7 @@
             <div class="col-12 col-sm-12 col-md-6" id="namiddag">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Namiddag</h4>
+                        <h3 class="card-title">Namiddag</h3>
                         <div
                             *ngFor="
                                 let dagAtelier of dagplanning.getNamiddagAteliers()
@@ -188,7 +182,27 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-12 col-sm-12 col-md-6" id="vervoer">
+              <div class="card">
+                  <div class="card-body">
+                      <h3 class="card-title">Vervoer</h3>
+                      <div *ngFor="let dagAtelier of dagplanning.getVervoerAteliers()">
+                        <h3 class="atelier">
+                          {{ dagAtelier.atelier.naam }}
+                        </h3>
+                        <h5>Bestuurder</h5>
+                        <p class="tekst begeleidertekst">
+                          {{ toDeelnemerString(dagAtelier.getBegeleiders()) }}
+                        </p>
+                        <h5>Cliënten</h5>
+                        <p class="tekst">
+                          {{ toDeelnemerString(dagAtelier.getClienten()) }}
+                        </p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
     </div>
 </ng-container>
 

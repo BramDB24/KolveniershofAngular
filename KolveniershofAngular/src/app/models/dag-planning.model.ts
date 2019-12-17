@@ -32,8 +32,14 @@ export class DagPlanning {
       d =>
         d.atelier.atelierType === 'Ziek' ||
         d.atelier.atelierType === 'Afwezig' ||
-        d.atelier.atelierType === 'VervoerAtelier' ||
         d.atelier.atelierType === 'Thuis'
+    );
+  }
+
+  public getVervoerAteliers(): Array<DagAtelier> {
+    return this.dagAteliers.filter(
+      d =>
+        d.atelier.atelierType === 'VervoerAtelier'
     );
   }
 }
