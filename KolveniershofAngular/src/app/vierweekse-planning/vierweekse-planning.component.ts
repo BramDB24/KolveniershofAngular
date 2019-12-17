@@ -48,8 +48,6 @@ export class VierweeksePlanningComponent implements OnInit {
   public SelecteerWeekdag(weekdag, i) {
     this.geselecteerdeWeekdag = weekdag;
     this.geselecteerdeWeekdagIndex = i + 1;
-    console.log(this.geselecteerdeWeekdag);
-    console.log(this.geselecteerdeWeekdagIndex);
   }
 
   /**

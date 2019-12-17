@@ -84,7 +84,6 @@ export class DagService {
   }
 
   public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: DagAtelier) {
-    console.log(dagAtelier);
     return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
   }
 

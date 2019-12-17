@@ -4,7 +4,7 @@
 
 export const environment = {
   apiUrl: 'https://kolveniershof3punt2.azurewebsites.net/api/',
-  //apiUrl: '/api',
+  //apiUrl: 'https://10.211.55.3:45455/api',
   production: false
 };
 

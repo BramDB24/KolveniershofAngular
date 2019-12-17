@@ -136,7 +136,6 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         atelier => atelier.naam === formAtelierNaam
       );
     }
-
     this.dagService
       .putDagAtelier(this.dagplanningId, this.dagAtelier)
       .subscribe(
