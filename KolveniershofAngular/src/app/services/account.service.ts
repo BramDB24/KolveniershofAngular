@@ -25,7 +25,7 @@ export class AccountService {
                 parsedToken = null;
             }
         }
-        
+
         this.user = new BehaviorSubject<Gebruiker>(
             JSON.parse(localStorage.getItem('loggedUser'))
         );
@@ -44,7 +44,10 @@ export class AccountService {
                     if (token) {
                         const local = JSON.parse(token);
                         localStorage.setItem(this._tokenKey, local.token);
-                        localStorage.setItem('loggedUser', JSON.stringify(local.user));
+                        localStorage.setItem(
+                            'loggedUser',
+                            JSON.stringify(local.user)
+                        );
                         this.user.next(local.user);
                         return true;
                     } else {
@@ -76,5 +79,3 @@ function parseJwt(token) {
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     return JSON.parse(window.atob(base64));
 }
-
-
