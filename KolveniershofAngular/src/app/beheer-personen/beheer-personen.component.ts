@@ -43,7 +43,7 @@ export class BeheerPersonenComponent implements OnInit {
 
 
   public redirect(gebruiker: Gebruiker): void {
-    this.router.navigate([`/register-gebruiker/${gebruiker.gebruikerId}`]);
+    this.router.navigate([`/register-gebruiker/${gebruiker.id}`]);
   }
 
   public nieuweGebruiker(): void {

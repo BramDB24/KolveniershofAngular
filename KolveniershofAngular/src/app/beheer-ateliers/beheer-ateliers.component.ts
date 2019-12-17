@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Atelier } from '../models/atelier.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-beheer-ateliers',
@@ -38,6 +39,10 @@ export class BeheerAteliersComponent implements OnInit {
         this.atelierLijst.sort = this.sort;
       });
     });
+  }
+
+  public getUrl(): string {
+    return `${environment.imageUrl}`;
   }
 
   public redirect(atelier : Atelier): void {

@@ -28,11 +28,11 @@ export class GebruikerService {
     }
 
     public postUpdateGebruiker(gebruikerJson: Gebruiker): Observable<{}> {
-        if (!gebruikerJson.gebruikerId) {
+        if (!gebruikerJson.id) {
             return null;
         }
         return this.http.put(
-            `${environment.apiUrl}/account/${gebruikerJson.gebruikerId}`, gebruikerJson
+            `${environment.apiUrl}/account/${gebruikerJson.id}`, gebruikerJson
         );
     }
 
@@ -41,6 +41,6 @@ export class GebruikerService {
     }
 
     public verwijderGebruiker(gebruikerJson: Gebruiker): Observable<{}> {
-        return this.http.delete(`${environment.apiUrl}/account/${gebruikerJson.gebruikerId}`);
+        return this.http.delete(`${environment.apiUrl}/account/${gebruikerJson.id}`);
     }
 }

@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://kolveniershof3punt2.azurewebsites.net/api/',
-  //apiUrl: 'https://10.211.55.3:45455/api',
+  apiUrl: 'https://kolveniershof3punt2.azurewebsites.net/api',
+  imageUrl: 'https://kolveniershof3punt2.azurewebsites.net/pictos',
+  //apiUrl: '/api',
   production: false
 };
 
