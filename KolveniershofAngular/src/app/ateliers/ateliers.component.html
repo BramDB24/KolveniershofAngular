@@ -38,34 +38,3 @@
 
 
 
-<!-- <div class="card">
-  <div class="card-body">
-    <form [formGroup]="atelierVerwijderenFormGroup">
-      <div class="row col-12 pb-3">
-        <div class="col-12 col-md-5 pl-0">
-          <h2>Atelier verwijderen:</h2>
-
-          <div id="atelierdiv">
-            <p>Selecteer het te verwijderen atelier:</p>
-
-            <input id="teVerwijderenAtelierInput" class="form-control" type="text"
-              formControlName="teVerwijderenAtelier" list="atelierNamen"
-              [ngClass]="{ 'is-invalid': submittedDelete &amp;&amp; atelierVerwijderenFormGroup.controls.teVerwijderenAtelier.errors }" />
-            <datalist id="atelierNamen">
-              <option *ngFor="let atelier of ateliers" [value]="atelier.naam">
-                {{atelier.naam}}
-              </option>
-            </datalist>
-          </div>
-
-          <div>
-            <button (click)="deleteAtelier()" type="submit" class="btn">
-              Opslaan
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </form>
-  </div>
-</div> -->

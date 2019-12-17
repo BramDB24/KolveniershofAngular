@@ -22,6 +22,7 @@ export class DagComponent implements OnChanges {
     public dagplanning: DagPlanning;
     public specialeAteliers = new Array<DagAtelier>();
     public commentaarForm: FormGroup;
+    public submittedSave = false;
 
     constructor(private dagService: DagService, private builder: FormBuilder) {}
 
@@ -39,15 +40,14 @@ export class DagComponent implements OnChanges {
     private initFormGroup(): void {
         this.commentaarForm = this.builder.group({
             opmerking: [
-                !this.dagplanning.commentaar
-                    ? ''
-                    : this.dagplanning.commentaar,
-                Validators.required,
+                !this.dagplanning.commentaar ? '' : this.dagplanning.commentaar,
+                Validators.required
             ],
         });
     }
 
     public submit(): void {
+        this.submittedSave = true;
         if (this.commentaarForm.invalid) {
             return;
         }
@@ -57,6 +57,7 @@ export class DagComponent implements OnChanges {
                 this.commentaarForm.controls.opmerking.value
             )
             .subscribe();
+        alert('Informatie correct opgeslaan!');
     }
 
     public haalDagplanningTemplateOpMetWeekdagEnWeek(

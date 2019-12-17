@@ -158,11 +158,33 @@
                                 style="width: 100%; resize: none; height: 100px;"
                                 rows="4"
                                 type="text"
+                                class="form-control"
                                 placeholder="Geef hier informatie in voor de dag"
+                                [ngClass]="{
+                                    'is-invalid':
+                                        submittedSave &&
+                                        commentaarForm.controls.opmerking.errors.required
+                                }"
                             ></textarea>
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                    submittedSave &&
+                                    commentaarForm.controls.opmerking.errors
+                                "
+                            >
+                                Je kan geen lege informatie versturen
+                            </div>
                         </form>
 
-                        <button class="btn btn-primary" type="submit" (click)="submit()">Opslaan</button>
+                        <button
+                            class="btn"
+                            type="submit"
+                            style="margin-top: 10px;"
+                            (click)="submit()"
+                        >
+                            Opslaan
+                        </button>
                     </div>
                 </div>
             </div>
