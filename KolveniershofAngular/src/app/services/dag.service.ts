@@ -44,11 +44,9 @@ export class DagService {
     );
   }
 
-  public getDagTemplate(weeknr: number, weekdag: number) {
+  public getDagTemplate(id: number, weeknr: number, weekdag: number) {
     return this.http
-      .get<DagPlanning>(
-        `${environment.apiUrl}/dagplanning/vanWeek/${weeknr}/vandag/${weekdag}`
-      )
+      .get<DagPlanning>(`${environment.apiUrl}/template/${id}/Week/${weeknr}/Dag/${weekdag}`)
       .pipe(
         map(x => {
           // er moeten een object.assign gebeuren omdat de mapping van json naar object automatisch gebeurd
@@ -79,7 +77,7 @@ export class DagService {
 
   public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: DagAtelier) {
     console.log(dagAtelier);
-    return this.http.post(`${environment.apiUrl}/dagplanning/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
+    return this.http.post(`${environment.apiUrl}/template/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
   }
 
   public getAanwezigheidslijst(date: Date): Observable<DagAtelier[]> {

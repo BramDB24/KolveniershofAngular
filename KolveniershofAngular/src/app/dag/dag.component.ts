@@ -12,6 +12,7 @@ import { Gebruiker } from '../models/gebruiker.model';
 })
 export class DagComponent implements OnChanges {
   // Geeft ons de input van de het kalender component
+  @Input() public templateId: number;
   @Input() public datum: Date;
   @Input() public geselecteerdeWeekdag: number;
   @Input() public geselecteerdeWeek: number;
@@ -24,8 +25,10 @@ export class DagComponent implements OnChanges {
   constructor(private dagService: DagService) { }
 
   ngOnChanges() {
+    console.log("test");
     if (this.datum == null) {
       this.haalDagplanningTemplateOpMetWeekdagEnWeek(
+        this.templateId,
         this.geselecteerdeWeek,
         this.geselecteerdeWeekdag
       );
@@ -35,10 +38,11 @@ export class DagComponent implements OnChanges {
   }
 
   public haalDagplanningTemplateOpMetWeekdagEnWeek(
+    templateId: number,
     week: number,
     weekdag: number
   ) {
-    this.dagService.getDagTemplate(week, weekdag).subscribe(
+    this.dagService.getDagTemplate(templateId, week, weekdag).subscribe(
       dag => {
         this.dagplanning = Object.assign(new DagPlanning(), dag);
         this.setDagMoment();
@@ -95,4 +99,10 @@ export class DagComponent implements OnChanges {
     });
     return uitvoer;
   }
+
+  public showNewDagplanning(dagplanning: DagPlanning) : void {
+    console.log(dagplanning);
+    this.dagplanning = Object.assign(new DagPlanning(), dagplanning);
+  }
+
 }
