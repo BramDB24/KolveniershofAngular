@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6" style="text-align: center;">
-        <h1>Welkom bij het kolveniershof</h1>
+        <h2>Welkom bij het kolveniershof</h2>
       </div>
     </div>
 
@@ -18,37 +18,19 @@
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="icon-user"></i></span>
             </div>
-            <input
-              type="text"
-              id="emailInvullen"
-              name="UserName"
-              [(ngModel)]="loginCredential"
-              class="form-control sty1"
-              placeholder="Emailadres"
-              required
-            />
+            <input type="text" id="emailInvullen" name="UserName" [(ngModel)]="loginCredential"
+              class="form-control sty1" placeholder="Emailadres" required />
           </div>
           <div class="input-group mb-4">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="icon-lock"></i></span>
             </div>
-            <input
-            id="password"
-              type="password"
-              name="password"
-              [(ngModel)]="password"
-              class="form-control"
-              placeholder="Wachtwoord"
-              required
-            />
+            <input id="password" type="password" name="password" [(ngModel)]="password" class="form-control"
+              placeholder="Wachtwoord" required />
           </div>
           <div>
-            <p
-              error-cy="errorMessage"
-              style="color:#E92626;font-size:20px;font-weight:normal"
-              Class="success"
-              align="left"
-            >{{ errorMessage }}</p>
+            <p error-cy="errorMessage" style="color:#E92626;font-size:20px;font-weight:normal" Class="success"
+              align="left">{{ errorMessage }}</p>
           </div>
           <div class="row">
             <div class="col-4">
