@@ -3,7 +3,6 @@
     <div class="selecteerWeekEnWeekdag">
       <h2>4-Weekse Planning</h2>
       <div>
-        <p>Templates</p>
         <mat-form-field>
           <mat-label>Template</mat-label>
           <mat-select [(ngModel)]="huidigeTemplate">
@@ -12,11 +11,11 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button (click)="deleteTemplate()">Delete</button>
-        <button *ngIf="!huidigeTemplate?.isActief" (click)="activeerTemplate()">Activeer</button>
-        <button (click)="switchNewTemplateVisibility()">Nieuw template</button>
-        <div id="templatenaam" *ngIf="showNewTemplateInput">
-          <input #templatenaam id="templateNaamInput" type="text" placeholder="Templatenaam"
+        <button class="btn" (click)="switchNewTemplateVisibility()"> <i class="fas fa-plus"></i></button>
+        <button class="btn btn-red" (click)="deleteTemplate()"> <i class="fas fa-trash"></i></button>
+        <button class="btn" *ngIf="!huidigeTemplate?.isActief" (click)="activeerTemplate()">Activeer</button>
+        <div id="templatenaam" class="input-group mb-3" *ngIf="showNewTemplateInput">
+          <input #templatenaam class="form-control" id="templateNaamInput" type="text" placeholder="Templatenaam"
              />
           <button (click)="createTemplate(templatenaam.value)">Creëer</button>
           <div  *ngIf="newTemplateError">

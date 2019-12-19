@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DagService } from '../services/dag.service';
 import { State } from '../homepage-edit/homepage-edit.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TemplateService } from '../services/template.service';
 import { DagComponent } from '../dag/dag.component';
 import { Template } from '../models/template';
@@ -31,13 +31,19 @@ export class VierweeksePlanningComponent implements OnInit {
   // StateType gelijk stellen aan enum State, anders kan html hier niet aan
   StateType = State;
 
-  constructor(private _templateService: TemplateService) {
+  constructor(private _templateService: TemplateService, private route: ActivatedRoute) {
     this.state = State.Dag;
   }
 
   ngOnInit() {
-    //resolver nodig!
-    this.getAllTemplates();
+    this.route.data.subscribe(item =>{
+      this.templates = item['templates'];
+      this.toonActiefTemplate();
+    },
+    err => {
+      this.newTemplateError = "Er liep iets fout bij het ophalen van de templates, probeer opnieuw."
+      console.log(err);
+    });
     this.geselecteerdeWeekdag = "Dinsdag";
     this.geselecteerdeWeekdagIndex = 1;
   }
