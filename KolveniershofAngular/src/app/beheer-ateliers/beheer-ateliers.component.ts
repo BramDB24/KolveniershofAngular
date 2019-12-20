@@ -45,7 +45,7 @@ export class BeheerAteliersComponent implements OnInit {
     return `${environment.imageUrl}`;
   }
 
-  public redirect(atelier : Atelier): void {
+  public redirect(atelier: Atelier): void {
     this.router.navigate([`/ateliers/${atelier.atelierId}`]);
   }
 
@@ -54,13 +54,16 @@ export class BeheerAteliersComponent implements OnInit {
   }
 
   public verwijderAtelier(atelier: Atelier) {
-    if(confirm("Bent u zeker dat u het atelier "+ atelier.naam + " wilt verwijderen?")) {
+    if(confirm('Bent u zeker dat u het atelier ' + atelier.naam + ' wilt verwijderen?')) {
       this.atelierService
       .deleteAtelier(atelier.atelierId)
       .subscribe(response => {
         alert('Atelier ' + atelier.naam + ' werd verwijderd.');
+      },
+      error => {},
+      () => {
+        window.location.reload();
       });
-      window.location.reload();
     }
   }
 }
