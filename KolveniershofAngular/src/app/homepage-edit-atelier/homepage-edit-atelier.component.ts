@@ -184,6 +184,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         'Deze gebruiker is al aanwezig vandaag';
       return;
     }
+    console.log(this.geselecteerdeGebruiker);
     this.dagAtelier.voegGebruikerToeAanDagplanning(this.geselecteerdeGebruiker);
     (document.getElementById(
       'gebruikerToevoegenLijst'
