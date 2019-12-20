@@ -25,7 +25,9 @@
                                         ? huidigeGebruiker.type == type
                                             ? true
                                             : false
-                                        : false
+                                        : i == 2
+                                            ? true
+                                            : false
                                 "
                                 name="gebruikerType"
                                 [value]="type"

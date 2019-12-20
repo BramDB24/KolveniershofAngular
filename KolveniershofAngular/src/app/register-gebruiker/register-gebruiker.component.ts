@@ -8,24 +8,31 @@ import {
     FormBuilder,
     Validators,
     AbstractControl,
+    ValidatorFn,
 } from '@angular/forms';
 import { BestandService } from '../services/bestand.service';
 import { Gebruiker } from '../models/gebruiker.model';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 
-function valideerBestandType(control: FormControl): { [key: string]: any } {
-    const foto = control.value.name;
-    if (!foto) {
-        return { required: true };
-    }
-    if (foto.split('.').length !== 2) {
-        return { wrongFileType: true };
-    }
-    const extentie = foto.split('.')[1];
-    if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
-        return { wrongFileType: true };
-    }
-    return null;
+function valideerBestandType(verplicht = true): ValidatorFn {
+    return (control: FormControl): { [key: string]: any } => {
+        const foto = control.value.name;
+        if (!foto) {
+            if (verplicht) {
+                return { required: true };
+            } else {
+                return null;
+            }
+        }
+        if (foto.split('.').length !== 2) {
+            return { wrongFileType: true };
+        }
+        const extentie = foto.split('.')[1];
+        if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
+            return { wrongFileType: true };
+        }
+        return null;
+    };
 }
 
 @Component({
@@ -46,13 +53,14 @@ export class RegisterGebruikerComponent implements OnInit {
     public submitted = false;
     public fototijdelijk: string;
     public isClient = false;
+    private oudeFotoNaam: string;
 
     constructor(
         private gebruikerService: GebruikerService,
         private bestandService: BestandService,
         private route: ActivatedRoute,
         private fb: FormBuilder
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.route.params.subscribe(
@@ -71,6 +79,7 @@ export class RegisterGebruikerComponent implements OnInit {
                                 console.log(err);
                             },
                             () => {
+                                this.oudeFotoNaam = this.huidigeGebruiker ? this.huidigeGebruiker.foto : '';
                                 this.initialiseerFormGroup();
                             }
                         );
@@ -83,6 +92,7 @@ export class RegisterGebruikerComponent implements OnInit {
                 console.log(err);
             }
         );
+        this.oudeFotoNaam = this.huidigeGebruiker ? this.huidigeGebruiker.foto : '';
         this.initialiseerFormGroup();
     }
 
@@ -118,8 +128,9 @@ export class RegisterGebruikerComponent implements OnInit {
                     Validators.required,
                 ],
                 foto: [
-                    this.huidigeGebruiker ? this.huidigeGebruiker.foto : '',
-                    valideerBestandType,
+                    this.oudeFotoNaam,
+                    [valideerBestandType(this.huidigeGebruiker === null)],
+                    // valideerBestandType,
                 ],
                 sfeergroep: [
                     this.huidigeGebruiker
@@ -155,16 +166,19 @@ export class RegisterGebruikerComponent implements OnInit {
         if (this.gebruikerFormGroup.invalid) {
             return;
         }
-
-        // maak bestandnaam uniek
-        const bestandNaam =
-            this.gebruikerFormGroup.controls.voornaam.value +
-            '_' +
-            this.gebruikerFormGroup.controls.achternaam.value +
-            '.' +
-            this.gebruikerFormGroup.controls.foto.value.name.split('.')[1];
+        let bestandNaam = '';
+        if (this.gebruikerFormGroup.controls.foto.value.name) {
+            // maak bestandnaam uniek
+            bestandNaam =
+                this.gebruikerFormGroup.controls.voornaam.value +
+                '_' +
+                this.gebruikerFormGroup.controls.achternaam.value +
+                '.' +
+                this.gebruikerFormGroup.controls.foto.value.name.split('.')[1];
+        }
         // folder naam voor bestand
         const folderNaam = 'gebruiker-foto';
+
 
         // bewaar alle gebruiker gegevens in een object
         let nieuweGebruiker;
@@ -174,7 +188,7 @@ export class RegisterGebruikerComponent implements OnInit {
                 achternaam: this.gebruikerFormGroup.controls.achternaam.value,
                 voornaam: this.gebruikerFormGroup.controls.voornaam.value,
                 email: this.gebruikerFormGroup.controls.email.value,
-                foto: bestandNaam,
+                foto: (bestandNaam === '') ? this.oudeFotoNaam : bestandNaam,
                 type: this.gebruikerFormGroup.controls.gebruikerType.value,
                 sfeergroep: this.gebruikerFormGroup.controls.sfeergroep.value,
             };
@@ -194,11 +208,15 @@ export class RegisterGebruikerComponent implements OnInit {
         }
 
         // Uploaden van de foto
-        this.bestandService.postFile(
-            folderNaam,
-            bestandNaam,
-            this.gebruikerFormGroup.controls.foto.value
-        );
+        if (this.oudeFotoNaam !== '' &&
+        this.gebruikerFormGroup.controls.foto.value.name !== undefined &&
+        this.oudeFotoNaam !== this.gebruikerFormGroup.controls.foto.value.name) {
+            this.bestandService.postFile(
+                folderNaam,
+                bestandNaam,
+                this.gebruikerFormGroup.controls.foto.value
+            ).subscribe();
+        }
 
         // Stuur nieuweGebruiker naar de databank
         if (this.huidigeGebruiker) {
