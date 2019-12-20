@@ -122,7 +122,11 @@ export class AteliersComponent implements OnInit {
         if (this.atelierFormGroup.invalid) {
             return;
         }
+       
+        var pictoUrl = this.huidigAtelier ? this.huidigAtelier.pictoURL : null
 
+        if(this.atelierFormGroup.value.picto.name != undefined){
+        pictoUrl = this.atelierFormGroup.value.picto.name
         // folder naam voor bestand
         const folderNaam = 'pictos';
         // Uploaden van de foto
@@ -135,15 +139,15 @@ export class AteliersComponent implements OnInit {
             err => {console.log(err);},
             () => {
             }
-        );;
-
+        );
+        }
         if (this.huidigAtelier) {
             this.atelierService
                 .updateAtelier({
                     atelierId: this.huidigAtelier.atelierId,
                     naam: this.atelierFormGroup.value.atelierNaam,
                     atelierType: this.huidigAtelier.atelierType,
-                    pictoURL: this.atelierFormGroup.value.picto.name,
+                    pictoURL: pictoUrl,
                 })
                 .subscribe(
                     () => {},
@@ -159,11 +163,12 @@ export class AteliersComponent implements OnInit {
                     }
                 );
         } else {
+            console.log(this.atelierFormGroup.value.picto.name)
             this.atelierService
                 .postAtelier({
                     naam: this.atelierFormGroup.value.atelierNaam,
                     atelierType: 'Gewoon',
-                    pictoURL: this.atelierFormGroup.value.picto.name, // de juiste: this.atelierFormGroup.value.picto
+                    pictoURL: this.atelierFormGroup.value.picto.name // de juiste: this.atelierFormGroup.value.picto
                 })
                 .pipe(
                     uploadProgress(progress => (this.progress = progress)),
