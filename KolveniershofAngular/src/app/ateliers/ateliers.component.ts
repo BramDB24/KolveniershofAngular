@@ -123,7 +123,7 @@ export class AteliersComponent implements OnInit {
         }
 
         // folder naam voor bestand
-        const folderNaam = 'atelierpictos';
+        const folderNaam = 'pictos';
 
         // Uploaden van de foto
         this.bestandService.postFile(
