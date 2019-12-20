@@ -25,7 +25,6 @@ export class DagAtelier {
 
   public voegGebruikerToeAanDagplanning(gebruiker: Gebruiker): void {
     this.gebruikers.push(gebruiker);
-    console.log(this.gebruikers);
   }
 
   public getAanwezigenVanDagatelier(gebruiker: Gebruiker): boolean {

@@ -18,100 +18,99 @@ import { PictoClientenlijstComponent } from './picto-agenda/picto-clientenlijst/
 import { TemplateResolverService } from './services/template-resolver.service';
 
 export const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginGebruikerComponent
-  },
-  {
-    path: 'dag',
-    redirectTo: '',
-    pathMatch: 'full'
-  },
-  {
-    path: 'beheer-personen',
-    component: BeheerPersonenComponent
-  },
-  {
-    path: 'beheer-ateliers',
-    component: BeheerAteliersComponent
-  },
-  {
-    path: 'ateliers',
-    component: AteliersComponent
-  },
-  {
-    path: 'ateliers/:id',
-    component: AteliersComponent
-  },
-  {
-    path: 'register-gebruiker',
-    component: RegisterGebruikerComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin'] }
-
-  },
-  {
-    path: 'picto-clientenlijst',
-    component: PictoClientenlijstComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin'] }
-
-  },
-  {
-    path: 'register-gebruiker/:id',
-    component: RegisterGebruikerComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin'] }
-
-  },
-  {
-    path: 'picto-agenda',
-    component: PictoPageComponent
-  },
-  {
-    path: '',
-    component: KalenderComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin', 'Begeleider'] }
-
-  },
-  {
-    path: 'homepage-edit',
-    component: HomepageEditComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin', 'Begeleider'] }
-
-  },
-  {
-    path: 'vierweekse-planning',
-    component: VierweeksePlanningComponent,
-    canActivate: [AuthGuard],
-    resolve: { templates: TemplateResolverService },
-    data: { roles: ['Admin', 'Begeleider'] }
-
-  },
-  {
-    path: 'ateliers',
-    component: AteliersComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin', 'Begeleider'] }
-
-  },
-  {
-    path: 'aanwezigheden',
-    component: AanwezighedenComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Admin', 'Begeleider'] }
-  },
-  {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full'
-  }
+    {
+        path: 'login',
+        component: LoginGebruikerComponent,
+    },
+    {
+        path: 'dag',
+        redirectTo: '',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+        data: { roles: ['Begeleider', 'Admin'] },
+    },
+    {
+        path: 'beheer-personen',
+        component: BeheerPersonenComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Begeleider', 'Admin'] },
+    },
+    {
+        path: 'beheer-ateliers',
+        component: BeheerAteliersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Begeleider', 'Admin'] },
+    },
+    {
+        path: 'ateliers',
+        component: AteliersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Begeleider', 'Admin'] },
+    },
+    {
+        path: 'ateliers/:id',
+        component: AteliersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Begeleider', 'Admin'] },
+    },
+    {
+        path: 'register-gebruiker',
+        component: RegisterGebruikerComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: 'picto-clientenlijst',
+        component: PictoClientenlijstComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: 'register-gebruiker/:id',
+        component: RegisterGebruikerComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: 'picto-agenda',
+        component: PictoPageComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider', 'Cliënt'] },
+    },
+    {
+        path: '',
+        component: KalenderComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: 'homepage-edit',
+        component: HomepageEditComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: 'vierweekse-planning',
+        component: VierweeksePlanningComponent,
+        canActivate: [AuthGuard],
+        resolve: { templates: TemplateResolverService },
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: 'aanwezigheden',
+        component: AanwezighedenComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['Admin', 'Begeleider'] },
+    },
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full',
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

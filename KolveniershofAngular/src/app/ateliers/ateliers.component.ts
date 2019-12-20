@@ -60,7 +60,7 @@ export class AteliersComponent implements OnInit {
         private bestandService: BestandService,
         private atelierService: AtelierService,
         private fb: FormBuilder
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.atelierService.getAteliers().subscribe(entry => {
@@ -85,7 +85,6 @@ export class AteliersComponent implements OnInit {
                                 alert(
                                     'Er was een error bij het ophalen van het atelier.'
                                 );
-                                console.log(err);
                             },
                             () => {
                                 this.initialiseerFormGroup();
@@ -97,7 +96,6 @@ export class AteliersComponent implements OnInit {
             },
             err => {
                 alert('Er was een error bij laden van de pagina.');
-                console.log(err);
             }
         );
         this.initialiseerFormGroup();
@@ -111,7 +109,7 @@ export class AteliersComponent implements OnInit {
             ],
             picto: [
                 this.huidigAtelier ? this.huidigAtelier.pictoURL : '',
-                [valideerBestandType(this.huidigAtelier === null)]
+                [valideerBestandType(this.huidigAtelier === null)],
             ],
         });
 
@@ -133,16 +131,18 @@ export class AteliersComponent implements OnInit {
             // folder naam voor bestand
             const folderNaam = 'pictos';
             // Uploaden van de foto
-            this.bestandService.postFile(
-                folderNaam,
-                pictoUrl,
-                this.atelierFormGroup.controls.picto.value
-            ).subscribe(
-                () => { },
-                err => { console.log(err); },
-                () => {
-                }
-            );
+            this.bestandService
+                .postFile(
+                    folderNaam,
+                    pictoUrl,
+                    this.atelierFormGroup.controls.picto.value
+                )
+                .subscribe(
+                    () => {},
+                    err => {
+                    },
+                    () => {}
+                );
         }
         if (this.huidigAtelier) {
             this.atelierService
@@ -153,9 +153,8 @@ export class AteliersComponent implements OnInit {
                     pictoURL: pictoUrl,
                 })
                 .subscribe(
-                    () => { },
+                    () => {},
                     err => {
-                        console.log(err);
                         this.errorMessage =
                             'Er was een probleem bij het aanmaken van het atelier.\n' +
                             'Een technische beschrijving over te fout werd in de console geschreven.';
@@ -166,21 +165,19 @@ export class AteliersComponent implements OnInit {
                     }
                 );
         } else {
-            console.log(this.atelierFormGroup.value.picto.name)
             this.atelierService
                 .postAtelier({
                     naam: this.atelierFormGroup.value.atelierNaam,
                     atelierType: 'Gewoon',
-                    pictoURL: this.atelierFormGroup.value.picto.name // de juiste: this.atelierFormGroup.value.picto
+                    pictoURL: this.atelierFormGroup.value.picto.name, // de juiste: this.atelierFormGroup.value.picto
                 })
                 .pipe(
                     uploadProgress(progress => (this.progress = progress)),
                     toResponseBody()
                 )
                 .subscribe(
-                    () => { },
+                    () => {},
                     err => {
-                        console.log(err);
                         this.errorMessage =
                             'Er was een probleem bij het opslaan van het atelier.\n' +
                             'Een technische beschrijving over te fout werd in de console geschreven.';
@@ -189,7 +186,7 @@ export class AteliersComponent implements OnInit {
                         this.successMessage = 'Het atelier werd opgeslagen.';
                         this.progress = 0;
                         this.submittedSave = false;
-                        this.atelierFormGroup.reset();
+                        //this.atelierFormGroup.reset();
                     }
                 );
         }
@@ -197,7 +194,7 @@ export class AteliersComponent implements OnInit {
 }
 
 export function requiredFileType(type: string) {
-    return function (control: FormControl) {
+    return function(control: FormControl) {
         const file = control.value;
         if (file) {
             const extension = file.name.split('.')[1].toLowerCase();
