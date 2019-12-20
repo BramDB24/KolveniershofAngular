@@ -37,7 +37,7 @@ describe('end-to-end', function () {
         .children().first()
         .children().last()
         .children().first()
-        .should('have.attr', 'src', 'https://kolveniershofapi.azurewebsites.net/pictos/' + ateliers[index] + '.jpg');
+        .should('have.attr', 'src', 'https://kolveniershof3punt2.azurewebsites.net/pictos/' + ateliers[index] + '.jpg');
       cy.visit('http://localhost:4200/');
       cy.get('#btnDagplanningAanpassen').click();
       cy.get('.dagmoment').contains(ateliers[index]).parent().find('a').click({

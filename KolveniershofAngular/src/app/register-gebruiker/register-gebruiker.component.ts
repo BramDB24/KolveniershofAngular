@@ -166,7 +166,7 @@ export class RegisterGebruikerComponent implements OnInit {
     let nieuweGebruiker;
     if (this.huidigeGebruiker) {
       nieuweGebruiker = {
-        gebruikerId: this.huidigeGebruiker.gebruikerId,
+        gebruikerId: this.huidigeGebruiker.id,
         achternaam: this.gebruikerFormGroup.controls.achternaam.value,
         voornaam: this.gebruikerFormGroup.controls.voornaam.value,
         email: this.gebruikerFormGroup.controls.email.value,

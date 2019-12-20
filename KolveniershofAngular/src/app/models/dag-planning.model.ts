@@ -7,6 +7,7 @@ export class DagPlanning {
   weekdag: number;
   dagplanningId: number;
   dagAteliers: DagAtelier[];
+  commentaar: string;
 
   public getDagAteliersOpDagMoment(dagMoment: string): DagAtelier[] {
     return this.dagAteliers.filter(
@@ -26,17 +27,19 @@ export class DagPlanning {
     return this.dagAteliers.filter(d => d.dagMoment === 'VolledigeDag');
   }
 
-  public getEten(): String {
-    return this.eten;
-  }
-
   public getSpecialeAteliers(): Array<DagAtelier> {
     return this.dagAteliers.filter(
       d =>
         d.atelier.atelierType === 'Ziek' ||
         d.atelier.atelierType === 'Afwezig' ||
-        d.atelier.atelierType === 'VervoerAtelier' ||
         d.atelier.atelierType === 'Thuis'
+    );
+  }
+
+  public getVervoerAteliers(): Array<DagAtelier> {
+    return this.dagAteliers.filter(
+      d =>
+        d.atelier.atelierType === 'VervoerAtelier'
     );
   }
 }

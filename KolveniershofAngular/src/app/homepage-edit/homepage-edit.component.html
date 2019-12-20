@@ -32,9 +32,10 @@
               </a>
             </div>
           <hr>
-          <h4>Maaltijd</h4>
+
+          <h4>Eten</h4>
               <button type="button" class="btn btn-link" (click)="setMaaltijd()">
-                middagmaal
+                Middagmaal
               </button>
 
             <div class="buttonClass">
@@ -50,8 +51,8 @@
         <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit" [dagAtelier]="atelier"
           [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()">
         </app-homepage-edit-atelier>
-        <app-homepage-edit-maaltijd *ngIf="state == StateType.Maaltijd" [isEdit]="isEdit" [dagAtelier]="atelier"
-          [dagplanningId]="dagPlanning.dagplanningId" (newDagAtelierAddedEvent)="updateAtelierLijst()">
+        <app-homepage-edit-maaltijd *ngIf="state == StateType.Maaltijd"
+          [dagPlanning]="dagPlanning" (newDagAtelierAddedEvent)="updateAtelierLijst()">
         </app-homepage-edit-maaltijd>
       </div>
     </div>

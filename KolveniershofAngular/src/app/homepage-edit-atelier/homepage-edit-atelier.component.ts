@@ -136,7 +136,6 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         atelier => atelier.naam === formAtelierNaam
       );
     }
-
     this.dagService
       .putDagAtelier(this.dagplanningId, this.dagAtelier)
       .subscribe(
@@ -169,7 +168,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         .getElementById(e.replace(/\s/g, ''))
         .getAttribute('data-index');
       this.geselecteerdeGebruiker = this.alleGebruikers.find(
-        g => g.gebruikerId === id
+        g => g.id === id
       );
     }
   }

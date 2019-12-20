@@ -1,52 +1,32 @@
 <ng-container *ngIf="initform">
-  <div class="card" id="addAtelier"> 
+  <div class="card" id="addAtelier">
     <div class="card-body">
       <form [formGroup]="dagAtelierFormGroup" (ngSubmit)="onSubmit()">
         <h5>Atelier</h5>
 
         <div class="row">
           <div class="col-4">
-            <input
-              id="atelierNaamInput"
-              class="form-control"
-              type="text"
-              formControlName="atelierNaam"
-              list="atelierNamen"
-              [ngClass]="{
+            <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
+              list="atelierNamen" [ngClass]="{
                 'is-invalid':
                   submitted && dagAtelierFormGroup.controls.atelierNaam.errors
-              }"
-            />
+              }" />
             <datalist id="atelierNamen">
-              <option
-                *ngFor="let dagatelier of ateliers"
-                [value]="dagatelier.naam"
-              >
+              <option *ngFor="let dagatelier of ateliers" [value]="dagatelier.naam">
                 {{ dagatelier.naam }}
               </option>
             </datalist>
-            <div
-              *ngIf="
+            <div *ngIf="
                 submitted && dagAtelierFormGroup.controls.atelierNaam.errors
-              "
-              class="text-danger"
-            >
-              <div
-                id="atelierOpslaanError"
-                class="d-block"
-                *ngFor="let error of atelierNaamFormErrors()"
-              >
+              " class="text-danger">
+              <div id="atelierOpslaanError" class="d-block" *ngFor="let error of atelierNaamFormErrors()">
                 {{ error }}
               </div>
             </div>
           </div>
           <div class="col-4">&nbsp;</div>
           <div class="col-4">
-            <select
-              id="dagMomentSelect"
-              class="form-control"
-              formControlName="dagMoment"
-            >
+            <select id="dagMomentSelect" class="form-control" formControlName="dagMoment">
               <option>Voormiddag</option>
               <option>Namiddag</option>
               <option value="VolledigeDag">Volledige Dag</option>
@@ -54,53 +34,32 @@
           </div>
         </div>
         <h5 style="margin: 15px 0;">Begeleiders</h5>
-        <div
-          class="naastelkaar clickable"
-          *ngFor="let begeleider of dagAtelier.getBegeleiders()"
-          (click)="verwijderGebruiker(begeleider)"
-        >
-          <img
-            id="{{ begeleider.voornaam }}"
-            class="begeleider"
-            src="{{ begeleider.foto }}"
-          />
-          <p class="tekst">{{ begeleider.voornaam }}</p>
+        <div class="naastelkaar clickable" *ngFor="let begeleider of dagAtelier.getBegeleiders()"
+          (click)="verwijderGebruiker(begeleider)">
+
+
           <i style="margin-top: 8px;" class="fas fa-minus-circle removeBtn"></i>
+          <p class="tekst">{{ begeleider.voornaam }}</p>
         </div>
 
         <h5 style="margin-bottom: 15px;">Cliënten</h5>
-        <div
-          class="naastelkaar clickable"
-          *ngFor="let client of dagAtelier.getClienten()"
-          (click)="verwijderGebruiker(client)"
-        >
-          <img
-            id="{{ client.voornaam }}"
-            class="client"
-            src="{{ client.foto }}"
-          />
-          <p class="tekst">{{ client.voornaam }}</p>
+        <div class="naastelkaar clickable" *ngFor="let client of dagAtelier.getClienten()"
+          (click)="verwijderGebruiker(client)">
+
+
           <i style="margin-top: 8px;" class="fas fa-minus-circle removeBtn"></i>
+          <p class="tekst">{{ client.voornaam }}</p>
         </div>
 
         <p>Persoon toevoegen:</p>
         <div class="row">
           <div class="col-4">
-            <input
-              id="gebruikerToevoegenLijst"
-              type="text"
-              class="form-control"
-              list="gebruikerList"
-              name="gebruikerToevoegen"
-              [ngClass]="{ 'is-invalid': gebruikerToevoegenLijstError }"
-              (change)="gekozenGebruiker($event.target.value)"
-            />
+            <input id="gebruikerToevoegenLijst" type="text" class="form-control" list="gebruikerList"
+              name="gebruikerToevoegen" [ngClass]="{ 'is-invalid': gebruikerToevoegenLijstError }"
+              (change)="gekozenGebruiker($event.target.value)" />
             <datalist id="gebruikerList">
-              <option
-                *ngFor="let gebruiker of getNietAanwezigen()"
-                id="{{ gebruiker.voornaam }}{{ gebruiker.achternaam }}"
-                [attr.data-index]="gebruiker.gebruikerId"
-              >
+              <option *ngFor="let gebruiker of getNietAanwezigen()"
+                id="{{ gebruiker.voornaam }}{{ gebruiker.achternaam }}" [attr.data-index]="gebruiker.gebruikerId">
                 {{ gebruiker.voornaam + " " + gebruiker.achternaam }}
               </option>
             </datalist>

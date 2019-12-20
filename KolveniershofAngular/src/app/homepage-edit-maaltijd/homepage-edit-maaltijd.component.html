@@ -1,39 +1,32 @@
 <ng-container *ngIf="initform">
     <div class="card" id="addAtelier"> 
       <div class="card-body">
-        <form [formGroup]="dagAtelierFormGroup" (ngSubmit)="onSubmit()">
-          <h5>Maaltijd:</h5>
+        <form [formGroup]="maaltijdFormGroup" (ngSubmit)="onSubmit()">
+          <h5>Eten:</h5>
           <div class="row">
-            <div class="col-4">
+            <div class="col-6">
               <input
-                id="atelierNaamInput"
+                id="maaltijdEdit"
                 class="form-control"
                 type="text"
-                formControlName="atelierNaam"
+                formControlName="maaltijd"
                 list="atelierNamen"
                 [ngClass]="{
                   'is-invalid':
-                    submitted && dagAtelierFormGroup.controls.atelierNaam.errors
+                    submitted && maaltijdFormGroup.controls.maaltijd.errors
                 }"
               />
-              <datalist id="atelierNamen">
-                <option
-                  *ngFor="let dagatelier of ateliers"
-                  [value]="dagatelier.naam"
-                >
-                  {{ dagatelier.naam }}
-                </option>
-              </datalist>
+
               <div
                 *ngIf="
-                  submitted && dagAtelierFormGroup.controls.atelierNaam.errors
+                  submitted && maaltijdFormGroup.controls.maaltijd.errors
                 "
                 class="text-danger"
               >
                 <div
                   id="atelierOpslaanError"
                   class="d-block"
-                  *ngFor="let error of atelierNaamFormErrors()"
+                  *ngFor="let error of maaltijdFormErrors()"
                 >
                   {{ error }}
                 </div>

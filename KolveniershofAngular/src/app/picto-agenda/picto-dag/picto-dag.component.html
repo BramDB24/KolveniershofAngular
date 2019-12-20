@@ -5,17 +5,36 @@
         <div class="row">
           <div class="col-12">
             <div>
-              <img style="width: 60px; height: 60px; float: left; margin-right: 16px;"
-                src="https://kolveniershofapi.azurewebsites.net/pictos/{{dagImg}}" alt="" />
-              <h4>{{pictodag.datum | date: 'EEEE dd MMMM yyyy'}}</h4>
+              <div class="image-container">
+                <img src="{{getUrl()}}/{{dagImg}}" alt="" />
+              </div>
+              <h4>{{pictodag.datum | date: 'EEEE'}}</h4>
+              <h4>{{pictodag.datum | date: 'dd MMMM yyyy'}}</h4>
             </div>
           </div>
         </div>
-        <h4>Voormiddag</h4>
+        <hr>
         <div class="row">
           <div class="col-12">
-            <div *ngFor="let atelier of voormiddag" class="image-container">
-              <img src="https://kolveniershofapi.azurewebsites.net/pictos/{{atelier.atelierImg}}" />
+            <div class="image-container">
+              <img src="{{getUrl()}}/bus.jpg" />
+            </div>
+            <div class="image-container">
+              <img src="{{getUrl()}}/cafetaria_rozenberg.jpg" />
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h4>Voormiddag</h4>
+        <div class="row">
+          <div class="col-12" *ngFor="let atelier of voormiddag">
+            <div>
+              <div class="image-container">
+                <img src="{{getUrl()}}/{{atelier.atelierImg}}" />
+              </div>
+              <div class="image-container" *ngFor="let begeleider of atelier.begeleiderImages">
+                <img src="{{getGebruikerUrl()}}/{{begeleider}}" />
+              </div>
             </div>
           </div>
         </div>
@@ -23,62 +42,59 @@
         <div class="row">
           <div class="col-12">
             <div class="image-container">
-              <img src="https://kolveniershofapi.azurewebsites.net/pictos/cafetaria_rozenberg.jpg">
-              <p>{{pictodag.menu}}</p>
+              <img src="{{getUrl()}}/eten.png">
             </div>
+            <p class="eten">{{pictodag.eten}}</p>
           </div>
         </div>
         <h4>Namiddag</h4>
         <div class="row">
-          <div class="col-12">
+          <div class="col-12" *ngFor="let atelier of namiddag">
             <div>
-              <div *ngFor="let atelier of namiddag" class="image-container">
-                <img src="https://kolveniershofapi.azurewebsites.net/pictos/{{atelier.atelierImg}}" />
+              <div class="image-container">
+                <img src="{{getUrl()}}/{{atelier.atelierImg}}" />
+              </div>
+              <div class="image-container" *ngFor="let begeleider of atelier.begeleiderImages">
+                <img src="{{getGebruikerUrl()}}/{{begeleider}}" />
               </div>
             </div>
           </div>
         </div>
-        <hr />
+        <hr>
         <div class="row">
           <div class="col-12">
-            <p>Geef commentaar op voor de dag</p>
+            <div class="image-container">
+              <img src="{{getUrl()}}/bus.jpg" />
+            </div>
+            <div class="image-container">
+              <img src="{{getUrl()}}/cafetaria_rozenberg.jpg" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <ng-template #weekend>
-      <div class="row weekend">
-        <div class="col-12">
-          <p>Geef commentaar op voor het weekend</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <textarea style="width: 100%; resize: none;"></textarea>
-        </div>
-      </div>
-    </ng-template>
   </div>
 </div>
 
 <ng-template #weekend>
-  <div class="row">
-    <div class="col-12">
-      <div>
-        <!-- <img style="width: 60px; height: 60px; float: left; margin-right: 16px;"
-          src="https://kolveniershofapi.azurewebsites.net/pictos/{{dagImg}}" alt="" /> nog geen images in backend -->
-        <h4>{{pictodag.datum | date: 'EEEE dd MMMM yyyy'}}</h4>
+  <ng-container>
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <img style="width: 60px; height: 60px; float: left; margin-right: 16px;" src="{{getUrl()}}/{{dagImg}}"
+            alt="" />
+          <h4>{{pictodag.datum | date: 'EEEE'}}</h4>
+          <h4>{{pictodag.datum | date: 'dd MMMM yyyy'}}</h4>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row weekend">
-    <div class="col-12">
-      <p>Geef commentaar op voor het weekend</p>
+    <div class="row">
+      <div class="col-12">
+        <textarea placeholder="Geef commentaar voor het weekend" [(ngModel)]="commentaar"
+          style="width: 100%; resize: none; height: 100px;"></textarea>
+        <button class="btn btn-primary" (click)="opslaanCommentaar(pictodag)">Opslaan</button>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <textarea style="width: 100%; resize: none;"></textarea>
-    </div>
-  </div>
+  </ng-container>
+
 </ng-template>
