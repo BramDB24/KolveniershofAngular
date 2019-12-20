@@ -27,6 +27,7 @@ export class PictoDagComponent implements OnInit {
     @Input() public commentaar: string;
     @Output() public opgeslaan = new EventEmitter<any>();
     public submitted = false;
+    @Input() public pictolijst: boolean;
 
     constructor() {}
 
@@ -52,7 +53,7 @@ export class PictoDagComponent implements OnInit {
         }
         this.opgeslaan.emit({
             date: this.pictodag.datum,
-            commentaar: this.commentaar.toString(),
+            commentaar: this.commentaar
         });
     }
 

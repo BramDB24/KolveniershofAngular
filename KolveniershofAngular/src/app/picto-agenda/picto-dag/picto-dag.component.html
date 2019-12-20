@@ -90,9 +90,15 @@
     </div>
     <div class="row">
       <div class="col-12">
+      <div *ngIf="!pictolijst">
         <textarea placeholder="Geef commentaar voor het weekend" [(ngModel)]="commentaar"
           style="width: 100%; resize: none; height: 100px;"></textarea>
         <button class="btn btn-primary" (click)="opslaanCommentaar(pictodag)">Opslaan</button>
+      </div>
+      <div *ngIf="pictolijst">
+        <h5>Commentaar:</h5>
+          <p>{{commentaar}}</p>
+      </div>
       </div>
     </div>
   </ng-container>

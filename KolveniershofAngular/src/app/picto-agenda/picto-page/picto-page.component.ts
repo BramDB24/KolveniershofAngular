@@ -44,6 +44,7 @@ export class PictoPageComponent implements OnInit, OnDestroy {
   public loading: boolean;
   public commentaren: Array<Commentaar> = new Array<Commentaar>();
   public opgeslaan: string;
+  public pictolijst = false;
   constructor(
     private _dagService: DagService,
     private _commentaarService: CommentaarService,
@@ -65,6 +66,7 @@ export class PictoPageComponent implements OnInit, OnDestroy {
    */
   @Input() set gebruiker(gebruiker: Gebruiker) {
     this._gebruiker = gebruiker;
+    this.pictolijst = true;
     this.ophalenCommentaar();
     this.toonWeek();
   }
