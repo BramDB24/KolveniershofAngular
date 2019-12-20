@@ -56,6 +56,7 @@ export class DagComponent implements OnChanges {
         this.loadingError = error;
       },
       () => {
+        this.initFormGroup();
         this.loading = true;
       }
     );
@@ -82,25 +83,6 @@ export class DagComponent implements OnChanges {
             )
             .subscribe();
         alert('Informatie correct opgeslaan!');
-    }
-
-    public haalDagplanningTemplateOpMetWeekdagEnWeek(
-        week: number,
-        weekdag: number
-    ) {
-        this.dagService.getDagTemplate(week, weekdag).subscribe(
-            dag => {
-                this.dagplanning = Object.assign(new DagPlanning(), dag);
-                this.setDagMoment();
-            },
-            error => {
-                this.loadingError = error;
-            },
-            () => {
-                this.initFormGroup();
-                this.loading = true;
-            }
-        );
     }
 
     public haalDagplanningOpMetDatum(date: Date) {
@@ -135,17 +117,6 @@ export class DagComponent implements OnChanges {
 
     public toonSpecialeAteliers(): void {
         this.bool = !this.bool;
-    }
-
-    public toDeelnemerString(gebruikers: Gebruiker[]): String {
-        var uitvoer = '';
-        gebruikers.forEach(function(gebruiker, index) {
-            uitvoer += gebruiker.voornaam.toUpperCase() + ' ';
-            if (index != gebruikers.length - 1) {
-                uitvoer += '/ ';
-            }
-        });
-        return uitvoer;
     }
 
   public toDeelnemerString(gebruikers: Gebruiker[]): String {
