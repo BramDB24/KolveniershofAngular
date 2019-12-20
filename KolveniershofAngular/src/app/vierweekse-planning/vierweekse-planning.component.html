@@ -12,7 +12,7 @@
           </mat-select>
         </mat-form-field>
         <button class="btn" (click)="switchNewTemplateVisibility()"> <i class="fas fa-plus"></i></button>
-        <button class="btn btn-red" (click)="deleteTemplate()"> <i class="fas fa-trash"></i></button>
+        <button class="btn btn-red" *ngIf="!huidigeTemplate?.isActief" (click)="deleteTemplate()"> <i class="fas fa-trash"></i></button>
         <button class="btn" *ngIf="!huidigeTemplate?.isActief" (click)="activeerTemplate()">Activeer</button>
         <div id="templatenaam" class="input-group mb-3" *ngIf="showNewTemplateInput">
           <input #templatenaam class="form-control" id="templateNaamInput" type="text" placeholder="Templatenaam"

@@ -14,15 +14,15 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" *ngIf="isAdmin()" (click)="redirect('dag')">Dagplanning</a>
+        <a class="nav-link" *ngIf="isBegeleider()" (click)="redirect('dag')">Dagplanning</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="picto-agendas" (click)="redirect('picto-agenda')"
+        <a class="nav-link" *ngIf="aangemelde && !isBegeleider()" id="picto-agendas" (click)="redirect('picto-agenda')"
           >Picto-agenda</a
         >
       </li>
       <li class="nav-item">
-          <a class="nav-link" id="clientenpictos" (click)="redirect('picto-clientenlijst')"
+          <a class="nav-link" *ngIf="isBegeleider()" id="clientenpictos" (click)="redirect('picto-clientenlijst')"
             >Clientenpictos</a
           >
         </li>
@@ -30,16 +30,16 @@
         <a class="nav-link" (click)="redirect('kalender')">kalender</a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" id="beheer-personen" *ngIf="isAdmin()" (click)="redirect('beheer-personen')">Beheer personen</a>
+        <a class="nav-link" *ngIf="isBegeleider()" id="beheer-personen" (click)="redirect('beheer-personen')">Beheer personen</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="4-weekse-planning" *ngIf="isAdmin()" (click)="redirect('vierweekse-planning')">4-weekse planning</a>
+        <a class="nav-link" *ngIf="isBegeleider()" id="4-weekse-planning" (click)="redirect('vierweekse-planning')">4-weekse planning</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="beheer-ateliers" *ngIf="isAdmin()" (click)="redirect('beheer-ateliers')">Beheer ateliers</a>
+        <a class="nav-link" id="beheer-ateliers" *ngIf="isBegeleider()" (click)="redirect('beheer-ateliers')">Beheer ateliers</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="aanwezigheden" *ngIf="isAdmin()" (click)="redirect('aanwezigheden')">Aanwezigheden</a>
+        <a class="nav-link" id="aanwezigheden" *ngIf="isBegeleider()" (click)="redirect('aanwezigheden')">Aanwezigheden</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">

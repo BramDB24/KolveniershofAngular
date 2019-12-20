@@ -20,8 +20,11 @@ export class NavigationComponent implements OnInit {
   }
 
   public isAdmin(): boolean {
-    return true; //voorlopig nog zonder authenticatie.
     return this.aangemelde && this.aangemelde.type === 'Admin';
+  }
+
+  public isBegeleider(): boolean {
+    return this.aangemelde && (this.aangemelde.type === 'Admin' || this.aangemelde.type === 'Begeleider');
   }
 
   public redirect(directory: string): void {
@@ -30,5 +33,6 @@ export class NavigationComponent implements OnInit {
 
   public afmelden(): void {
     this.accountService.logout();
+    this.router.navigate([`/login`])
   }
 }

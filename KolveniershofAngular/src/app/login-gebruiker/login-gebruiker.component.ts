@@ -34,7 +34,13 @@ export class LoginGebruikerComponent implements OnInit {
             this.router.navigateByUrl(this.accountService.redirectUrl);
             this.accountService.redirectUrl = undefined;
           } else {
-           this.router.navigate(['']);
+            this.accountService.huidigeGebruiker.subscribe(val => {
+              if(val.type == "Cliënt")
+              this.router.navigate(['/picto-agenda']);   
+              else
+              this.router.navigate(['']);
+            })
+           
           }
         } else {
           this.errorMessage = 'Could not login';

@@ -24,7 +24,6 @@ export class AuthGuard implements CanActivate {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
-        return true; //authenticatie voorlopig uit.
         const currentUser: Gebruiker = this.authService.user.value;
         if (currentUser) {
             if (next.data.roles && next.data.roles.indexOf(currentUser.type) === -1) {

@@ -48,6 +48,7 @@ export class AccountService {
                             'loggedUser',
                             JSON.stringify(local.user)
                         );
+                        console.log(local.user);
                         this.user.next(local.user);
                         return true;
                     } else {
