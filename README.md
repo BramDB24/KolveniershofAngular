@@ -38,8 +38,12 @@ Login: lisa@gmail.be
 Wachtwoord: password1010  
 
 ## Extra settings?
-
-Indien er user secrets of nog andere instellingen (zoals bvb het aanpassen connectiestring,…) dienen te gebeuren alvorens de app lokaal runt, som deze op.
+Als u lokaal wilt runnen, moet u de usersecrets aanpassen zoals volgt:
+```
+ "Tokens": {
+    "Key": "dezestringmoeteenvoldoendelangelengtehebben"
+  }
+```
 
 ## Meta
 De applicatie is ontworpen door 6 laatstejaars bachelor studenten van HoGent Toegepaste Informatica:
