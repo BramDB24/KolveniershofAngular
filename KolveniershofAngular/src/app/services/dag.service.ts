@@ -45,9 +45,13 @@ export class DagService {
             );
     }
 
-    public putDagAtelier(id: number, dagAtelier: DagAtelier) {
+    public putDagAtelier(date: Date, dagAtelier: DagAtelier) {
+        const convertedDate: string = this.datePipe.transform(
+            date,
+            'yyyy-MM-dd'
+        );
         return this.http.put(
-            `${environment.apiUrl}/dagplanning/${id}/dagatelier`,
+            `${environment.apiUrl}/dagplanning/${convertedDate}/dagatelier`,
             dagAtelier
         );
     }
