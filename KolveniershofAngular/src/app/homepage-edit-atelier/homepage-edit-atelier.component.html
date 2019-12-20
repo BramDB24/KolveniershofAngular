@@ -59,7 +59,7 @@
               (change)="gekozenGebruiker($event.target.value)" />
             <datalist id="gebruikerList">
               <option *ngFor="let gebruiker of getNietAanwezigen()"
-                id="{{ gebruiker.voornaam }}{{ gebruiker.achternaam }}" [attr.data-index]="gebruiker.gebruikerId">
+                id="{{ gebruiker.voornaam }}{{ gebruiker.achternaam }}" [attr.data-index]="gebruiker.id">
                 {{ gebruiker.voornaam + " " + gebruiker.achternaam }}
               </option>
             </datalist>
