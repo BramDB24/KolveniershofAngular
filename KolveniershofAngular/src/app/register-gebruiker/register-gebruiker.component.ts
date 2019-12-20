@@ -174,7 +174,7 @@ export class RegisterGebruikerComponent implements OnInit {
                 achternaam: this.gebruikerFormGroup.controls.achternaam.value,
                 voornaam: this.gebruikerFormGroup.controls.voornaam.value,
                 email: this.gebruikerFormGroup.controls.email.value,
-                foto: folderNaam + '/' + bestandNaam,
+                foto: bestandNaam,
                 type: this.gebruikerFormGroup.controls.gebruikerType.value,
                 sfeergroep: this.gebruikerFormGroup.controls.sfeergroep.value,
             };
@@ -187,7 +187,7 @@ export class RegisterGebruikerComponent implements OnInit {
                 password: this.gebruikerFormGroup.controls.wachtwoord.value,
                 passwordConfirmation: this.gebruikerFormGroup.controls
                     .bevestigWachtwoord.value,
-                foto: folderNaam + '/' + bestandNaam,
+                foto: bestandNaam,
                 type: this.gebruikerFormGroup.controls.gebruikerType.value,
                 sfeergroep: this.gebruikerFormGroup.controls.sfeergroep.value,
             };
