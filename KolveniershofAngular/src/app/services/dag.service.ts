@@ -75,9 +75,9 @@ export class DagService {
       );
   }
 
-    public postEten(dagplannigid: number, eten: String) {
+    public postEten(datum: string, eten: String) {
         return this.http.post(
-            `${environment.apiUrl}/dagplanning/${dagplannigid}/eten?eten=${eten}`,
+            `${environment.apiUrl}/dagplanning/${datum}/eten?eten=${eten}`,
             null
         );
     }
@@ -95,10 +95,7 @@ export class DagService {
   }
 
     public deleteAterlierUitDagplanning(datum, dagAtelier: DagAtelier) {
-        return this.http.post(
-            `${environment.apiUrl}/dagplanning/${datum}/dagateliers`,
-            dagAtelier
-        );
+        return this.http.put(`${environment.apiUrl}/dagplanning/${datum}/dagateliers`, dagAtelier);
     }
 
 /**

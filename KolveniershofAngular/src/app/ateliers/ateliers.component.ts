@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BestandService } from '../services/bestand.service';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
+    console.log(control.value)
     if (!control.value.picto) {
         return;
     }
@@ -107,7 +108,7 @@ export class AteliersComponent implements OnInit {
             ],
             picto: new FormControl(
                 this.huidigAtelier ? this.huidigAtelier.pictoURL : '',
-                [Validators.required, valideerBestandType]
+                [Validators.required]
             ),
         });
 
@@ -121,24 +122,32 @@ export class AteliersComponent implements OnInit {
         if (this.atelierFormGroup.invalid) {
             return;
         }
+       
+        var pictoUrl = this.huidigAtelier ? this.huidigAtelier.pictoURL : null
 
+        if(this.atelierFormGroup.value.picto.name != undefined){
+        pictoUrl = this.atelierFormGroup.value.picto.name
         // folder naam voor bestand
-        const folderNaam = 'atelierpictos';
-
+        const folderNaam = 'pictos';
         // Uploaden van de foto
         this.bestandService.postFile(
             folderNaam,
             this.atelierFormGroup.value.picto.name,
             this.atelierFormGroup.value.picto
+        ).subscribe(
+            () => {},
+            err => {console.log(err);},
+            () => {
+            }
         );
-
+        }
         if (this.huidigAtelier) {
             this.atelierService
                 .updateAtelier({
                     atelierId: this.huidigAtelier.atelierId,
                     naam: this.atelierFormGroup.value.atelierNaam,
                     atelierType: this.huidigAtelier.atelierType,
-                    pictoURL: this.atelierFormGroup.value.picto.name,
+                    pictoURL: pictoUrl,
                 })
                 .subscribe(
                     () => {},
@@ -154,11 +163,12 @@ export class AteliersComponent implements OnInit {
                     }
                 );
         } else {
+            console.log(this.atelierFormGroup.value.picto.name)
             this.atelierService
                 .postAtelier({
                     naam: this.atelierFormGroup.value.atelierNaam,
                     atelierType: 'Gewoon',
-                    pictoURL: this.atelierFormGroup.value.picto.name, // de juiste: this.atelierFormGroup.value.picto
+                    pictoURL: this.atelierFormGroup.value.picto.name // de juiste: this.atelierFormGroup.value.picto
                 })
                 .pipe(
                     uploadProgress(progress => (this.progress = progress)),
