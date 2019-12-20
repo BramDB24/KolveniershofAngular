@@ -46,7 +46,7 @@ export class HomepageEditMaaltijdComponent implements OnInit, OnChanges {
       return;
     }
       this.dagService
-      .postEten(this.dagPlanning.dagplanningId, this.maaltijdFormGroup.controls.maaltijd.value)
+      .postEten(this.dagPlanning.datum, this.maaltijdFormGroup.controls.maaltijd.value)
       .subscribe(
         entry => {},
         err => {
