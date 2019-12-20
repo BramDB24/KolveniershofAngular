@@ -1,0 +1,106 @@
+<div class="card maxheight" [ngClass]="selected ? 'yellow':'normal'">
+  <div class="card-body">
+    <div *ngIf="!isWeekend; else weekend">
+      <div>
+        <div class="row">
+          <div class="col-12">
+            <div>
+              <div class="image-container">
+                <img src="{{getUrl()}}/{{dagImg}}" alt="" />
+              </div>
+              <h4>{{pictodag.datum | date: 'EEEE'}}</h4>
+              <h4>{{pictodag.datum | date: 'dd MMMM yyyy'}}</h4>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12">
+            <div class="image-container">
+              <img src="{{getUrl()}}/bus.jpg" />
+            </div>
+            <div class="image-container">
+              <img src="{{getUrl()}}/cafetaria_rozenberg.jpg" />
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h4>Voormiddag</h4>
+        <div class="row">
+          <div class="col-12" *ngFor="let atelier of voormiddag">
+            <div>
+              <div class="image-container">
+                <img src="{{getUrl()}}/{{atelier.atelierImg}}" />
+              </div>
+              <div class="image-container" *ngFor="let begeleider of atelier.begeleiderImages">
+                <img src="{{getGebruikerUrl()}}/{{begeleider}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <h4>Menu</h4>
+        <div class="row">
+          <div class="col-12">
+            <div class="image-container">
+              <img src="{{getUrl()}}/eten.png">
+            </div>
+            <p class="eten">{{pictodag.eten}}</p>
+          </div>
+        </div>
+        <h4>Namiddag</h4>
+        <div class="row">
+          <div class="col-12" *ngFor="let atelier of namiddag">
+            <div>
+              <div class="image-container">
+                <img src="{{getUrl()}}/{{atelier.atelierImg}}" />
+              </div>
+              <div class="image-container" *ngFor="let begeleider of atelier.begeleiderImages">
+                <img src="{{getGebruikerUrl()}}/{{begeleider}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12">
+            <div class="image-container">
+              <img src="{{getUrl()}}/bus.jpg" />
+            </div>
+            <div class="image-container">
+              <img src="{{getUrl()}}/cafetaria_rozenberg.jpg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #weekend>
+  <ng-container>
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <img style="width: 60px; height: 60px; float: left; margin-right: 16px;" src="{{getUrl()}}/{{dagImg}}"
+            alt="" />
+          <h4>{{pictodag.datum | date: 'EEEE'}}</h4>
+          <h4>{{pictodag.datum | date: 'dd MMMM yyyy'}}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+      <div *ngIf="!pictolijst">
+        <textarea placeholder="Geef commentaar voor het weekend" [(ngModel)]="commentaar"
+          style="width: 100%; resize: none; height: 100px;"></textarea>
+        <button class="btn btn-primary" (click)="opslaanCommentaar(pictodag)">Opslaan</button>
+      </div>
+      <div *ngIf="pictolijst">
+        <h5>Commentaar:</h5>
+          <p>{{commentaar}}</p>
+      </div>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-template>

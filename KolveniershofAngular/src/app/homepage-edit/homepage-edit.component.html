@@ -1,0 +1,60 @@
+<ng-container *ngIf="loaded">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3" id="editDagplanningKader">
+        <div class="card">
+          <div class="card-body" id="atelierPlanning"> 
+            <h4>Volledige Dag</h4>
+            <div class="dagmoment" *ngFor="let ateliers of dagPlanning.getVolledigedagAteliers()" id="atelierPlanning">
+              <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
+                {{ ateliers.atelier.naam }}
+              </button>
+              <a (click)="deleteAtelierUitDagplanning(ateliers)" id="delete">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
+            <h4>Voormiddag</h4>
+            <div class="dagmoment" *ngFor="let ateliers of dagPlanning.getVoormiddagAteliers()">
+              <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
+                {{ ateliers.atelier.naam }}
+              </button>
+              <a (click)="deleteAtelierUitDagplanning(ateliers)">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
+            <h4>Namiddag</h4>
+            <div class="dagmoment" *ngFor="let ateliers of dagPlanning.getNamiddagAteliers()">
+              <button type="button" class="btn btn-link" (click)="setAtelier(ateliers)">
+                {{ ateliers.atelier.naam }}
+              </button>
+              <a (click)="deleteAtelierUitDagplanning(ateliers)">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
+          <hr>
+
+          <h4>Eten</h4>
+              <button type="button" class="btn btn-link" (click)="setMaaltijd()">
+                Middagmaal
+              </button>
+
+            <div class="buttonClass">
+              <button (click)="nieuwAtelier()" id="atelierToevoegen" type="button" class="btn atelierbtn nieuw">
+                Atelier toevoegen
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-9">
+        <app-homepage-edit-atelier *ngIf="state == StateType.Edit" [isEdit]="isEdit" [dagAtelier]="atelier"
+          [dagplanningId]="dagPlanning.dagplanningId" [datum]="dagPlanning.datum" (newDagAtelierAddedEvent)="updateAtelierLijst()">
+        </app-homepage-edit-atelier>
+        <app-homepage-edit-maaltijd *ngIf="state == StateType.Maaltijd"
+          [dagPlanning]="dagPlanning" (newDagAtelierAddedEvent)="updateAtelierLijst()">
+        </app-homepage-edit-maaltijd>
+      </div>
+    </div>
+  </div>
+</ng-container>

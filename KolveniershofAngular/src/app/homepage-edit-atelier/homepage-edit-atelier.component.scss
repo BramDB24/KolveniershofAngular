@@ -1,0 +1,72 @@
+.naastelkaar {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.client {
+  width: 75px;
+  margin-right: 30px;
+  margin-bottom: 5px;
+}
+
+.style1 {
+  box-shadow: 0px 12px 22px 1px rgb(71, 177, 88);
+}
+
+.rechts {
+  float: right;
+}
+
+.image:hover {
+  cursor: pointer;
+}
+
+.tekst {
+  margin-right: 15px;
+  margin-left: 15px;
+  font-size: 11pt;
+  margin-bottom: 10px;
+}
+
+.dropdown {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.begeleider {
+  width: 75px;
+  margin-right: 30px;
+  font-size: 14pt;
+  color: white;
+  border-radius: 5px;
+}
+
+.begeleider:hover {
+  cursor: pointer;
+}
+
+.btn {
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+}
+
+.customCol {
+  padding: unset;
+}
+
+.btn:hover {
+  background-color: slategray;
+}
+
+.removeBtn {
+  background-color: white;
+  border-radius: 100%;
+  color: crimson;
+  margin: auto;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}

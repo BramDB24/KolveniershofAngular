@@ -1,0 +1,38 @@
+.arrowbutton {
+  all: unset;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.weekend {
+  display: inline;
+}
+
+.normalcard {
+  margin-bottom: 30px;
+  margin-top: 10px;
+
+}
+.smallcard{
+    height: 48%;
+    margin-bottom: 20px;
+}
+
+.fullheight{
+    height: 100%;
+}
+
+.green{
+    background-color: green;
+}
+
+.btn-primary{
+  margin-left: 5px;
+  margin-right:5px;
+}

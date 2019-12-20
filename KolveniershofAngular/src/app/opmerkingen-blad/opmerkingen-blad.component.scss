@@ -1,0 +1,55 @@
+.alignRight{
+  text-align: right;
+}
+
+.margin-left-10{
+  margin-left:10px;
+}
+
+@media (min-width: 900px) {
+  .textareawidth {
+    width: 20%;
+  }
+
+}
+
+@media (min-width: 768px) {
+  .textareawidth {
+    width: 70%;
+  }
+}
+
+@media (max-width: 899px) {
+  .textareawidth {
+    width: 70%;
+  }
+}
+
+.btn {
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+  font-size: 12pt;
+
+  &.geselecteerd {
+    background-color: rgb(96, 55, 194);
+    font-weight: bold;
+  }
+
+  &:hover {
+    background-color: rgb(66, 102, 138);
+  }
+
+  max-width: 5em;
+ // margin-bottom: 3em;
+  padding : 0.5em;
+}
+
+.spaceNaOpmerking {
+  padding-bottom: 2em;
+  padding-top: 0.5em;
+}
+
+textarea {
+  resize: none;
+}

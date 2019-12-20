@@ -1,0 +1,10 @@
+<div class="left">
+  <ul class="list-group" id="clientNaam">
+    <li class="list-group-item" [ngClass]="client == huidigeClient ? 'lightblue' : ''" *ngFor="let client of $clienten | async" (click)="toonPicto(client)">
+      {{client.voornaam}} {{client.achternaam}}
+    </li>
+  </ul>
+</div>
+<div class="right" *ngIf="huidigeClient">
+  <app-picto-page [gebruiker]="huidigeClient"></app-picto-page>
+</div>

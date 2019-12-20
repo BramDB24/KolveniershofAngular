@@ -1,0 +1,52 @@
+<ng-container *ngIf="!loading; else loadingError">
+  <div class="container-fluid" id="print">
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-8">
+        <h1>{{titel}}</h1>
+      </div>
+
+      <div class="col-4" id="nietPrinten">
+        <button class="btn-primary rounded" (click)="geefVorigeDatum()" type="button">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <mat-form-field class="datepickerform">
+          <input matInput [matDatepicker]="datePicker" [ngModel]="datum"
+            (dateChange)='filter$.next($event.target.value)'>
+          <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+          <mat-datepicker data-cy="datepicker" #datePicker></mat-datepicker>
+        </mat-form-field>
+        <button class="btn-primary rounded" (click)="geefVolgendeDatum()" type="button">
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row" id="nietPrinten">
+      <div class="offset-9 col-3 alignRight">
+        <app-print></app-print>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 normalcard" *ngFor="let pictodag of weekdagen; index as i">
+        <app-picto-dag [pictodag]="pictodag" [dagImg]="dagpictos[i]" [isWeekend]="false" [selected]="isSelected(pictodag)"></app-picto-dag>
+      </div>
+      <div class="col-lg-4 col-md-6 normalcard">
+        <div class="row fullheight">
+          <div class="col-12 smallcard" *ngFor="let pictodag of weekenddagen; index as i">
+            <app-picto-dag (opgeslaan)="opslaanCommentaar($event)" [pictolijst]="pictolijst" [commentaar]="getCommentaar(i)" [pictodag]="pictodag" [dagImg]="dagpictos[i+5]"  [isWeekend]="true" [selected]="isSelected(pictodag)"></app-picto-dag>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row" id="nietPrinten" style="margin-bottom:30px">
+      <div class="col-12">
+        <button style="float:right;" class="btn btn-primary">Opslaan</button>
+      </div>
+    </div> -->
+  </div>
+
+</ng-container>
+<ng-template #loadingError>
+  <div class="spinner-border spinner" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</ng-template>

@@ -1,0 +1,55 @@
+
+.btn {
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 10px;
+  font-size: 12pt;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  &.geselecteerd {
+    background-color: rgb(96, 55, 194);
+    font-weight: bold;
+  }
+  &:hover {
+    background-color: rgb(66, 102, 138);
+  }
+  
+}
+
+.kalenderNav {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.naastelkaar {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.datum {
+  font-size: 20pt;
+}
+
+.links {
+  float: left;
+}
+
+.rechts {
+  float: right;
+}
+
+.keuzeknop {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.datumButton{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin: auto 20px;
+}
+

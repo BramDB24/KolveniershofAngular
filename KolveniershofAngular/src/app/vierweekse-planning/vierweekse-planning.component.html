@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="vierweeksePlanning">
+    <div class="selecteerWeekEnWeekdag">
+      <h2>4-Weekse Planning</h2>
+      <div>
+        <mat-form-field>
+          <mat-label>Template</mat-label>
+          <mat-select [(ngModel)]="huidigeTemplate">
+            <mat-option *ngFor="let template of templates" [value]="template">
+              {{template.naam}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="btn" (click)="switchNewTemplateVisibility()"> <i class="fas fa-plus"></i></button>
+        <button class="btn btn-red" *ngIf="!huidigeTemplate?.isActief" (click)="deleteTemplate()"> <i class="fas fa-trash"></i></button>
+        <button class="btn" *ngIf="!huidigeTemplate?.isActief" (click)="activeerTemplate()">Activeer</button>
+        <div id="templatenaam" class="input-group mb-3" *ngIf="showNewTemplateInput">
+          <input #templatenaam class="form-control" id="templateNaamInput" type="text" placeholder="Templatenaam"
+             />
+          <button (click)="createTemplate(templatenaam.value)">Creëer</button>
+          <div  *ngIf="newTemplateError">
+            <p>{{newTemplateError}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="border rounded-sm">
+        <div class="row weken">
+          <div *ngFor="let number of [1,2,3,4]">
+            <button [ngClass]="number == geselecteerdeWeek ? 'btn geselecteerd' : 'btn'" (click)="selecteerWeek(number)"
+              type="button">Week {{number}}</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row weekdagen">
+          <div *ngFor="let weekdag of weekdagen; let i = index">
+            <button [ngClass]="i == geselecteerdeWeekdagIndex - 1 ? 'btn geselecteerd' : 'btn'"
+              (click)="selecteerWeekdag(weekdag, i)" type="button">{{weekdag}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row sectiondag">
+    <div class="col-xs-12 col-md-3">
+      <h4 class="font-weight-bold">Week {{geselecteerdeWeek}}, {{geselecteerdeWeekdag}}</h4>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <button class="btn" type="button" (click)="veranderState(StateType.Dag)"
+        [ngClass]="{ 'geselecteerd' : state == StateType.Dag }" [disabled]="state == StateType.Dag">Dagplanning
+        Template</button>
+      <button class="btn" type="button" (click)="veranderState(StateType.DagEdit)"
+        [ngClass]="{ 'geselecteerd' : state == StateType.DagEdit }" [disabled]="state != StateType.Dag"><i
+          class="far fa-edit"></i> Dagplanning Template
+        aanpassen</button>
+    </div>
+  </div>
+
+
+  <app-dag *ngIf="state == StateType.Dag" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex" [templateId]="huidigeTemplate?.id"></app-dag>
+  <app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex" [templateId]="huidigeTemplate?.id">
+  </app-homepage-edit>
+</div>

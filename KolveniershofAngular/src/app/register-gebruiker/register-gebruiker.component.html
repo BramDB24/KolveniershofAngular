@@ -1,0 +1,240 @@
+<ng-container>
+    <div class="container">
+        <h2 class="titel">Account {{ submitButtonText }}</h2>
+        <form
+            class="border border-light p-5"
+            [formGroup]="gebruikerFormGroup"
+            (ngSubmit)="onSubmit()"
+        >
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <p class="mr-3">Soort gebruiker:</p>
+                        <div
+                            class="custom-control custom-radio mb-4 mr-4"
+                            *ngFor="let type of gebruikerTypes; let i = index"
+                        >
+                            <input
+                                id="radioButtonType"
+                                type="radio"
+                                class="custom-control-input"
+                                id="{{ 'radio' + type }}"
+                                (change)="checkClient(type)"
+                                [checked]="
+                                    huidigeGebruiker
+                                        ? huidigeGebruiker.type == type
+                                            ? true
+                                            : false
+                                        : i == 2
+                                            ? true
+                                            : false
+                                "
+                                name="gebruikerType"
+                                [value]="type"
+                                formControlName="gebruikerType"
+                            />
+                            <label
+                                class="custom-control-label"
+                                for="{{ 'radio' + type }}"
+                                >{{ type }}</label
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" *ngIf="isClient">
+                    <div class="row">
+                        <p class="mr-3">Sfeergroep:</p>
+                        <div
+                            class="custom-control custom-radio mb-4 mr-4"
+                            *ngFor="let sfeergr of sfeergroepen; let i = index"
+                        >
+                            <input
+                                type="radio"
+                                class="custom-control-input form-control"
+                                id="{{ 'radio' + sfeergr }}"
+                                [checked]="
+                                    huidigeGebruiker
+                                        ? huidigeGebruiker.sfeergroep == sfeergr
+                                            ? true
+                                            : false
+                                        : true
+                                "
+                                name="sfeergroep"
+                                [value]="sfeergr"
+                                formControlName="sfeergroep"
+                                [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.sfeergroep.errors }"
+                            />
+                            <label
+                                class="custom-control-label"
+                                for="{{ 'radio' + sfeergr }}"
+                                >{{ sfeergr }}</label
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-around">
+                <div class="col-md-5 m-1">
+                    <label for="achternaam">Achternaam*</label>
+                    <input
+                        type="text"
+                        id="achternaam"
+                        class="form-control"
+                        formControlName="achternaam"
+                        [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.achternaam.errors }"
+                    />
+                    <div
+                        *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.achternaam.errors"
+                        class="text-danger"
+                    >
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.achternaam.errors
+                                    .required
+                            "
+                        >
+                            Achternaam is verplicht
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 m-1">
+                    <label for="voornaam">Voornaam*</label>
+                    <input
+                        type="text"
+                        id="voornaam"
+                        class="form-control"
+                        formControlName="voornaam"
+                        [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.voornaam.errors }"
+                    />
+                    <div
+                        *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.voornaam.errors"
+                        class="text-danger"
+                    >
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.voornaam.errors
+                                    .required
+                            "
+                        >
+                            Voornaam is verplicht
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 m-1">
+                    <label for="email">Email*</label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-control"
+                        formControlName="email"
+                        [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.email.errors }"
+                    />
+                    <div
+                        *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.email.errors"
+                        class="text-danger"
+                    >
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.email.errors
+                                    .required
+                            "
+                        >
+                            Email is verplicht
+                        </div>
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.email.errors.email
+                            "
+                        >
+                            Vul een geldig email address in
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 m-1" *ngIf="!huidigeGebruiker">
+                    <label for="wachtwoord">Wachtwoord*</label>
+                    <input
+                        type="password"
+                        id="wachtwoord"
+                        class="form-control"
+                        formControlName="wachtwoord"
+                        [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.wachtwoord.errors }"
+                    />
+                    <div
+                        *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.wachtwoord.errors"
+                        class="text-danger"
+                    >
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.wachtwoord.errors
+                                    .required
+                            "
+                        >
+                            Wachtwoord is verplicht
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 m-1" *ngIf="!huidigeGebruiker">
+                    <label for="bevestigWachtwoord">Bevestig wachtwoord*</label>
+                    <input
+                        type="password"
+                        id="bevestigWachtwoord"
+                        class="form-control"
+                        formControlName="bevestigWachtwoord"
+                        [ngClass]="{ 'is-invalid': submitted &amp;&amp; gebruikerFormGroup.controls.bevestigWachtwoord.errors }"
+                    />
+                    <div
+                        *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.bevestigWachtwoord.errors"
+                        class="text-danger"
+                    >
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.bevestigWachtwoord
+                                    .errors.required
+                            "
+                        >
+                            Bevestiging wachtwoord is verplicht
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 m-1">
+                    <label for="foto">Foto*</label>
+                    <app-file-upload
+                        formControlName="foto"
+                        [gebruiker]="huidigeGebruiker"
+                        [errorGevonden]="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors"
+                    ></app-file-upload>
+                    <!-- [progress]="progress" -->
+                    <div
+                        *ngIf="submitted &amp;&amp; gebruikerFormGroup.controls.foto.errors"
+                        class="text-danger"
+                    >
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.foto.errors.required
+                            "
+                        >
+                            Een foto is verplicht
+                        </div>
+                        <div
+                            *ngIf="
+                                gebruikerFormGroup.controls.foto.errors
+                                    .wrongFileType
+                            "
+                        >
+                            Gelieve een geldige foto type te uploaden (.jpg,
+                            .png)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <small>* = Verplicht</small>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn">
+                        {{ submitButtonText }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-container>

@@ -1,0 +1,213 @@
+<ng-container *ngIf="loadingError !== undefined && loading; else loadingError">
+    <div class="container" id="print">
+        <div class="row">
+            <div class="col-12">
+                <h2>Dagplanning</h2>
+            </div>
+            <div class="col-6" id="nietPrinten">
+                <input
+                    type="checkbox"
+                    (change)="toonSpecialeAteliers()"
+                    id="afwezigheden"
+                />
+                <label style="margin-top: 11px; margin-left:8px;">Toon afwezigheden, ziektes, vervoer</label>
+            </div>
+            <div class="col-6 aliginRight" id="nietPrinten">
+                <app-print></app-print>
+            </div>
+        </div>
+
+        <div *ngIf="bool" class="row">
+            <div
+                class="col-12 col-sm-12 col-md-6"
+                *ngFor="let dagAtelier of dagplanning.getSpecialeAteliers()"
+                style="margin-bottom:30px;"
+                id="specialeAteliers"
+            >
+                <div class="card">
+                    <div class="card-body">
+                        <ng-container>
+                            <h3 class="card-title atelier">
+                                {{ dagAtelier.atelier.naam }}
+                            </h3>
+                            <p class="tekst">
+                                {{ toDeelnemerString(dagAtelier.gebruikers) }}
+                            </p>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-12 col-sm-12 col-md-12" id="volledigeDag">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Volledige dag</h3>
+                        <div *ngFor="let dagAtelier of dagplanning.getVolledigedagAteliers()">
+                            <h2 class="atelier">
+                                {{ dagAtelier.atelier.naam }}
+                            </h2>
+                            <h5>Begeleider(s):</h5>
+                            <p class="tekst begeleidertekst">
+                                {{
+                                    toDeelnemerString(
+                                        dagAtelier.getBegeleiders()
+                                    )
+                                }}
+                            </p>
+                            <h5>Cliënten</h5>
+                            <p class="tekst">
+                                {{
+                                    toDeelnemerString(dagAtelier.getClienten())
+                                }}
+                            </p>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-12 col-sm-12 col-md-12" id="eten">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Eten</h3>
+                        <p>{{ dagplanning.eten }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-12 col-sm-12 col-md-6" id="voormiddag">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Voormiddag</h3>
+                        <div
+                            *ngFor="
+                                let dagAtelier of dagplanning.getVoormiddagAteliers()
+                            "
+                        >
+                            <h3 class="atelier">
+                                {{ dagAtelier.atelier.naam }}
+                            </h3>
+                            <h5>Begeleider(s)</h5>
+                            <p class="tekst begeleidertekst">
+                                {{
+                                    toDeelnemerString(
+                                        dagAtelier.getBegeleiders()
+                                    )
+                                }}
+                            </p>
+                            <h5>Cliënten</h5>
+                            <p class="tekst">
+                                {{
+                                    toDeelnemerString(dagAtelier.getClienten())
+                                }}
+                            </p>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6" id="namiddag">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Namiddag</h3>
+                        <div
+                            *ngFor="
+                                let dagAtelier of dagplanning.getNamiddagAteliers()
+                            "
+                        >
+                            <h3 class="atelier">
+                                {{ dagAtelier.atelier.naam }}
+                            </h3>
+                            <h5>Begeleider(s)</h5>
+                            <p class="tekst begeleidertekst">
+                                {{
+                                    toDeelnemerString(
+                                        dagAtelier.getBegeleiders()
+                                    )
+                                }}
+                            </p>
+                            <h5>Cliënten</h5>
+                            <p class="tekst">
+                                {{
+                                    toDeelnemerString(dagAtelier.getClienten())
+                                }}
+                            </p>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-12 col-sm-12 col-md-6" id="commentaarveld">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Extra informatie</h3>
+                        <form [formGroup]="commentaarForm">
+                            <textarea
+                                formControlName="opmerking"
+                                style="width: 100%; resize: none; height: 100px;"
+                                rows="4"
+                                type="text"
+                                class="form-control"
+                                placeholder="Geef hier informatie in voor de dag"
+                                [ngClass]="{
+                                    'is-invalid':
+                                        submittedSave &&
+                                        commentaarForm.controls.opmerking.errors.required
+                                }"
+                            ></textarea>
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                    submittedSave &&
+                                    commentaarForm.controls.opmerking.errors
+                                "
+                            >
+                                Je kan geen lege informatie versturen
+                            </div>
+                        </form>
+
+                        <button
+                            class="btn"
+                            type="submit"
+                            style="margin-top: 10px;"
+                            (click)="submit()"
+                        >
+                            Opslaan
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6" id="vervoer">
+              <div class="card">
+                  <div class="card-body">
+                      <h3 class="card-title">Vervoer</h3>
+                      <div *ngFor="let dagAtelier of dagplanning.getVervoerAteliers()">
+                        <h3 class="atelier">
+                          {{ dagAtelier.atelier.naam }}
+                        </h3>
+                        <h5>Bestuurder</h5>
+                        <p class="tekst begeleidertekst">
+                          {{ toDeelnemerString(dagAtelier.getBegeleiders()) }}
+                        </p>
+                        <h5>Cliënten</h5>
+                        <p class="tekst">
+                          {{ toDeelnemerString(dagAtelier.getClienten()) }}
+                        </p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingError>
+    <div class="spinner-border spinner" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</ng-template>
