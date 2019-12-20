@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BestandService } from '../services/bestand.service';
 
 function valideerBestandType(control: FormControl): { [key: string]: any } {
+    console.log(control.value)
     if (!control.value.picto) {
         return;
     }
@@ -107,7 +108,7 @@ export class AteliersComponent implements OnInit {
             ],
             picto: new FormControl(
                 this.huidigAtelier ? this.huidigAtelier.pictoURL : '',
-                [Validators.required, valideerBestandType]
+                [Validators.required]
             ),
         });
 
@@ -124,13 +125,17 @@ export class AteliersComponent implements OnInit {
 
         // folder naam voor bestand
         const folderNaam = 'pictos';
-
         // Uploaden van de foto
         this.bestandService.postFile(
             folderNaam,
             this.atelierFormGroup.value.picto.name,
             this.atelierFormGroup.value.picto
-        );
+        ).subscribe(
+            () => {},
+            err => {console.log(err);},
+            () => {
+            }
+        );;
 
         if (this.huidigAtelier) {
             this.atelierService
