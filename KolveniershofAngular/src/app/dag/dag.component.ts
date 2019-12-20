@@ -12,30 +12,54 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
     styleUrls: ['./dag.component.scss'],
 })
 export class DagComponent implements OnChanges {
-    // Geeft ons de input van de het kalender component
-    @Input() public datum: Date;
-    @Input() public geselecteerdeWeekdag: number;
-    @Input() public geselecteerdeWeek: number;
-    public loadingError: HttpErrorResponse;
-    public loading = false;
-    public bool = false;
-    public dagplanning: DagPlanning;
-    public specialeAteliers = new Array<DagAtelier>();
-    public commentaarForm: FormGroup;
+
+  // Geeft ons de input van de het kalender component
+  @Input() public templateId: number;
+  @Input() public datum: Date;
+  @Input() public geselecteerdeWeekdag: number;
+  @Input() public geselecteerdeWeek: number;
+  public loadingError: HttpErrorResponse;
+  public loading = false;
+  public bool = false;
+  public dagplanning: DagPlanning;
+  public specialeAteliers = new Array<DagAtelier>();
+  public commentaarForm: FormGroup;
     public submittedSave = false;
+
 
     constructor(private dagService: DagService, private builder: FormBuilder) {}
 
-    ngOnChanges() {
-        if (this.datum == null) {
-            this.haalDagplanningTemplateOpMetWeekdagEnWeek(
-                this.geselecteerdeWeek,
-                this.geselecteerdeWeekdag
-            );
-        } else {
-            this.haalDagplanningOpMetDatum(this.datum);
-        }
+
+  ngOnChanges() {
+    if (this.datum == null) {
+      this.haalDagplanningTemplateOpMetWeekdagEnWeek(
+        this.templateId,
+        this.geselecteerdeWeek,
+        this.geselecteerdeWeekdag
+      );
+    } else {
+      this.haalDagplanningOpMetDatum(this.datum);
     }
+  }
+
+  public haalDagplanningTemplateOpMetWeekdagEnWeek(
+    templateId: number,
+    week: number,
+    weekdag: number
+  ) {
+    this.dagService.getDagTemplate(templateId, week, weekdag).subscribe(
+      dag => {
+        this.dagplanning = Object.assign(new DagPlanning(), dag);
+        this.setDagMoment();
+      },
+      error => {
+        this.loadingError = error;
+      },
+      () => {
+        this.loading = true;
+      }
+    );
+  }
 
     private initFormGroup(): void {
         this.commentaarForm = this.builder.group({
@@ -124,5 +148,23 @@ export class DagComponent implements OnChanges {
         return uitvoer;
     }
 
+  public toDeelnemerString(gebruikers: Gebruiker[]): String {
+    var uitvoer = ""
+    gebruikers.forEach(function (gebruiker, index) {
+      uitvoer += gebruiker.voornaam.toUpperCase() + " ";
+      if (index != (gebruikers.length - 1)) {
+        uitvoer += "/ ";
+      }
+    });
+    return uitvoer;
+  }
+
+  public showNewDagplanning(dagplanning: DagPlanning) : void {
+    console.log(dagplanning);
+    this.dagplanning = Object.assign(new DagPlanning(), dagplanning);
+  }
+
+
     public opslaanCommentaar(): void {}
+
 }

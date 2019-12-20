@@ -2,18 +2,39 @@
   <div class="vierweeksePlanning">
     <div class="selecteerWeekEnWeekdag">
       <h2>4-Weekse Planning</h2>
+      <div>
+        <mat-form-field>
+          <mat-label>Template</mat-label>
+          <mat-select [(ngModel)]="huidigeTemplate">
+            <mat-option *ngFor="let template of templates" [value]="template">
+              {{template.naam}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="btn" (click)="switchNewTemplateVisibility()"> <i class="fas fa-plus"></i></button>
+        <button class="btn btn-red" (click)="deleteTemplate()"> <i class="fas fa-trash"></i></button>
+        <button class="btn" *ngIf="!huidigeTemplate?.isActief" (click)="activeerTemplate()">Activeer</button>
+        <div id="templatenaam" class="input-group mb-3" *ngIf="showNewTemplateInput">
+          <input #templatenaam class="form-control" id="templateNaamInput" type="text" placeholder="Templatenaam"
+             />
+          <button (click)="createTemplate(templatenaam.value)">Creëer</button>
+          <div  *ngIf="newTemplateError">
+            <p>{{newTemplateError}}</p>
+          </div>
+        </div>
+      </div>
       <div class="border rounded-sm">
         <div class="row weken">
           <div *ngFor="let number of [1,2,3,4]">
-            <button *ngIf="number == geselecteerdeWeek" (click)="SelecteerWeek(number)" type="button" class="btn geselecteerd">Week {{number}}</button>
-            <button *ngIf="number != geselecteerdeWeek" (click)="SelecteerWeek(number)" type="button" class="btn">Week {{number}}</button>
+            <button [ngClass]="number == geselecteerdeWeek ? 'btn geselecteerd' : 'btn'" (click)="selecteerWeek(number)"
+              type="button">Week {{number}}</button>
           </div>
         </div>
         <hr>
         <div class="row weekdagen">
           <div *ngFor="let weekdag of weekdagen; let i = index">
-            <button *ngIf="i == geselecteerdeWeekdagIndex - 1" (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn geselecteerd">{{weekdag}}</button>
-            <button *ngIf="i != geselecteerdeWeekdagIndex - 1" (click)="SelecteerWeekdag(weekdag, i)" type="button" class="btn ">{{weekdag}}</button>
+            <button [ngClass]="i == geselecteerdeWeekdagIndex - 1 ? 'btn geselecteerd' : 'btn'"
+              (click)="selecteerWeekdag(weekdag, i)" type="button">{{weekdag}}</button>
           </div>
         </div>
       </div>
@@ -37,7 +58,8 @@
 
 
   <app-dag *ngIf="state == StateType.Dag" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
-    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex"></app-dag>
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex" [templateId]="huidigeTemplate?.id"></app-dag>
   <app-homepage-edit *ngIf="state == StateType.DagEdit" [datum]="null" [geselecteerdeWeek]="geselecteerdeWeek"
-    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex">
+    [geselecteerdeWeekdag]="geselecteerdeWeekdagIndex" [templateId]="huidigeTemplate?.id">
   </app-homepage-edit>
+</div>

@@ -20,6 +20,7 @@ export enum State {
     styleUrls: ['./homepage-edit.component.scss'],
 })
 export class HomepageEditComponent implements OnInit, OnChanges {
+    @Input() public templateId: number;
     @Input() public geselecteerdeWeekdag: number;
     @Input() public geselecteerdeWeek: number;
     @Input() public datum: Date;
@@ -39,7 +40,8 @@ export class HomepageEditComponent implements OnInit, OnChanges {
         if (this.datum == null) {
             this.haalDagplanningTemplateOpMetWeekdagEnWeek(
                 this.geselecteerdeWeek,
-                this.geselecteerdeWeekdag
+                this.geselecteerdeWeekdag,
+                this.templateId
             );
         } else {
             this.haalDagplanningOpMetDatum(this.datum);
@@ -50,7 +52,8 @@ export class HomepageEditComponent implements OnInit, OnChanges {
         if (this.datum == null) {
             this.haalDagplanningTemplateOpMetWeekdagEnWeek(
                 this.geselecteerdeWeek,
-                this.geselecteerdeWeekdag
+                this.geselecteerdeWeekdag,
+                this.templateId
             );
         } else {
             this.haalDagplanningOpMetDatum(this.datum);
@@ -72,10 +75,11 @@ export class HomepageEditComponent implements OnInit, OnChanges {
 
     public haalDagplanningTemplateOpMetWeekdagEnWeek(
         week: number,
-        weekdag: number
+        weekdag: number,
+        id: number
     ) {
         this.dagService
-            .getDagTemplate(week, weekdag)
+            .getDagTemplate(id, week, weekdag)
             .pipe(
                 finalize(() => {
                     this.loaded = true;

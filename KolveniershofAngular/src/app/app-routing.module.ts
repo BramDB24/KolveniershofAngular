@@ -15,6 +15,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { DagAtelier } from './models/dag-atelier.model';
 import { DagComponent } from './dag/dag.component';
 import { PictoClientenlijstComponent } from './picto-agenda/picto-clientenlijst/picto-clientenlijst.component';
+import { TemplateResolverService } from './services/template-resolver.service';
 
 export const routes: Routes = [
   {
@@ -85,6 +86,7 @@ export const routes: Routes = [
     path: 'vierweekse-planning',
     component: VierweeksePlanningComponent,
     canActivate: [AuthGuard],
+    resolve: { templates: TemplateResolverService },
     data: { roles: ['Admin', 'Begeleider'] }
 
   },

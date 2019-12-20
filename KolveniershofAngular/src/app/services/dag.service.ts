@@ -52,12 +52,32 @@ export class DagService {
         );
     }
 
+
+  public getDagTemplate(id: number, weeknr: number, weekdag: number) {
+    return this.http
+      .get<DagPlanning>(`${environment.apiUrl}/template/${id}/Week/${weeknr}/Dag/${weekdag}`)
+      .pipe(
+        map(x => {
+          // er moeten een object.assign gebeuren omdat de mapping van json naar object automatisch gebeurd
+          // op deze manier moet er geen constructors voorzien worden voor de mapping te laten slagen
+          // echter moet er wel een 'echt' object gemaakt worden zodat we methodes normaal kunnen aanroepen
+          // zonder expliciet new Class() te moeten doen
+          this.huidigeGeselecteerdeDag = Object.assign(new DagPlanning(), x);
+          this.huidigeGeselecteerdeDag.dagAteliers = x.dagAteliers.map(t =>
+            Object.assign(new DagAtelier(), t)
+          );
+          return this.huidigeGeselecteerdeDag;
+        })
+      );
+  }
+
     public postEten(dagplannigid: number, eten: String) {
         return this.http.post(
             `${environment.apiUrl}/dagplanning/${dagplannigid}/eten?eten=${eten}`,
             null
         );
     }
+
 
     public getDagTemplate(weeknr: number, weekdag: number) {
         return this.http
@@ -88,6 +108,12 @@ export class DagService {
             .pipe(map(x => x.sort((a, b) => a.naam.localeCompare(b.naam))));
     }
 
+
+  public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: DagAtelier) {
+    console.log(dagAtelier);
+    return this.http.post(`${environment.apiUrl}/template/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
+  }
+
     public deleteAterlierUitDagplanning(datum, dagAtelier: DagAtelier) {
         return this.http.post(
             `${environment.apiUrl}/dagplanning/${datum}/dagateliers`,
@@ -95,6 +121,7 @@ export class DagService {
         );
     }
 
+/**
     public deleteAterlierUitDagplanningTemplate(
         weeknr,
         weekdag,
@@ -105,7 +132,7 @@ export class DagService {
             dagAtelier
         );
     }
-
+**/
     public getAanwezigheidslijst(date: Date): Observable<DagAtelier[]> {
         const convertedDate: string = this.datePipe.transform(
             date,
