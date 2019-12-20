@@ -5,6 +5,7 @@ import {
     FormControl,
     FormGroup,
     Validators,
+    ValidatorFn,
 } from '@angular/forms';
 import { pipe } from 'rxjs';
 import { filter, map, tap, finalize } from 'rxjs/operators';
@@ -14,23 +15,25 @@ import { AtelierService } from '../services/atelier.service';
 import { ActivatedRoute } from '@angular/router';
 import { BestandService } from '../services/bestand.service';
 
-function valideerBestandType(control: FormControl): { [key: string]: any } {
-    console.log(control.value)
-    if (!control.value.picto) {
-        return;
-    }
-    const foto = control.value.picto;
-    if (!foto) {
-        return { required: true };
-    }
-    if (foto.split('.').length !== 2) {
-        return { wrongFileType: true };
-    }
-    const extentie = foto.split('.')[1];
-    if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
-        return { wrongFileType: true };
-    }
-    return null;
+function valideerBestandType(verplicht = true): ValidatorFn {
+    return (control: FormControl): { [key: string]: any } => {
+        const foto = control.value.name;
+        if (!foto) {
+            if (verplicht) {
+                return { required: true };
+            } else {
+                return null;
+            }
+        }
+        if (foto.split('.').length !== 2) {
+            return { wrongFileType: true };
+        }
+        const extentie = foto.split('.')[1];
+        if (!['jpg', 'png', 'jpeg'].includes(extentie.toLowerCase())) {
+            return { wrongFileType: true };
+        }
+        return null;
+    };
 }
 
 @Component({
@@ -57,7 +60,7 @@ export class AteliersComponent implements OnInit {
         private bestandService: BestandService,
         private atelierService: AtelierService,
         private fb: FormBuilder
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.atelierService.getAteliers().subscribe(entry => {
@@ -106,10 +109,10 @@ export class AteliersComponent implements OnInit {
                 this.huidigAtelier ? this.huidigAtelier.naam : '',
                 Validators.required,
             ],
-            picto: new FormControl(
+            picto: [
                 this.huidigAtelier ? this.huidigAtelier.pictoURL : '',
-                [Validators.required]
-            ),
+                [valideerBestandType(this.huidigAtelier === null)]
+            ],
         });
 
         this.titelTekst = this.huidigAtelier ? 'aanpassen' : 'toevoegen';
@@ -122,24 +125,24 @@ export class AteliersComponent implements OnInit {
         if (this.atelierFormGroup.invalid) {
             return;
         }
-       
-        var pictoUrl = this.huidigAtelier ? this.huidigAtelier.pictoURL : null
 
-        if(this.atelierFormGroup.value.picto.name != undefined){
-        pictoUrl = this.atelierFormGroup.value.picto.name
-        // folder naam voor bestand
-        const folderNaam = 'pictos';
-        // Uploaden van de foto
-        this.bestandService.postFile(
-            folderNaam,
-            this.atelierFormGroup.value.picto.name,
-            this.atelierFormGroup.value.picto
-        ).subscribe(
-            () => {},
-            err => {console.log(err);},
-            () => {
-            }
-        );
+        let pictoUrl = this.huidigAtelier ? this.huidigAtelier.pictoURL : null;
+
+        if (this.atelierFormGroup.controls.picto.value.name) {
+            pictoUrl = this.atelierFormGroup.controls.picto.value.name;
+            // folder naam voor bestand
+            const folderNaam = 'pictos';
+            // Uploaden van de foto
+            this.bestandService.postFile(
+                folderNaam,
+                pictoUrl,
+                this.atelierFormGroup.controls.picto.value
+            ).subscribe(
+                () => { },
+                err => { console.log(err); },
+                () => {
+                }
+            );
         }
         if (this.huidigAtelier) {
             this.atelierService
@@ -150,7 +153,7 @@ export class AteliersComponent implements OnInit {
                     pictoURL: pictoUrl,
                 })
                 .subscribe(
-                    () => {},
+                    () => { },
                     err => {
                         console.log(err);
                         this.errorMessage =
@@ -175,7 +178,7 @@ export class AteliersComponent implements OnInit {
                     toResponseBody()
                 )
                 .subscribe(
-                    () => {},
+                    () => { },
                     err => {
                         console.log(err);
                         this.errorMessage =
@@ -185,8 +188,8 @@ export class AteliersComponent implements OnInit {
                     () => {
                         this.successMessage = 'Het atelier werd opgeslagen.';
                         this.progress = 0;
-                        this.atelierFormGroup.reset();
                         this.submittedSave = false;
+                        this.atelierFormGroup.reset();
                     }
                 );
         }
@@ -194,7 +197,7 @@ export class AteliersComponent implements OnInit {
 }
 
 export function requiredFileType(type: string) {
-    return function(control: FormControl) {
+    return function (control: FormControl) {
         const file = control.value;
         if (file) {
             const extension = file.name.split('.')[1].toLowerCase();

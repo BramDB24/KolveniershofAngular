@@ -1,40 +1,46 @@
 <div class="container">
   <div class="row">
-      <div class="col-12">
-    <form [formGroup]="atelierFormGroup">
-         <div class="col-12 alert alert-danger" *ngIf="errorMessage != ''">
-            {{errorMessage}}
+    <div class="col-12">
+      <form [formGroup]="atelierFormGroup">
+        <div class="col-12 alert alert-danger" *ngIf="errorMessage != ''">
+          {{errorMessage}}
+        </div>
+        <div class="col-12 alert alert-success" *ngIf="successMessage != ''">
+          {{successMessage}}
+        </div>
+        <h2 class="titel">Atelier {{titelTekst}}</h2>
+        <div id="atelierdiv">
+          <p>Kies de naam van het atelier:</p>
+          <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
+            [ngClass]="{ 'is-invalid': submittedSave &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
+          <div class="invalid-feedback" *ngIf="submittedSave && atelierFormGroup.controls.atelierNaam.errors">
+            Een atelier naam is verplicht
           </div>
-          <div class="col-12 alert alert-success" *ngIf="successMessage != ''">
-              {{successMessage}}
-            </div>
-          <h2 class="titel">Atelier {{titelTekst}}</h2>
-          <div id="atelierdiv">
-            <p>Kies de naam van het atelier:</p>
-            <input id="atelierNaamInput" class="form-control" type="text" formControlName="atelierNaam"
-              [ngClass]="{ 'is-invalid': submittedSave &amp;&amp; atelierFormGroup.controls.atelierNaam.errors }" />
-              <div class="invalid-feedback" *ngIf="submittedSave && atelierFormGroup.controls.atelierNaam.errors">
-                Een atelier naam is verplicht
-              </div>
+        </div>
+
+        <div id="atelierdiv">
+          <p>Selecteer een picto voor het atelier (.jpg, .jpeg of .png):</p>
+          <app-file-upload formControlName="picto" [atelier]="huidigAtelier"
+            [errorGevonden]="submittedSave &amp;&amp; atelierFormGroup.controls.picto.errors"></app-file-upload>
+        </div>
+        <div *ngIf="submittedSave &amp;&amp; atelierFormGroup.controls.picto.errors" class="text-danger">
+          <div *ngIf="atelierFormGroup.controls.picto.errors.required">
+            Een picto is verplicht
           </div>
-
-          <div id="atelierdiv">
-            <p>Selecteer een picto voor het atelier (.jpg, .jpeg of .png):</p>
-            <app-file-upload formControlName="picto" [atelier]="huidigAtelier" [progress]="progress"></app-file-upload>
+          <div *ngIf="atelierFormGroup.controls.picto.errors.wrongFileType">
+            Gelieve een geldige afbeelding type te uploaden (.jpg, .jpeg of .png)
           </div>
+        </div>
 
-          <div>
-            <button (click)="saveAtelier()" type="button" class="btn">
-              Opslaan
-            </button>
-          </div>
+        <div>
+          <button (click)="saveAtelier()" type="button" class="btn">
+            Opslaan
+          </button>
+        </div>
 
 
-        
-    </form>
-  </div>
+
+      </form>
+    </div>
   </div>
 </div>
-
-
-
