@@ -44,7 +44,16 @@ Als u lokaal wilt runnen, moet u de usersecrets aanpassen zoals volgt:
     "Key": "dezestringmoeteenvoldoendelangelengtehebben"
   }
 ```
-
+En zorg ervoor dat de ApplicationDataInitializer als volgt is opgebouwd:
+```
+_dbContext.Database.EnsureDeleted();
+    if (_dbContext.Database.EnsureCreated())
+    {
+      ///
+      /// Data
+      ///
+    }
+```
 ## Meta
 De applicatie is ontworpen door 6 laatstejaars bachelor studenten van HoGent Toegepaste Informatica:
 - Bram De Bleecker
