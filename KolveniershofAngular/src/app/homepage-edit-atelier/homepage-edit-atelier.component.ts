@@ -17,6 +17,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   @Input() private dagAtelier: DagAtelier;
   @Input() public isEdit: boolean;
   @Input() public dagplanningId: number;
+  @Input() public datum: Date;
   @Output() public newDagAtelierAddedEvent = new EventEmitter();
   public gebruikersLoaded = false;
   public ateliersLoaded = false;
@@ -137,7 +138,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
       );
     }
     this.dagService
-      .putDagAtelier(this.dagplanningId, this.dagAtelier)
+      .putDagAtelier(this.datum, this.dagAtelier)
       .subscribe(
         entry => {},
         err => {
