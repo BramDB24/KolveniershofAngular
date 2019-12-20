@@ -174,6 +174,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
   }
 
   public voegGebruikerToe(): void {
+    this.gebruikerToevoegenLijstError = ''
     if (!this.geselecteerdeGebruiker) {
       this.gebruikerToevoegenLijstError = 'Gelieve een gebruiker te selecter';
       return;
