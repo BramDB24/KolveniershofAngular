@@ -122,29 +122,32 @@ export class HomepageEditComponent implements OnInit, OnChanges {
     }
 
     public deleteAtelierUitDagplanning(atelier) {
-        if (
-            confirm(
-                'Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?'
-            )
-        ) {
+        if (confirm('Bent u zeker dat u dit atelier wilt verwijderen van de dagplanning?')) {
+            var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
             if (this.datum == null) {
-                this.dagService
-                    .deleteAterlierUitDagplanningTemplate(
+                this.dagService.deleteAterlierUitDagplanningTemplate(
                         this.dagPlanning.weeknummer,
                         this.dagPlanning.weekdag,
                         atelier
-                    )
-
-                    .subscribe();
+                    ).subscribe(val => {
+                        
+                    },
+                    err => {
+                        indexAteliers = -1;
+                        alert("Kon het atelier niet verwijderen");
+                    });
             } else {
                 this.dagService
-                    .deleteAterlierUitDagplanning(
-                        this.dagPlanning.datum,
-                        atelier
-                    )
-                    .subscribe();
+                    .deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier)
+                    .subscribe( val => {
+                        
+                    },
+                    err => {
+                        indexAteliers = -1;
+                        alert("Kon het atelier niet verwijderen");
+                    });
             }
-            var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
+            
             if (indexAteliers > -1) {
                 this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
             }
