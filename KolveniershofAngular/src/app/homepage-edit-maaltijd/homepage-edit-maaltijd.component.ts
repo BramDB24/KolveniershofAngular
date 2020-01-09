@@ -45,6 +45,7 @@ export class HomepageEditMaaltijdComponent implements OnInit, OnChanges {
     if (this.maaltijdFormGroup.invalid) {
       return;
     }
+    if(this.dagPlanning.datum != null){
       this.dagService
       .postEten(this.dagPlanning.datum, this.maaltijdFormGroup.controls.maaltijd.value)
       .subscribe(
@@ -60,6 +61,23 @@ export class HomepageEditMaaltijdComponent implements OnInit, OnChanges {
           alert('De aanpassingen zijn opgeslagen');
         }
       );
+    } else{
+      this.dagService
+      .postEtenTemplate(this.dagPlanning.dagplanningId, this.maaltijdFormGroup.controls.maaltijd.value)
+      .subscribe(
+        entry => {},
+        err => {
+          alert(
+            'Er was een probleem bij het opslaan van de aanpassing.\n' +
+              'Een techische beschrijving over te fout werd in de console geschreven.'
+          );
+        },
+        () => {
+          this.newDagPlanningAddedEvent.emit();
+          alert('De aanpassingen zijn opgeslagen');
+        }
+      );
+    }
   }
 
   private valideerMaaltijd(control: FormControl): { [key: string]: any } {

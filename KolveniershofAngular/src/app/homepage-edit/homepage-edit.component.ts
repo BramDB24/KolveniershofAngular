@@ -30,7 +30,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
     public state = State.Standard;
     StateType = State;
     loaded = false;
-    constructor(private dagService: DagService) {}
+    constructor(private dagService: DagService) { }
 
     ngOnInit() {
         this.state = State.Standard;
@@ -107,14 +107,14 @@ export class HomepageEditComponent implements OnInit, OnChanges {
         this.state = State.Maaltijd;
     }
 
-  // public nieuwAtelier() {
-   // var atelier = Object.assign(new DagAtelier());
-   // atelier.dagMoment = 'VolledigeDag';
-   // this.atelier = atelier;
-   // this.isEdit = false;
-   // this.state = State.Edit;
-  //} 
-  //welke vd 2?
+    // public nieuwAtelier() {
+    // var atelier = Object.assign(new DagAtelier());
+    // atelier.dagMoment = 'VolledigeDag';
+    // this.atelier = atelier;
+    // this.isEdit = false;
+    // this.state = State.Edit;
+    //} 
+    //welke vd 2?
     public nieuwAtelier() {
         this.atelier = Object.assign(new DagAtelier());
         this.isEdit = false;
@@ -126,11 +126,11 @@ export class HomepageEditComponent implements OnInit, OnChanges {
             var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
             if (this.datum == null) {
                 this.dagService.deleteAterlierUitDagplanningTemplate(
-                        this.dagPlanning.dagplanningId,
-                        atelier
-                    ).subscribe(val => {
-                        
-                    },
+                    this.templateId,
+                    atelier
+                ).subscribe(val => {
+
+                },
                     err => {
                         indexAteliers = -1;
                         alert("Kon het atelier niet verwijderen");
@@ -138,15 +138,15 @@ export class HomepageEditComponent implements OnInit, OnChanges {
             } else {
                 this.dagService
                     .deleteAterlierUitDagplanning(this.dagPlanning.datum, atelier)
-                    .subscribe( val => {
-                        
+                    .subscribe(val => {
+
                     },
-                    err => {
-                        indexAteliers = -1;
-                        alert("Kon het atelier niet verwijderen");
-                    });
+                        err => {
+                            indexAteliers = -1;
+                            alert("Kon het atelier niet verwijderen");
+                        });
             }
-            
+
             if (indexAteliers > -1) {
                 this.dagPlanning.dagAteliers.splice(indexAteliers, 1);
             }

@@ -86,6 +86,12 @@ export class DagService {
             null
         );
     }
+    public postEtenTemplate(id: number, eten: String) {
+        return this.http.post(
+            `${environment.apiUrl}/dagplanning/dagTemplate/${id}/eten?eten=${eten}`,
+            null
+        );
+    }
 
     public getAteliers(): Observable<Array<Atelier>> {
         return this.http
