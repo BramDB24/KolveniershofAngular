@@ -126,8 +126,7 @@ export class HomepageEditComponent implements OnInit, OnChanges {
             var indexAteliers = this.dagPlanning.dagAteliers.indexOf(atelier);
             if (this.datum == null) {
                 this.dagService.deleteAterlierUitDagplanningTemplate(
-                        this.dagPlanning.weeknummer,
-                        this.dagPlanning.weekdag,
+                        this.dagPlanning.dagplanningId,
                         atelier
                     ).subscribe(val => {
                         

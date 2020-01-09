@@ -56,6 +56,11 @@ export class DagService {
         );
     }
 
+    public putTemplateDagAtelier(id: number, dagAtelier: DagAtelier){
+        return this.http.put(`${environment.apiUrl}/dagplanning/dagTemplate/${id}/dagatelier`,
+        dagAtelier)
+    }
+
 
   public getDagTemplate(id: number, weeknr: number, weekdag: number) {
     return this.http
@@ -89,9 +94,9 @@ export class DagService {
     }
 
 
-  public deleteAterlierUitDagplanningTemplate(weeknr, weekdag, dagAtelier: DagAtelier) {
+  public deleteAterlierUitDagplanningTemplate(id: number, dagAtelier: DagAtelier) {
     console.log(dagAtelier);
-    return this.http.post(`${environment.apiUrl}/template/week/${weeknr}/dag/${weekdag}/dagateliers`, dagAtelier);
+    return this.http.put(`${environment.apiUrl}/dagplanning/dagTemplate/${id}/dagatelier/delete`, dagAtelier);
   }
 
     public deleteAterlierUitDagplanning(datum, dagAtelier: DagAtelier) {

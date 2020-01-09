@@ -141,7 +141,7 @@ export class VierweeksePlanningComponent implements OnInit {
     }
 
     public activeerTemplate(): void {
-        if (confirm(this.huidigeTemplate.naam + 'nu activeren?')) {
+        if (confirm(this.huidigeTemplate.naam + ' nu activeren?')) {
             this._templateService.putTemplate(this.huidigeTemplate).subscribe(
                 val => {
                     this.templates.filter(t => t.isActief)[0].isActief = false;

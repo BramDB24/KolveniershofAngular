@@ -137,7 +137,20 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
         atelier => atelier.naam === formAtelierNaam
       );
     }
-    this.dagService
+    if(this.datum == null){
+      this.dagService.putTemplateDagAtelier(this.dagplanningId, this.dagAtelier).subscribe(entry => {},
+        err => {
+          alert(
+            'Er was een probleem bij het opslaan van de aanpassing.\n' +
+              'Een techische beschrijving over te fout werd in de console geschreven.'
+          );
+        },
+        () => {
+          this.newDagAtelierAddedEvent.emit();
+          alert('De aanpassingen zijn opgeslagen');
+        });
+    }else{
+      this.dagService
       .putDagAtelier(this.datum, this.dagAtelier)
       .subscribe(
         entry => {},
@@ -152,6 +165,7 @@ export class HomepageEditAtelierComponent implements OnInit, OnChanges {
           alert('De aanpassingen zijn opgeslagen');
         }
       );
+    }
   }
 
   public atelierNaamFormErrors(): string[] {
